@@ -256,6 +256,23 @@ class ModeloTipoEquipos{
 
 	}
 
+	static public function mdlValidarTipoEquipoEnCompras($id){
+
+		  
+		    $stmt = Conexion::conectar()->prepare("SELECT * FROM equipos where id_nombre_equipos = $id");
+		  
+		   			
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
 
 
 

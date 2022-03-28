@@ -100,6 +100,7 @@ class ControladorTipoEquipos{
 	MOSTRAR TIPO EQUIPOS
 	=============================================*/
 
+	
 	static public function ctrMostrarTipoEquipo($item, $valor){
 
 		$tabla = "nombre_equipos";
@@ -244,10 +245,14 @@ class ControladorTipoEquipos{
 
 	static public function ctrBorrarTipoEquipo(){
 
-		if(isset($_GET["idTipoEquipo"])){
+	if(isset($_GET["idTipoEquipo"])){
 
 			$tabla ="nombre_equipos";
 			$datos = $_GET["idTipoEquipo"];
+
+		$valida = ModeloTipoEquipos::mdlValidarTipoEquipoEnCompras($datos);
+		
+		if(!$valida){	
 
 			if($_GET["fotoEquipo"] != ""){
 
@@ -278,72 +283,31 @@ class ControladorTipoEquipos{
 
 				</script>';
 
-			}		
+			}
 
-		}
-
-	}
-
-
-
-    //FUNCION SE ACTIVA CUANDO SE DEFINA EL MANTENEDOR DE EQUIPOS PARA ARRIENDO
-	static public function ctrBorrarTipoEquipoValidacion(){
-
-		if(isset($_GET["idTipoEquipo"])){
-
-			$respuesta = Model::mdlMostrarUsuarios("usuarios", "id_sucursal", $_GET["idSucursal"], "ASC");
-		
-			if(!$respuesta){
-
-				$tabla ="sucursales";
-				$datos = $_GET["idSucursal"];
-
-				$respuesta = ModeloSucursales::mdlBorrarSucursal($tabla, $datos);
-
-				if($respuesta == "ok"){
-
-					echo'<script>
-
-						swal({
-							  type: "success",
-							  title: "La sucursal ha sido borrada correctamente",
-							  showConfirmButton: true,
-							  confirmButtonText: "Cerrar"
-							  }).then(function(result){
-										if (result.value) {
-
-										window.location = "sucursales";
-
-										}
-									})
-
-						</script>';
-				}
-
-			}else{
-
-				echo'<script>
+		}else{
+			echo'<script>
 
 					swal({
 						  type: "error",
-						  title: "La sucursal no se puede eliminar porque tiene procesos anteriores",
+						  title: " No se puede eliminar porque tiene equipos vinculados",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "sucursales";
+									window.location = "tipo-equipos";
 
 									}
 								})
 
 					</script>';	
+		}		
 
-			}
 		}
-		
-	}
 
+	} 
+	
 
 }
 	
