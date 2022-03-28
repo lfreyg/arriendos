@@ -109,7 +109,7 @@ class ModeloTipoEquipos{
 
 	static public function mdlIngresarTipoEquipo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria,id_marca,descripcion,precio,modelo, meses_garantia) VALUES (:idCategoria,:marca,:descripcion,:precio,:modelo,:garantia)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria,id_marca,descripcion,precio,modelo, meses_garantia,vida_util) VALUES (:idCategoria,:marca,:descripcion,:precio,:modelo,:garantia,:vida)");
 
 		$stmt -> bindParam(":idCategoria", $datos["idCategoria"], PDO::PARAM_INT);
 		$stmt -> bindParam(":marca", $datos["marca"], PDO::PARAM_INT);		
@@ -117,6 +117,7 @@ class ModeloTipoEquipos{
 		$stmt -> bindParam(":precio", $datos["precio"], PDO::PARAM_INT);
 		$stmt -> bindParam(":modelo", strtoupper(str_replace('"', "''",$datos["modelo"])), PDO::PARAM_STR);
 		$stmt -> bindParam(":garantia", $datos["garantia"], PDO::PARAM_INT);
+		$stmt -> bindParam(":vida", $datos["vida"], PDO::PARAM_INT);
 
 
 		if($stmt->execute()){
@@ -141,14 +142,15 @@ class ModeloTipoEquipos{
 
 	static public function mdlEditarTipoEquipos($tabla, $datos){
 	
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_marca = :marca, descripcion = :descripcion, modelo = :modelo, precio = :precio, foto = :foto, meses_garantia = :meses_garantia WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_marca = :marca, descripcion = :descripcion, modelo = :modelo, precio = :precio, foto = :foto, meses_garantia = :meses_garantia, vida_util = :vida WHERE id = :id");
 
 		$stmt -> bindParam(":marca", $datos["marca"], PDO::PARAM_INT);
 		$stmt -> bindParam(":descripcion", strtoupper($datos["descripcion"]), PDO::PARAM_STR);
 		$stmt -> bindParam(":modelo", strtoupper($datos["modelo"]), PDO::PARAM_STR);
 		$stmt -> bindParam(":precio", $datos["precio"], PDO::PARAM_STR);		
 		$stmt -> bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
-		$stmt -> bindParam(":meses_garantia", $datos["garantia"], PDO::PARAM_STR);		
+		$stmt -> bindParam(":meses_garantia", $datos["garantia"], PDO::PARAM_INT);	
+		$stmt -> bindParam(":vida", $datos["vida"], PDO::PARAM_INT);	
 		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_STR);
 
 		if($stmt -> execute()){

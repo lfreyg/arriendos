@@ -18,7 +18,8 @@ class ControladorTipoEquipos{
 					           "marca"=>$_POST["nuevoMarcaEquipo"],
 					           "modelo" => $_POST["nuevoModelo"],	
 					           "descripcion" => $_POST["nuevoNombre"],
-					           "garantia" => $_POST["nuevogarantia"],		
+					           "garantia" => $_POST["nuevogarantia"],	
+					           "vida" => $_POST["nuevoVida"],	
 				               "precio" => $_POST["nuevoPrecio"]);
 					           
 
@@ -202,6 +203,7 @@ class ControladorTipoEquipos{
 				               "modelo" => $_POST["editarModelo"],			              	
 				               "precio" => $_POST["editarPrecio"],		   
 							   "garantia" => $_POST["editarGarantia"],
+							   "vida" => $_POST["editarVida"],
 							   "foto" => $ruta,
 							   "id" => $_POST['idTipo']
 							  );

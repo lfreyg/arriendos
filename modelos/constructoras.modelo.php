@@ -61,7 +61,7 @@ class ModeloConstructoras{
 
 	static public function mdlIngresarConstructora($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(rut,nombre,direccion,telefono,contacto_cobranza,telefono_cobranza,email_cobranza,forma_pago_id,banco) VALUES (:rut, :nombre, :direccion, :telefono, :contacto, :telefonoCobra, :mailCobra,:formaPago, :banco)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(rut,nombre,direccion,telefono,contacto_cobranza,telefono_cobranza,email_cobranza,forma_pago_id,banco, codigo_actividad) VALUES (:rut, :nombre, :direccion, :telefono, :contacto, :telefonoCobra, :mailCobra,:formaPago, :banco, :codigoAct)");
 
 		$stmt->bindParam(":rut", strtoupper($datos['rut']), PDO::PARAM_STR);
 		$stmt->bindParam(":nombre", strtoupper($datos['nombre']), PDO::PARAM_STR);
@@ -72,6 +72,7 @@ class ModeloConstructoras{
 		$stmt->bindParam(":mailCobra", strtolower($datos['mailCobra']), PDO::PARAM_STR);
 		$stmt->bindParam(":formaPago", strtoupper($datos['formaPago']), PDO::PARAM_STR);		
 		$stmt->bindParam(":banco", strtoupper($datos['banco']), PDO::PARAM_STR);
+		$stmt->bindParam(":codigoAct", strtoupper($datos['codigoAct']), PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -94,7 +95,7 @@ class ModeloConstructoras{
 
 	static public function mdlEditarConstructora($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, direccion = :direccion, telefono = :telefono, contacto_cobranza = :contacto, telefono_cobranza = :telefonoCobra, email_cobranza = :mailCobra, forma_pago_id = :formaPago, banco = :banco WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, direccion = :direccion, telefono = :telefono, contacto_cobranza = :contacto, telefono_cobranza = :telefonoCobra, email_cobranza = :mailCobra, forma_pago_id = :formaPago, banco = :banco, codigo_actividad = :codigoAct WHERE id = :id");
 
 		$stmt->bindParam(":id", strtoupper($datos['id']), PDO::PARAM_STR);		
 		$stmt->bindParam(":nombre", strtoupper($datos['nombre']), PDO::PARAM_STR);
@@ -105,6 +106,7 @@ class ModeloConstructoras{
 		$stmt->bindParam(":mailCobra", strtolower($datos['mailCobra']), PDO::PARAM_STR);
 		$stmt->bindParam(":formaPago", strtoupper($datos['formaPago']), PDO::PARAM_STR);		
 		$stmt->bindParam(":banco", strtoupper($datos['banco']), PDO::PARAM_STR);
+		$stmt->bindParam(":codigoAct", strtoupper($datos['codigoAct']), PDO::PARAM_STR);
 				
 
 		if($stmt->execute()){

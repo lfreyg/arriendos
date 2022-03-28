@@ -27,6 +27,7 @@ $(".tablas").on("click", ".btnEditarConstructora", function(){
      		$("#cobraTeleEditarConstructora").val(respuesta["telefono_cobranza"]); 
      		$("#cobraMailEditarConstructora").val(respuesta["email_cobranza"]); 
      		$("#formaPagoEditarConstructora").val(respuesta["forma_pago_id"]); 	
+     		$("#codigoEditarConstructora").val(respuesta["codigo_actividad"]); 	
 
            if(respuesta["forma_pago_id"] == 7 || respuesta["forma_pago_id"] == 8){
      		 $('#mostrarBancoEditar').css("display", "block");

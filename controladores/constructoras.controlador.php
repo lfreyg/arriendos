@@ -22,6 +22,7 @@ class ControladorConstructoras{
                                "telefonoCobra"=>$_POST["cobraTeleNuevaConstructora"],
                                "mailCobra"=>$_POST["cobraMailNuevaConstructora"],
                                "formaPago"=>$_POST["formaPagoNuevaConstructora"],
+                               "codigoAct"=>$_POST["codigoNuevaConstructora"],
                                "banco"=>$_POST["bancoNuevaConstructora"]
 					           );
 
@@ -192,6 +193,7 @@ class ControladorConstructoras{
                                "telefonoCobra"=>$_POST["cobraTeleEditarConstructora"],
                                "mailCobra"=>$_POST["cobraMailEditarConstructora"],
                                "formaPago"=>$_POST["formaPagoEditarConstructora"],
+                               "codigoAct"=>$_POST["codigoEditarConstructora"],
                                "banco"=>$_POST["bancoEditarConstructora"]);
 
 				$respuesta = ModeloConstructoras::mdlEditarConstructora($tabla, $datos);

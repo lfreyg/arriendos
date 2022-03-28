@@ -70,10 +70,11 @@ $(".tablas").on("click", ".btnEditarTipoEquipo", function(){
 		dataType: "json",
 		success: function(respuesta){
 			
-			$("#editarMarcaEquipo").val(respuesta["id_marca"])
+			$("#editarMarcaEquipo").val(respuesta["id_marca"]);
 			$("#editarNombre").val(respuesta["descripcion"]);				
 			$("#editarModelo").val(respuesta["modelo"]);	
-			$("#editarGarantia").val(respuesta["meses_garantia"])	
+			$("#editarGarantia").val(respuesta["meses_garantia"]);
+			$("#editarVida").val(respuesta["vida_util"]);	
 			$("#editarPrecio").val(respuesta["precio"]);
 			$("#fotoActual").val(respuesta["foto"]);
 			$("#idTipo").val(respuesta["id"]);

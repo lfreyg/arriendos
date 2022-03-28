@@ -79,6 +79,7 @@ $nombreCategoria = $categorias["categoria"];
            <th>Modelo</th> 
            <th>Descripción</th>   
            <th>Meses Garantia</th>
+           <th>Meses Vida</th>
            <th>Precio</th>         
            <th>Foto</th>   
            <th>Estado</th>        
@@ -102,7 +103,8 @@ $nombreCategoria = $categorias["categoria"];
                   <td>'.$marca["descripcion"].'</td>  
                   <td>'.$value["modelo"].'</td>            
                   <td>'.$value["descripcion"].'</td>
-                  <td>'.$value["meses_garantia"].'</td>';
+                  <td>'.$value["meses_garantia"].'</td>
+                  <td>'.$value["vida_util"].'</td>';
           echo '  <td>'.number_format($value["precio"],0,',','.').'</td>';                  
 
                   if($value["foto"] != ""){
@@ -279,6 +281,18 @@ MODAL AGREGAR
 
             </div>
 
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                <input type="number" class="form-control input-lg" name="nuevoVida" autocomplete="off" placeholder="Meses Vida Util" required>
+
+              </div>
+
+            </div>
+
           
 
             <!-- ENTRADA PARA PRECIO -->
@@ -390,7 +404,7 @@ MODAL EDITAR
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
                 <p class="help-block">Descripción</p>
                 <input type="text" class="form-control input-lg" id="editarNombre" placeholder="Descripción" autocomplete="off" name="editarNombre" value="" required>
                 <input type="hidden" id="idTipo" name="idTipo">              
@@ -403,7 +417,7 @@ MODAL EDITAR
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
                 <p class="help-block">Modelo</p>
                 <input type="text" class="form-control input-lg" id="editarModelo" placeholder="Modelo" autocomplete="off" name="editarModelo" value="" required>
               </div>
@@ -414,12 +428,24 @@ MODAL EDITAR
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
                 <p class="help-block">Meses Garantia</p>
                 <input type="number" class="form-control input-lg" id="editarGarantia" placeholder="Meses Garantia" autocomplete="off" name="editarGarantia" value="" required>
               </div>
 
             </div> 
+
+             <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                <p class="help-block">Vida Útil</p>
+                <input type="number" class="form-control input-lg" id="editarVida" name="editarVida" autocomplete="off" placeholder="Meses Vida Util" required>
+
+              </div>
+
+            </div>
 
             
 

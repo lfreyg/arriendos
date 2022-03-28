@@ -34,7 +34,9 @@ for($i=0; $i < count($_SESSION["idObrasSeleccionadas"]); $i++){
 			    $precioConvenio = $hojaDeProductos->getCellByColumnAndRow(7, $indiceFila);  
 			    
 			              
-            if($precioConvenio != ''){
+            if($precioConvenio == ''){
+                $precioConvenio = 0;
+            }
 
             	
             	echo "equipo : ".$idEquipo;
@@ -50,7 +52,7 @@ for($i=0; $i < count($_SESSION["idObrasSeleccionadas"]); $i++){
 
 			              $respuesta = ModeloCargaMasivaPrecios::mdlIngresarListaEquipos($tabla, $datos);
 
-			                          }
+			                          
 
 			}
 

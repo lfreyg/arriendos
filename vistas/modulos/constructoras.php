@@ -67,6 +67,7 @@ $_SESSION['idConstructora'] = null;
            <th>Teléfono Cobranza</th>
            <th>Correo Cobranza</th>
            <th>Forma Pago</th>
+           <th>Actividad</th>
            <th>Estado</th>           
            <th>Acciones</th>
 
@@ -111,7 +112,8 @@ $_SESSION['idConstructora'] = null;
                     <td class="text-uppercase">'.$value["contacto_cobranza"].'</td>
                     <td class="text-uppercase">'.$value["telefono_cobranza"].'</td>
                     <td class="text-uppercase">'.$value["email_cobranza"].'</td>
-                    <td class="text-uppercase">'.$nombreFormaPago.$banco.'</td>';
+                    <td class="text-uppercase">'.$nombreFormaPago.$banco.'</td>
+                    <td class="text-uppercase">'.$value["codigo_actividad"].'</td>';
 
 
               if($value["estado"] != 0){
@@ -271,6 +273,7 @@ MODAL AGREGAR PROVEEDOR
                 </div>
 
                <div id = "mostrarBanco">
+                <div class="form-group row">
                  <div class="form-group">              
                       <div class="input-group">                      
                         <span class="input-group-addon"><i class="fa fa-th"></i></span> 
@@ -284,8 +287,18 @@ MODAL AGREGAR PROVEEDOR
                           ?>
                         </select>
                       </div>
-                   </div>                
+                   </div>  
+                 </div>              
                </div>  
+
+               <div class="form-group row">
+                <div class="form-group">              
+                  <div class="input-group">              
+                   <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                   <input type="text" class="form-control input-lg" name="codigoNuevaConstructora" placeholder="Código Actividad" required>
+                  </div>
+                </div>
+              </div>
 
           
 
@@ -436,6 +449,7 @@ MODAL EDITAR
                 </div>
 
                <div id = "mostrarBancoEditar">
+                <div class="form-group row">
                 <div class="form-group">              
                       <div class="input-group">                      
                         <span class="input-group-addon"><i class="fa fa-th"></i></span> 
@@ -449,8 +463,18 @@ MODAL EDITAR
                           ?>
                         </select>
                       </div>
-                   </div>       
-               </div>            
+                   </div> 
+                   </div>      
+               </div>   
+
+               <div class="form-group row">
+                <div class="form-group">              
+                  <div class="input-group">              
+                   <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                   <input type="text" class="form-control input-lg" id="codigoEditarConstructora" name="codigoEditarConstructora" placeholder="Código Actividad" required>
+                  </div>
+                </div>
+              </div>         
            
   
           </div>
