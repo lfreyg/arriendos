@@ -440,7 +440,7 @@ MODAL EDITAR
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                <p class="help-block">Vida Útil</p>
+                <p class="help-block">Meses Vida Útil</p>
                 <input type="number" class="form-control input-lg" id="editarVida" name="editarVida" autocomplete="off" placeholder="Meses Vida Util" required>
 
               </div>
