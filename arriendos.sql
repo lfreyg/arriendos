@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-03-2022 a las 17:04:02
+-- Tiempo de generación: 01-04-2022 a las 00:56:29
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -368,10 +368,9 @@ CREATE TABLE `pedido_equipo` (
 
 INSERT INTO `pedido_equipo` (`id`, `id_constructoras`, `id_obras`, `id_sucursal`, `id_usuario`, `estado`, `compartido`, `documento`, `orden_compra`, `creado`) VALUES
 (1, 3, 5, 1, 1, 7, 0, 'vistas/img/PedidoEquipos/1.pdf', '', '2022-03-31 01:13:14'),
-(2, 3, 7, 1, 1, 7, 0, 'vistas/img/PedidoEquipos/2.pdf', '985214', '2022-03-31 01:13:29'),
 (3, 3, 6, 1, 1, 7, 0, '', '65211', '2022-03-31 04:33:06'),
 (4, 4, 8, 1, 1, 7, 0, 'vistas/img/PedidoEquipos/4.pdf', '', '2022-03-31 05:06:32'),
-(5, 3, 9, 1, 1, 7, 0, NULL, '', '2022-03-31 05:13:56');
+(6, 5, 10, 1, 1, 7, 0, NULL, '', '2022-03-31 20:34:04');
 
 -- --------------------------------------------------------
 
@@ -519,7 +518,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `id_sucursal`, `creacion`) VALUES
-(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-03-31 02:40:38', '2022-03-31 05:40:38', 1, '2022-03-11 21:40:11'),
+(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-03-31 17:33:50', '2022-03-31 20:33:50', 1, '2022-03-11 21:40:11'),
 (2, 'CRISTIAN VALLEJOS', 'cvallejos', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 2, 'vistas/img/usuarios/cvallejos/678.jpg', 1, '2022-02-23 18:16:46', '2022-03-03 13:35:00', 1, '2022-03-11 21:40:11');
 
 --
@@ -702,7 +701,7 @@ ALTER TABLE `obras`
 -- AUTO_INCREMENT de la tabla `pedido_equipo`
 --
 ALTER TABLE `pedido_equipo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido_equipo_detalle`
