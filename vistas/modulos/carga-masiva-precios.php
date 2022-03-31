@@ -71,7 +71,7 @@ if($_SESSION["perfil"] != "Administrador"){
 
             </div>
 
-      </div>
+     
 
       <div class="box-body">
         
@@ -82,7 +82,8 @@ if($_SESSION["perfil"] != "Administrador"){
           </div>
 
      
-      </div>
+           </div>
+       </div>
 
     </div>
 

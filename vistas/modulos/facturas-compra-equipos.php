@@ -102,7 +102,7 @@ MODAL AGREGAR
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar Factura Compra</h4>
+          <h4 class="modal-title">Agregar Factura Compra</h4>
 
         </div>
 
@@ -239,7 +239,7 @@ MODAL EDITAR
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Agregar Factura Compra</h4>
+          <h4 class="modal-title">Editar Factura Compra</h4>
 
         </div>
 

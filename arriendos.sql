@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-03-2022 a las 13:43:58
+-- Tiempo de generación: 31-03-2022 a las 17:04:02
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -94,6 +94,7 @@ CREATE TABLE `constructoras` (
   `email_cobranza` text COLLATE utf8_spanish_ci NOT NULL,
   `forma_pago_id` int(11) NOT NULL,
   `banco` int(11) DEFAULT NULL,
+  `codigo_actividad` text COLLATE utf8_spanish_ci NOT NULL,
   `estado` int(11) NOT NULL DEFAULT 1,
   `creacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -102,10 +103,10 @@ CREATE TABLE `constructoras` (
 -- Volcado de datos para la tabla `constructoras`
 --
 
-INSERT INTO `constructoras` (`id`, `rut`, `nombre`, `direccion`, `telefono`, `contacto_cobranza`, `telefono_cobranza`, `email_cobranza`, `forma_pago_id`, `banco`, `estado`, `creacion`) VALUES
-(3, '8.349.073-K', 'CONSTRUCTORA ALFA', 'CALLE 4 ORIENTE 55', '967564098', 'LEO', '967564098', 'l.frey.g@gmail.com', 6, 0, 1, '2022-03-11 21:37:41'),
-(4, '13.663.730-4', 'CONSTRUCTORA GAMA', 'CALLE 4 ORIENTE 55', '967564098', 'DSDSDS', '985474445', 'dsdsd@gmail.com', 7, 7, 1, '2022-03-11 21:37:41'),
-(5, '13.485.480-4', 'CONSTRUCTORA BETA', 'DSDSDSD', '967564094', 'DSDSDSD', '343434343', 'ssdsdsds@gmail', 8, 11, 1, '2022-03-11 21:37:41');
+INSERT INTO `constructoras` (`id`, `rut`, `nombre`, `direccion`, `telefono`, `contacto_cobranza`, `telefono_cobranza`, `email_cobranza`, `forma_pago_id`, `banco`, `codigo_actividad`, `estado`, `creacion`) VALUES
+(3, '8.349.073-K', 'CONSTRUCTORA ALFA', 'CALLE 4 ORIENTE 55', '967564098', 'LEO', '967564098', 'l.frey.g@gmail.com', 6, 0, '410020', 1, '2022-03-11 21:37:41'),
+(4, '13.663.730-4', 'CONSTRUCTORA GAMA', 'CALLE 4 ORIENTE 55', '967564098', 'DSDSDS', '985474445', 'dsdsd@gmail.com', 7, 7, '410020', 1, '2022-03-11 21:37:41'),
+(5, '13.485.480-4', 'CONSTRUCTORA BETA', 'DSDSDSD', '967564094', 'DSDSDSD', '343434343', 'ssdsdsds@gmail', 8, 11, '410010', 1, '2022-03-11 21:37:41');
 
 -- --------------------------------------------------------
 
@@ -176,21 +177,23 @@ INSERT INTO `equipos` (`id`, `id_nombre_equipos`, `id_factura`, `codigo`, `numer
 
 CREATE TABLE `estados` (
   `id` int(11) NOT NULL,
-  `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
-  `creacion` int(11) NOT NULL DEFAULT current_timestamp()
+  `descripcion` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `estados`
 --
 
-INSERT INTO `estados` (`id`, `descripcion`, `creacion`) VALUES
-(1, 'DISPONIBLE', 2147483647),
-(2, 'EN OBRA', 2147483647),
-(3, 'SERVICIO TECNICO', 2147483647),
-(4, 'DE BAJA', 2147483647),
-(5, 'EN TRASLADO', 2147483647),
-(6, 'ROBADO', 2147483647);
+INSERT INTO `estados` (`id`, `descripcion`) VALUES
+(1, 'DISPONIBLE'),
+(2, 'EN OBRA'),
+(3, 'SERVICIO TECNICO'),
+(4, 'DE BAJA'),
+(5, 'EN TRASLADO'),
+(6, 'ROBADO'),
+(7, 'EN CONSTRUCCIÓN'),
+(8, 'PENDIENTE'),
+(9, 'FINALIZADO');
 
 -- --------------------------------------------------------
 
@@ -291,6 +294,7 @@ CREATE TABLE `nombre_equipos` (
   `precio` int(11) NOT NULL DEFAULT 0,
   `modelo` text COLLATE utf8_spanish_ci NOT NULL,
   `meses_garantia` int(11) NOT NULL,
+  `vida_util` int(11) DEFAULT NULL,
   `creacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -298,14 +302,14 @@ CREATE TABLE `nombre_equipos` (
 -- Volcado de datos para la tabla `nombre_equipos`
 --
 
-INSERT INTO `nombre_equipos` (`id`, `id_categoria`, `id_marca`, `descripcion`, `foto`, `estado`, `precio`, `modelo`, `meses_garantia`, `creacion`) VALUES
-(6, 6, 6, 'CINCELADOR 10 KGS', '', 1, 5600, 'TGH', 24, '2022-03-11 21:39:02'),
-(7, 8, 2, 'SONDA FLEXIBLE 4X5MTS', 'vistas/img/productos/7/445.jpg', 1, 1200, 'FLX', 6, '2022-03-11 21:39:02'),
-(8, 6, 3, 'CINCELADOR 10KGS AVR', '', 1, 7500, 'AVR', 24, '2022-03-11 21:39:02'),
-(11, 6, 2, 'CINCELADOR 10 KGS', '', 1, 3400, 'AVR', 24, '2022-03-11 21:39:02'),
-(15, 6, 6, 'CINCELADOR 10 KGS', '', 1, 5500, 'TGB', 24, '2022-03-11 21:39:02'),
-(16, 9, 3, 'DEMOLEDOR  7 KGS', 'vistas/img/productos/16/866.jpg', 1, 7500, 'TYU', 24, '2022-03-11 21:39:02'),
-(17, 9, 3, 'DEMOLEDOR 10 KGS', '', 1, 8500, 'SDR', 24, '2022-03-14 14:17:08');
+INSERT INTO `nombre_equipos` (`id`, `id_categoria`, `id_marca`, `descripcion`, `foto`, `estado`, `precio`, `modelo`, `meses_garantia`, `vida_util`, `creacion`) VALUES
+(6, 6, 6, 'CINCELADOR 10 KGS', '', 1, 5600, 'TGH', 24, 50, '2022-03-11 21:39:02'),
+(7, 8, 2, 'SONDA FLEXIBLE 4X5MTS', 'vistas/img/productos/7/445.jpg', 1, 1200, 'FLX', 6, NULL, '2022-03-11 21:39:02'),
+(8, 6, 3, 'CINCELADOR 10 KGS', '', 1, 7500, 'AVR', 24, 40, '2022-03-11 21:39:02'),
+(11, 6, 2, 'CINCELADOR 10 KGS', '', 1, 3400, 'AVR', 24, 40, '2022-03-11 21:39:02'),
+(15, 6, 6, 'CINCELADOR 10 KGS', '', 1, 5500, 'TGB', 24, 40, '2022-03-11 21:39:02'),
+(16, 9, 3, 'DEMOLEDOR  7 KGS', 'vistas/img/productos/16/866.jpg', 1, 7500, 'TYU', 24, NULL, '2022-03-11 21:39:02'),
+(17, 9, 3, 'DEMOLEDOR 10 KGS', '', 1, 8500, 'SDR', 24, NULL, '2022-03-14 14:17:08');
 
 -- --------------------------------------------------------
 
@@ -342,6 +346,53 @@ INSERT INTO `obras` (`id`, `id_constructoras`, `nombre`, `contacto`, `direccion`
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `pedido_equipo`
+--
+
+CREATE TABLE `pedido_equipo` (
+  `id` int(11) NOT NULL,
+  `id_constructoras` int(11) NOT NULL,
+  `id_obras` int(11) NOT NULL,
+  `id_sucursal` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `estado` int(11) NOT NULL DEFAULT 7,
+  `compartido` int(11) NOT NULL DEFAULT 0,
+  `documento` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `orden_compra` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `creado` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pedido_equipo`
+--
+
+INSERT INTO `pedido_equipo` (`id`, `id_constructoras`, `id_obras`, `id_sucursal`, `id_usuario`, `estado`, `compartido`, `documento`, `orden_compra`, `creado`) VALUES
+(1, 3, 5, 1, 1, 7, 0, 'vistas/img/PedidoEquipos/1.pdf', '', '2022-03-31 01:13:14'),
+(2, 3, 7, 1, 1, 7, 0, 'vistas/img/PedidoEquipos/2.pdf', '985214', '2022-03-31 01:13:29'),
+(3, 3, 6, 1, 1, 7, 0, '', '65211', '2022-03-31 04:33:06'),
+(4, 4, 8, 1, 1, 7, 0, 'vistas/img/PedidoEquipos/4.pdf', '', '2022-03-31 05:06:32'),
+(5, 3, 9, 1, 1, 7, 0, NULL, '', '2022-03-31 05:13:56');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pedido_equipo_detalle`
+--
+
+CREATE TABLE `pedido_equipo_detalle` (
+  `id` int(11) NOT NULL,
+  `id_pedido_equipo` int(11) NOT NULL,
+  `id_nombre_equipo` int(11) NOT NULL,
+  `cantidad_solicita` int(11) NOT NULL,
+  `observaciones` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `id_guia_despacho` int(11) DEFAULT NULL,
+  `cantidad_guia` int(11) DEFAULT NULL,
+  `fecha_entrega` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `precios_clientes`
 --
 
@@ -354,32 +405,6 @@ CREATE TABLE `precios_clientes` (
   `creado` timestamp NOT NULL DEFAULT current_timestamp(),
   `usuario` text COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `precios_clientes`
---
-
-INSERT INTO `precios_clientes` (`id`, `id_constructoras`, `id_obras`, `id_nombre_equipos`, `precio`, `creado`, `usuario`) VALUES
-(55, 3, 3, 6, 4500, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(56, 3, 3, 11, 3100, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(57, 3, 3, 15, 5000, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(58, 3, 3, 17, 8000, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(59, 3, 3, 7, 1000, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(60, 3, 6, 6, 4500, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(61, 3, 6, 11, 3100, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(62, 3, 6, 15, 5000, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(63, 3, 6, 17, 8000, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(64, 3, 6, 7, 1000, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(65, 3, 9, 6, 4500, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(66, 3, 9, 11, 3100, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(67, 3, 9, 15, 5000, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(68, 3, 9, 17, 8000, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(69, 3, 9, 7, 1000, '2022-03-21 21:08:45', 'LEONARDO FREY'),
-(75, 3, 7, 6, 4500, '2022-03-21 21:10:12', 'LEONARDO FREY'),
-(76, 3, 7, 11, 3100, '2022-03-21 21:10:12', 'LEONARDO FREY'),
-(77, 3, 7, 15, 5000, '2022-03-21 21:10:12', 'LEONARDO FREY'),
-(78, 3, 7, 17, 8000, '2022-03-21 21:10:12', 'LEONARDO FREY'),
-(79, 3, 7, 7, 1000, '2022-03-21 21:10:12', 'LEONARDO FREY');
 
 -- --------------------------------------------------------
 
@@ -494,7 +519,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `id_sucursal`, `creacion`) VALUES
-(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-03-21 18:05:05', '2022-03-21 21:05:05', 1, '2022-03-11 21:40:11'),
+(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-03-31 02:40:38', '2022-03-31 05:40:38', 1, '2022-03-11 21:40:11'),
 (2, 'CRISTIAN VALLEJOS', 'cvallejos', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 2, 'vistas/img/usuarios/cvallejos/678.jpg', 1, '2022-02-23 18:16:46', '2022-03-03 13:35:00', 1, '2022-03-11 21:40:11');
 
 --
@@ -559,6 +584,18 @@ ALTER TABLE `nombre_equipos`
 -- Indices de la tabla `obras`
 --
 ALTER TABLE `obras`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `pedido_equipo`
+--
+ALTER TABLE `pedido_equipo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `pedido_equipo_detalle`
+--
+ALTER TABLE `pedido_equipo_detalle`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -629,7 +666,7 @@ ALTER TABLE `equipos`
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas_compra_equipos`
@@ -653,7 +690,7 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de la tabla `nombre_equipos`
 --
 ALTER TABLE `nombre_equipos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `obras`
@@ -662,10 +699,22 @@ ALTER TABLE `obras`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT de la tabla `pedido_equipo`
+--
+ALTER TABLE `pedido_equipo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `pedido_equipo_detalle`
+--
+ALTER TABLE `pedido_equipo_detalle`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `precios_clientes`
 --
 ALTER TABLE `precios_clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`

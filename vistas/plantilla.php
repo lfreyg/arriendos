@@ -150,6 +150,10 @@ CUERPO DOCUMENTO
     //OFICINA CENTRAL
     define("CENTRAL",1);
 
+    //ESTADO PEDIDOS
+    define("PENDIENTE",7);
+    define("FINALIZADO",8);
+
 
     /*=============================================
     CONTENIDO
@@ -172,9 +176,9 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "factura-detalles" || 
          $_GET["ruta"] == "carga-masiva-precios" || 
          $_GET["ruta"] == "descargar-listado-precios-nuevos" || 
-         $_GET["ruta"] == "escribe" ||    
-                
+         $_GET["ruta"] == "pedido-equipos" ||
 
+         
          $_GET["ruta"] == "salir"){
 
         include "modulos/".$_GET["ruta"].".php";
