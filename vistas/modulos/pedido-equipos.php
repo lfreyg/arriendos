@@ -405,8 +405,8 @@ MODAL EDITAR
 
 <?php
 
-  $eliminarProducto = new ControladorFacturasCompra();
-  $eliminarProducto -> ctrEliminarFacturaCompra();
+  $eliminarProducto = new ControladorPedidoEquipo();
+  $eliminarProducto -> ctrEliminarPedidoEquipo();
 
 ?>      
 

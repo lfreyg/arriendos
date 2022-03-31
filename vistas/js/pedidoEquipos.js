@@ -58,24 +58,24 @@ $('#btnNuevoPedido').click(function() {
 ELIMINAR 
 =============================================*/
 
-$(".tablaPedido tbody").on("click", "button.btnEliminarFacturaCompra", function(){
+$(".tablaPedido tbody").on("click", "button.btnEliminarPedidoEquipo", function(){
 
-	var idFactura = $(this).attr("idFactura");
+	var idPedido = $(this).attr("idPedido");
 
 	swal({
 
-		title: '¿Está seguro de borrar Factura Compra?',
+		title: '¿Está seguro de borrar el Pedido de Equipos?',
 		text: "¡Si no lo está puede cancelar la accíón!",
 		type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, borrar factura!'
+        confirmButtonText: 'Si, borrar Pedido!'
         }).then(function(result) {
         if (result.value) {
 
-        	window.location = "index.php?ruta=facturas-compra-equipos&idFactura="+idFactura;
+        	window.location = "index.php?ruta=pedido-equipos&idPedido="+idPedido;
 
         }
 
@@ -86,11 +86,11 @@ $(".tablaPedido tbody").on("click", "button.btnEliminarFacturaCompra", function(
 	
 
 
-$(".tablaPedido tbody").on("click", "button.btnDetalleFactura", function(){
+$(".tablaPedido tbody").on("click", "button.btnDetallePedidoEquipo", function(){
 
-	var idFactura = $(this).attr("idFactura");
+	var idPedido = $(this).attr("idPedido");
 
-	window.location = "index.php?ruta=factura-detalles&idFactura="+idFactura;
+	window.location = "index.php?ruta=pedido-equipos-detalle&idPedido="+idPedido;
 
 })
 

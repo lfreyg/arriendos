@@ -24,6 +24,22 @@ class ModeloPedidoEquipo{
 
 	}
 
+	static public function mdlMostrarPedidoEquipoDetalle($id){
+
+		
+			
+			$stmt = Conexion::conectar()->prepare("SELECT pe.id as numero, c.nombre as constructora, o.nombre as obra, s.nombre as sucursal, u.nombre as usuario, e.descripcion as estado, pe.compartido as compartido, pe.documento as documento, pe.creado as creado, pe.orden_compra as oc FROM pedido_equipo pe join constructoras c on pe.id_constructoras = c.id join obras o on pe.id_obras = o.id join sucursales s on pe.id_sucursal = s.id join usuarios u on pe.id_usuario = u.id join estados e on pe.estado = e.id WHERE pe.id = $id");
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();		
+
+		    $stmt -> close();
+
+		    $stmt = null;
+
+	}
+
 	static public function mdlMostrarPedidoEquipoUnico($id){
 
 		
@@ -119,7 +135,7 @@ class ModeloPedidoEquipo{
 	BORRAR 
 	=============================================*/
 
-	static public function mdlEliminarFacturasCompra($tabla, $datos){
+	static public function mdlEliminarPedidoEquipo($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
@@ -127,7 +143,7 @@ class ModeloPedidoEquipo{
 
 		if($stmt -> execute()){
 
-			$stmt2 = Conexion::conectar()->prepare("DELETE FROM equipos WHERE id_factura = :id");
+			$stmt2 = Conexion::conectar()->prepare("DELETE FROM pedido_equipo_detalle WHERE id_pedido_equipo = :id");
 			$stmt2 -> bindParam(":id", $datos, PDO::PARAM_INT);
 			$stmt2 -> execute();
 
@@ -146,41 +162,21 @@ class ModeloPedidoEquipo{
 
 	}
 
-	
+	static public function mdlValidaEquipoPedido($valor){
 
+		
 
-	
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM pedido_equipo_detalle WHERE cantidad_guia > 0 and id_pedido_equipo = $valor");
 
-	static public function mdlFacturaPorId($tabla, $datos){
-
-		$stmt = Conexion::conectar()->prepare("select * FROM $tabla WHERE id = :id");
-
-		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);		
-
-		$stmt -> execute();
-
-		return $stmt -> fetch();
-
-		$stmt -> close();
-
-		$stmt = null;
-
-	}
-
-
-	static public function mdlSumaTotalFacturaCompra($anio){
-
-		    $anno = $anio;
-
-			$stmt = Conexion::conectar()->prepare("SELECT sum(e.precio_compra) as total FROM equipos e join facturas_compra_equipos fce on e.id_factura = fce.id where year(fce.fecha_factura) = $anno");	
 			
-
 			$stmt -> execute();
-   		    return $stmt -> fetch();
+   		    return $stmt -> fetchAll();
 		    $stmt -> close();
 		    $stmt = null;
 
 	}
+
+		
 
 
 }

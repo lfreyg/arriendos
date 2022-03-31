@@ -61,7 +61,7 @@ class ControladorPedidoEquipo{
 					$_SESSION['idPedidoEquipo'] = $respuesta["id"];
 
 					echo'<script>		
-                                     window.location = "pedido-equipos";
+                                     window.location = "pedido-equipos-detalle";
 										
 
 						</script>';
@@ -134,15 +134,15 @@ class ControladorPedidoEquipo{
 	/*=============================================
 	BORRAR 
 	=============================================*/
-	static public function ctrEliminarFacturaCompra(){
+	static public function ctrEliminarPedidoEquipo(){
 
-		if(isset($_GET["idFactura"])){
+		if(isset($_GET["idPedido"])){
 
-			$tabla ="facturas_compra_equipos";
-			$datos = $_GET["idFactura"];
+			$tabla ="pedido_equipo";
+			$datos = $_GET["idPedido"];
 
 			
-			$respuesta = ModeloFacturasCompra::mdlEliminarFacturasCompra($tabla, $datos);
+			$respuesta = ModeloPedidoEquipo::mdlEliminarPedidoEquipo($tabla, $datos);
 
 			if($respuesta == "ok"){
 
@@ -150,13 +150,13 @@ class ControladorPedidoEquipo{
 
 				swal({
 					  type: "success",
-					  title: "Factura de compra ha sido borrado correctamente",
+					  title: "Pedido ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "facturas-compra-equipos";
+								window.location = "pedido-equipos";
 
 								}
 							})

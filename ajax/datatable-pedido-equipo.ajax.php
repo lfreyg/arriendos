@@ -42,6 +42,14 @@ class TablaPedidoEquipo{
 		  	$dateReg = date_create($pedidoEquipos[$i]["creado"]);
 		  	$fechaReg = date_format($dateReg,"d-M-Y H:i:s");
 
+		  	$valida = ModeloPedidoEquipo::mdlValidaEquipoPedido($pedidoEquipos[$i]["numero"]);
+
+		  	if($valida == true){
+		  		$disable = 'disabled';
+		  	}else{
+		  		$disable = '';
+		  	}
+
 		  	            	  	
 
 		  	/*=============================================
@@ -50,7 +58,7 @@ class TablaPedidoEquipo{
 
   			
 
-  				 $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarPedidoEquipo' idPedido='".$pedidoEquipos[$i]["numero"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarPedidoEquipo' idPedido='".$pedidoEquipos[$i]["numero"]."'><i class='fa fa-times'></i></button><button class='btn btn-info btnDetallePedidoEquipo' title='Detalle' idPedido='".$pedidoEquipos[$i]["numero"]."'><i class='fa fa-th'></i></button></div>";
+  				 $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarPedidoEquipo' idPedido='".$pedidoEquipos[$i]["numero"]."'><i class='fa fa-pencil'></i></button><button ".$disable." class='btn btn-danger btnEliminarPedidoEquipo' idPedido='".$pedidoEquipos[$i]["numero"]."'><i class='fa fa-times'></i></button><button class='btn btn-info btnDetallePedidoEquipo' title='Detalle' idPedido='".$pedidoEquipos[$i]["numero"]."'><i class='fa fa-th'></i></button></div>";
 
   				  			           
 		 

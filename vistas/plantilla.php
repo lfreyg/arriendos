@@ -177,6 +177,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "carga-masiva-precios" || 
          $_GET["ruta"] == "descargar-listado-precios-nuevos" || 
          $_GET["ruta"] == "pedido-equipos" ||
+         $_GET["ruta"] == "pedido-equipos-detalle" ||
 
          
          $_GET["ruta"] == "salir"){
