@@ -17,12 +17,12 @@ class ControladorUsuarios{
 				$tabla = "usuarios";
 
 				$item = "usuario";
-				$valor = $_POST["ingUsuario"];
+				$valor = strtolower($_POST["ingUsuario"]);
 
 				$respuesta = ModeloUsuarios::MdlMostrarUsuarios($tabla, $item, $valor);
 
 
-				if(is_array($respuesta) && $respuesta["usuario"] == $_POST["ingUsuario"] && $respuesta["password"] == $encriptar){
+				if(is_array($respuesta) && $respuesta["usuario"] == strtolower($_POST["ingUsuario"]) && $respuesta["password"] == $encriptar){
 
 					if($respuesta["estado"] == 1){
 

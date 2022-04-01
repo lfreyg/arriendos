@@ -46,7 +46,7 @@ class ModeloUsuarios{
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, usuario, password, perfil, foto, id_sucursal) VALUES (:nombre, :usuario, :password, :perfil, :foto, :id_sucursal)");
 
 		$stmt->bindParam(":nombre", strtoupper($datos["nombre"]), PDO::PARAM_STR);
-		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", strtolower($datos["usuario"]), PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
 		$stmt->bindParam(":perfil", $datos["perfil"], PDO::PARAM_STR);
 		$stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
@@ -80,7 +80,7 @@ class ModeloUsuarios{
 		$stmt -> bindParam(":password", $datos["password"], PDO::PARAM_STR);
 		$stmt -> bindParam(":perfil", $datos["perfil"], PDO::PARAM_STR);
 		$stmt -> bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
-		$stmt -> bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+		$stmt -> bindParam(":usuario", strtolower($datos["usuario"]), PDO::PARAM_STR);
 		$stmt -> bindParam(":id_sucursal", $datos["idSucursal"], PDO::PARAM_STR);
 
 		if($stmt -> execute()){
