@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-04-2022 a las 00:56:29
+-- Tiempo de generación: 08-04-2022 a las 15:00:48
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -167,7 +167,8 @@ INSERT INTO `equipos` (`id`, `id_nombre_equipos`, `id_factura`, `codigo`, `numer
 (58, 8, 13, '65844', '65844', 98500, 0, 1, '2022-03-15 23:05:12', '2022-03-15 23:05:12', 1),
 (59, 15, 11, '65211', '65214', 69800, 0, 1, '2022-03-16 22:28:03', '2022-03-16 22:28:03', 1),
 (60, 6, 16, '85474', '25412', 63254, 0, 1, '2022-03-16 22:53:15', '2022-03-16 22:53:15', 1),
-(61, 6, 16, '32100', '32100', 65200, 0, 1, '2022-03-21 15:47:23', '2022-03-21 15:47:23', 1);
+(61, 6, 16, '32100', '32100', 65200, 0, 1, '2022-03-21 15:47:23', '2022-03-21 15:47:23', 1),
+(62, 8, 15, '6528744L', '5212', 63200, 0, 1, '2022-04-08 01:33:45', '2022-04-08 01:33:45', 1);
 
 -- --------------------------------------------------------
 
@@ -193,7 +194,9 @@ INSERT INTO `estados` (`id`, `descripcion`) VALUES
 (6, 'ROBADO'),
 (7, 'EN CONSTRUCCIÓN'),
 (8, 'PENDIENTE'),
-(9, 'FINALIZADO');
+(9, 'FINALIZADO'),
+(10, 'ARRIENDO'),
+(11, 'CAMBIO');
 
 -- --------------------------------------------------------
 
@@ -367,10 +370,10 @@ CREATE TABLE `pedido_equipo` (
 --
 
 INSERT INTO `pedido_equipo` (`id`, `id_constructoras`, `id_obras`, `id_sucursal`, `id_usuario`, `estado`, `compartido`, `documento`, `orden_compra`, `creado`) VALUES
-(1, 3, 5, 1, 1, 7, 0, 'vistas/img/PedidoEquipos/1.pdf', '', '2022-03-31 01:13:14'),
-(3, 3, 6, 1, 1, 7, 0, '', '65211', '2022-03-31 04:33:06'),
-(4, 4, 8, 1, 1, 7, 0, 'vistas/img/PedidoEquipos/4.pdf', '', '2022-03-31 05:06:32'),
-(6, 5, 10, 1, 1, 7, 0, NULL, '', '2022-03-31 20:34:04');
+(1, 3, 5, 1, 1, 8, 0, 'vistas/img/PedidoEquipos/1.pdf', '', '2022-03-31 01:13:14'),
+(3, 3, 6, 1, 1, 8, 0, '', '65211', '2022-03-31 04:33:06'),
+(4, 4, 8, 1, 1, 8, 0, 'vistas/img/PedidoEquipos/4.pdf', '', '2022-03-31 05:06:32'),
+(6, 5, 10, 1, 1, 8, 0, NULL, '', '2022-03-31 20:34:04');
 
 -- --------------------------------------------------------
 
@@ -384,10 +387,24 @@ CREATE TABLE `pedido_equipo_detalle` (
   `id_nombre_equipo` int(11) NOT NULL,
   `cantidad_solicita` int(11) NOT NULL,
   `observaciones` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `tipo` int(11) NOT NULL,
   `id_guia_despacho` int(11) DEFAULT NULL,
   `cantidad_guia` int(11) DEFAULT NULL,
   `fecha_entrega` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pedido_equipo_detalle`
+--
+
+INSERT INTO `pedido_equipo_detalle` (`id`, `id_pedido_equipo`, `id_nombre_equipo`, `cantidad_solicita`, `observaciones`, `tipo`, `id_guia_despacho`, `cantidad_guia`, `fecha_entrega`) VALUES
+(28, 1, 16, 0, '', 10, NULL, NULL, NULL),
+(30, 1, 16, 0, '', 10, NULL, NULL, NULL),
+(31, 1, 17, 0, '', 11, NULL, NULL, NULL),
+(32, 3, 7, 0, '', 11, NULL, NULL, NULL),
+(33, 6, 16, 0, 'con mango y discos', 10, NULL, 1, NULL),
+(34, 6, 16, 0, 'con botones', 10, NULL, NULL, NULL),
+(35, 6, 6, 0, '', 10, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -518,8 +535,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `id_sucursal`, `creacion`) VALUES
-(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-03-31 17:33:50', '2022-03-31 20:33:50', 1, '2022-03-11 21:40:11'),
-(2, 'CRISTIAN VALLEJOS', 'cvallejos', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 2, 'vistas/img/usuarios/cvallejos/678.jpg', 1, '2022-02-23 18:16:46', '2022-03-03 13:35:00', 1, '2022-03-11 21:40:11');
+(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-04-08 00:01:04', '2022-04-08 04:01:04', 1, '2022-03-11 21:40:11'),
+(2, 'CRISTIAN VALLEJOS', 'cvallejos', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 2, 'vistas/img/usuarios/cvallejos/678.jpg', 1, '2022-02-23 18:16:46', '2022-03-03 13:35:00', 1, '2022-03-11 21:40:11'),
+(3, 'BASTIAN FREY', 'bfrey', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 1, '', 1, '2022-04-01 19:28:06', '2022-04-01 22:28:06', 1, '2022-04-01 22:21:17');
 
 --
 -- Índices para tablas volcadas
@@ -659,13 +677,13 @@ ALTER TABLE `constructoras`
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas_compra_equipos`
@@ -707,7 +725,7 @@ ALTER TABLE `pedido_equipo`
 -- AUTO_INCREMENT de la tabla `pedido_equipo_detalle`
 --
 ALTER TABLE `pedido_equipo_detalle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `precios_clientes`
@@ -743,7 +761,7 @@ ALTER TABLE `tipo_cobro`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

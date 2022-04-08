@@ -368,3 +368,4 @@ MODAL EDITAR
 
 
 
+<script src="vistas/js/facturaCompra.js?v=<?php echo(rand());?>"></script>

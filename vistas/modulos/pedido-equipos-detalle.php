@@ -23,7 +23,7 @@ if($_SESSION["idPedidoEquipo"] == ''){
 
   echo '<script>
 
-    window.location = "pedido-equipos-detalle";
+    window.location = "pedido-equipos";
 
   </script>';
 
@@ -125,29 +125,35 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
                 </div>
 
                 <div class="form-group row">
-                  <div class="col-xs-3" style="padding-right:0px">
-                   <div class="form-group">
-                    <div class="form-group"> 
-                     <label>Cantidad</label>               
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="number" class="form-control" autocomplete="off" id="compraDetallePrecio" value="">                 
-                     </div>
-                   </div> 
-                </div>
-                  </div>
 
-                  <div class="col-xs-8" style="padding-right:0px">
+                   <div class="col-xs-8" style="padding-right:0px">
                      <div class="form-group">
                     <div class="form-group">   
                     <label>Detalles</label>              
                       <div class="input-group">                    
                         <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" autocomplete="off" id="compraDetalleSerie" value="">                 
+                         <input type="text" class="form-control" autocomplete="off" id="pedidoDetalle" value="">                 
                      </div>
                    </div> 
                 </div>
                   </div>
+
+                  <div class="col-xs-3" style="padding-right:0px">
+                   <div class="form-group">
+                    <div class="form-group"> 
+                     <label>Tipo</label>               
+                      <div class="input-group">                    
+                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                         <select class="form-control" id="pedidoTipo" style="width: 100%;" name="pedidoTipo" required> 
+                           <option value="<?php echo ARRIENDO?>">ARRIENDO</option>   
+                           <option value="<?php echo CAMBIO?>">CAMBIO</option>
+                         </select>            
+                     </div>
+                   </div> 
+                </div>
+                  </div>
+
+                 
 
                 </div>
 
@@ -165,12 +171,8 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
                       <div class="col-xs-11" style="padding-right:0px">
                        <div id="mostrar_tabla_detalles" align="left"></div>
                       </div>
-               </div>
+               </div>            
 
-              
-
-               
-      
               </div>
 
           </div>
@@ -313,46 +315,33 @@ MODAL EDITAR
                   </div>
                </div> 
 
-                <div class="form-group row">
-                  <div class="col-xs-3" style="padding-right:0px">
+               
+                 
                    <div class="form-group">
                     <div class="form-group"> 
-                     <label>Precio Compra</label>               
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="ion ion-social-usd"></i></span> 
-                         <input type="number" class="form-control" autocomplete="off" id="editaDetallePrecio" required>                 
-                     </div>
-                   </div> 
-                </div>
-                  </div>
-
-                  <div class="col-xs-4" style="padding-right:0px">
-                     <div class="form-group">
-                    <div class="form-group">   
-                    <label>Serie Equipo</label>              
+                     <label>Detalles</label>               
                       <div class="input-group">                    
                         <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" autocomplete="off" id="editaDetalleSerie" required>                 
+                         <input type="text" class="form-control" autocomplete="off" id="editaDetalles">
                      </div>
                    </div> 
                 </div>
-                  </div>
 
-                  <div class="col-xs-4" style="padding-right:0px">
-                     <div class="form-group">
-                    <div class="form-group">   
-                    <label>Código Equipo</label>              
+                <div class="form-group">
+                    <div class="form-group"> 
+                     <label>Tipo</label>               
                       <div class="input-group">                    
                         <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" autocomplete="off" required id="editaDetalleCodigo">                 
+                         <select class="form-control" id="pedidoTipoEdita" style="width: 100%;" name="pedidoTipoEdita" required> 
+                           <option value="<?php echo ARRIENDO?>">ARRIENDO</option>   
+                           <option value="<?php echo CAMBIO?>">CAMBIO</option>
+                         </select>            
                      </div>
                    </div> 
                 </div>
-                  </div>
-                </div>
-            
-
-  
+                                              
+              
+              
           </div>
 
         </div>

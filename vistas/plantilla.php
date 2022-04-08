@@ -151,9 +151,13 @@ CUERPO DOCUMENTO
     define("CENTRAL",1);
 
     //ESTADO PEDIDOS
-    define("PENDIENTE",7);
-    define("FINALIZADO",8);
+    define("CONSTRUCCION",7);
+    define("PENDIENTE",8);
+    define("FINALIZADO",9);
 
+    //ESTADO EQUIPO PEDIDO
+    define("ARRIENDO",10);
+    define("CAMBIO",11);
 
     /*=============================================
     CONTENIDO
@@ -222,7 +226,6 @@ CUERPO DOCUMENTO
 <script src="vistas/js/constructoras.js?v=<?php echo(rand());?>"></script>
 <script src="vistas/js/obras.js?v=<?php echo(rand());?>"></script>
 <script src="vistas/js/marcas.js?v=<?php echo(rand());?>"></script>
-<script src="vistas/js/facturaCompra.js?v=<?php echo(rand());?>"></script>
 
 
 </body>

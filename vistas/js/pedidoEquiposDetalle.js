@@ -3,8 +3,8 @@ recargaTabla();
 
 function genera_tabla_compras() {
 
-	id = $('#idFacturaCompra').val();
-
+	id = $('#idPedidoGenerado').val();
+    
 
 	datos = "id=" + id;
 
@@ -12,7 +12,7 @@ function genera_tabla_compras() {
 	$.ajax({
 
 
-		url: "ajax/tabla-equipos-comprados.ajax.php",
+		url: "ajax/tabla-equipos-pedidos.ajax.php",
 		method: "POST",
 		data: datos,
 
@@ -27,10 +27,6 @@ function genera_tabla_compras() {
 
 
 $(".tablaEquiposFactura tbody").on("click", "button.agregarEquipoArriendo", function() {
-
-	$('#compraDetallePrecio').val('');
-	$('#compraDetalleCodigo').val('');
-	$('#compraDetalleSerie').val('');
 
 
 	var idTipoEquipo = $(this).attr("idTipoEquipo");
@@ -67,17 +63,13 @@ $(".tablaEquiposFactura tbody").on("click", "button.agregarEquipoArriendo", func
 					$("#compraDetalleMarca").val(marca["descripcion"]);
 					$("#compraDetalleDescripcion").val(respuesta["descripcion"]);
 					$("#compraDetalleModelo").val(respuesta["modelo"]);
-					$("#idEquipoDetalle").val(respuesta["id"]);
-					$('#compraDetallePrecio').focus();
+					$("#idEquipoDetalle").val(respuesta["id"]);				
+					
 
 				}
 
 			})
-
-
 		}
-
-
 
 	});
 
@@ -88,82 +80,51 @@ $(".tablaEquiposFactura tbody").on("click", "button.agregarEquipoArriendo", func
 
 $('#btnAgregarDetalle').click(function() {
 
-if ($('#compraDetalleCodigo').val() != '') {
-	
-	if ($('#compraDetalleDescripcion').val() == '') {
+		
+	if ($('#idEquipoDetalle').val() == '') {
 		alertify.error("Seleccione un equipo de la lista");
 		return false;
 	}
 
-	if ($('#compraDetallePrecio').val() == '') {
-		alertify.error("Debe ingresar precio de compra");
-		$('#compraDetallePrecio').focus();
-		return false;
-	}
-
-	if ($('#compraDetalleSerie').val() == '') {
-		alertify.error("Debe ingresar Número de Serie");
-		$('#compraDetalleSerie').focus();
-		return false;
-	}
-
-	if ($('#compraDetalleCodigo').val() == '') {
-		alertify.error("Debe asignar un código al equipo");
-		$('#compraDetalleCodigo').focus();
-		return false;
-	}
-
-	
 	id_nombre_equipos = $('#idEquipoDetalle').val();
-	id_factura = $('#idFacturaCompra').val();
-	codigo = $('#compraDetalleCodigo').val();
-	numero_serie = $('#compraDetalleSerie').val();
-	precio_compra = $('#compraDetallePrecio').val();
-
+	id_pedido = $('#idPedidoGenerado').val();
+	tipo = $('#pedidoTipo').val();
+	detalle = $('#pedidoDetalle').val();
+	
 	datos = "id_nombre_equipos=" + id_nombre_equipos +
-		"&id_factura=" + id_factura +
-		"&codigo=" + codigo +
-		"&numero_serie=" + numero_serie +
-		"&precio_compra=" + precio_compra;
+		"&id_pedido=" + id_pedido +
+		"&tipo=" + tipo +
+		"&detalle=" + detalle;
 
 
 	$.ajax({
 
 		type: "POST",
-		url: "ajax/guarda-equipo-detalle-factura.ajax.php",
+		url: "ajax/guarda-equipo-detalle-pedido.ajax.php",
 		data: datos,
 
 		success: function(res) {
 
 			genera_tabla_compras();
-			alertify.success("Equipo creado con exito");
-
-			$('#compraDetalleSerie').val('');
-			$('#compraDetalleCodigo').val('');
-			$('#compraDetalleSerie').focus();
+			alertify.success("Equipo agregado al pedido");			
+			$('#pedidoTipo').val(10);
 			
-
-
+			
 		}
 	});
-}
+
 });
 
-
-
-$('#compraDetalleSerie').blur(function() {
-	//codigo = $('#compraDetalleSerie').val();
-	//$('#compraDetalleCodigo').val();
-	$('#compraDetalleCodigo').focus();
-});
 
 
 $('#seleccionaMarcaEquipo').change(function() {
 
+	$('#idEquipoDetalle').val('');
 	$('#compraDetalleMarca').val('');
 	$('#compraDetalleDescripcion').val('');
 	$('#compraDetalleModelo').val('');
-
+	$('#pedidoDetalle').val('');
+	$('#pedidoTipo').val(10);
 
 
 	var idMarca = $('#seleccionaMarcaEquipo').val();
@@ -224,46 +185,6 @@ function recargaTabla(id) {
 
 }
 
-/*=============================================
-REVISAR SI EL CODIGO YA ESTÁ REGISTRADO
-=============================================*/
-
-
-$('#compraDetalleCodigo').blur(function() {
-
-	if ($('#compraDetalleCodigo').val() != '') {
-		$(".alert").remove();
-
-		var validarCodigo = $(this).val();
-
-		var datos = new FormData();
-		datos.append("validarCodigo", validarCodigo);
-
-		$.ajax({
-			url: "ajax/equipos.ajax.php",
-			method: "POST",
-			data: datos,
-			cache: false,
-			contentType: false,
-			processData: false,
-			dataType: "json",
-			success: function(respuesta) {
-				if (respuesta) {
-
-					//$("#compraDetalleCodigo").parent().after('<div class="alert alert-warning">El código ya existe</div>');
-
-					$("#compraDetalleCodigo").val("");	
-					$("#compraDetalleCodigo").focus();				
-					alertify.error("Código de equipo ya existe");
-
-				}
-
-			}
-
-		});
-	}
-});
-
 
 
 function editar(id) {
@@ -275,7 +196,7 @@ function editar(id) {
 
 	$.ajax({
 
-		url: "ajax/equipos.ajax.php",
+		url: "ajax/equipos-pedido.ajax.php",
 		method: "POST",
 		data: datos,
 		cache: false,
@@ -283,63 +204,25 @@ function editar(id) {
 		processData: false,
 		dataType: "json",
 		success: function(equipo) {
-			var idTipoEquipo = equipo["id_nombre_equipos"];
-			var precio = equipo["precio_compra"];
-			var serie = equipo["numero_serie"];
-			var codigo = equipo["codigo"];
+            
+
+			var marca = equipo["marca"];
+			var tipoEquipo = equipo["tipo_equipo"];
+			var modelo = equipo["modelo"];
 			var id = equipo["id"];
+			var idTipo = equipo["idTipo"];
+			var detalle = equipo["detalle"];
+			
 
+			    $("#compraDetalleMarcaEdita").val(marca);
+				$("#compraDescripcionEdita").val(tipoEquipo);
+				$("#compraModeloEdita").val(modelo);
+				$("#idEquipoDetalleEdita").val(id);
+				$('#pedidoTipoEdita').val(idTipo);
+				$('#editaDetalles').val(detalle);				
+				$('#editaDetalles').focus();
 
-
-			var datos = new FormData();
-			datos.append("idTipoEquipo", idTipoEquipo);
-
-			$.ajax({
-
-				url: "ajax/tipoEquipos.ajax.php",
-				method: "POST",
-				data: datos,
-				cache: false,
-				contentType: false,
-				processData: false,
-				dataType: "json",
-				success: function(tipo) {
-					var idMarca = tipo["id_marca"];
-					var tipoEquipo = tipo["descripcion"];
-					var modelo = tipo["modelo"];
-
-
-
-					var datos = new FormData();
-					datos.append("idMarca", idMarca);
-					$.ajax({
-						url: "ajax/marcas.ajax.php",
-						method: "POST",
-						data: datos,
-						cache: false,
-						contentType: false,
-						processData: false,
-						dataType: "json",
-						success: function(marca) {
-
-							marca = marca["descripcion"];
-
-
-
-							$("#compraDetalleMarcaEdita").val(marca);
-							$("#compraDescripcionEdita").val(tipoEquipo);
-							$("#compraModeloEdita").val(modelo);
-							$("#idEquipoDetalleEdita").val(id);
-							$('#editaDetallePrecio').val(precio);
-							$('#editaDetalleSerie').val(serie);
-							$('#editaDetalleCodigo').val(codigo);
-							$('#editaDetallePrecio').focus();
-
-						}
-					})
-
-				}
-			});
+					
 
 		}
 
@@ -351,42 +234,27 @@ function editar(id) {
 }
 
 
+
+
 $('#btnGuardarEdita').click(function() {
 
-	if ($('#editaDetallePrecio').val() == '') {
-		alertify.error("Debe ingresar precio de compra");
-		$('#editaDetallePrecio').focus();
-		return;
-	}
-
-	if ($('#editaDetalleSerie').val() == '') {
-		alertify.error("Debe ingresar Número de Serie");
-		$('#editaDetalleSerie').focus();
-		return;
-	}
-
-	if ($('#editaDetalleCodigo').val() == '') {
-		alertify.error("Debe asignar un código al equipo");
-		$('#editaDetalleCodigo').focus();
-		return;
-	}
-
+	
 
 	idEquipo = $('#idEquipoDetalleEdita').val();
-	codigo = $('#editaDetalleCodigo').val();
-	numero_serie = $('#editaDetalleSerie').val();
-	precio_compra = $('#editaDetallePrecio').val();
+	tipo = $('#pedidoTipoEdita').val();
+	detalle = $('#editaDetalles').val();
+			
+				
 
 	datos = "idEquipo=" + idEquipo +
-		"&codigo=" + codigo +
-		"&numero_serie=" + numero_serie +
-		"&precio_compra=" + precio_compra;
+		"&tipo=" + tipo +		
+		"&detalle=" + detalle;
 
 
 	$.ajax({
 
 		type: "POST",
-		url: "ajax/edita-equipo-detalle-factura.ajax.php",
+		url: "ajax/edita-equipo-detalle-pedido.ajax.php",
 		data: datos,
 
 		success: function(res) {
@@ -400,7 +268,33 @@ $('#btnGuardarEdita').click(function() {
 });
 
 $('#btnFinalizarPedido').click(function() {
-	window.location = "index.php?ruta=pedido-equipos";
+	
+	id = $('#idPedidoGenerado').val();
+
+	var datos = new FormData();
+	datos.append("finalizaPedido", id);
+
+
+	$.ajax({
+		url: "ajax/equipos-pedido.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(r) {
+
+			//envia_correo();
+	       
+
+
+
+		}
+	});
+
+
+	 window.location = "index.php?ruta=pedido-equipos";
 
 });
 
@@ -419,7 +313,7 @@ function elimina_equipo(id) {
 
 
 	$.ajax({
-		url: "ajax/equipos.ajax.php",
+		url: "ajax/equipos-pedido.ajax.php",
 		method: "POST",
 		data: datos,
 		cache: false,
@@ -435,4 +329,21 @@ function elimina_equipo(id) {
 
 		}
 	});
+}
+
+function envia_correo(){
+	$.ajax({
+		url: "ajax/envia-correo.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(r) {
+
+			
+		}
+	});
+
 }
