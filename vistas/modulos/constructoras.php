@@ -12,7 +12,7 @@ if($_SESSION["perfil"] != "Administrador"){
   return;
 
 }
-session_start();
+
 $_SESSION['idConstructora'] = null;
 
 ?>

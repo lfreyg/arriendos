@@ -12,7 +12,6 @@ if($_SESSION["perfil"] != "Administrador"){
 
 }
 
-session_start();
 $_SESSION['idCategoria'] = null;
 
 ?>
