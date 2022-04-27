@@ -40,7 +40,7 @@ class TablaPedidoEquipo{
 
 		  			  			  	
 		  	$dateReg = date_create($pedidoEquipos[$i]["creado"]);
-		  	$fechaReg = date_format($dateReg,"d-M-Y H:i:s");
+		  	$fechaReg = date_format($dateReg,"d-m-Y H:i:s");
 
 		  	$valida = ModeloPedidoEquipo::mdlValidaEquipoPedido($pedidoEquipos[$i]["numero"]);
 

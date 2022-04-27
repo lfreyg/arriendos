@@ -56,10 +56,10 @@ class TablaFacturasCompra{
 		  	$proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
 
 		  	$date = date_create($facturasCompra[$i]["fecha_factura"]);
-		  	$fechaFactura = date_format($date,"d-M-Y");
+		  	$fechaFactura = date_format($date,"d-m-Y");
 
 		  	$dateReg = date_create($facturasCompra[$i]["fecha_registro"]);
-		  	$fechaReg = date_format($dateReg,"d-M-Y H:i:s");
+		  	$fechaReg = date_format($dateReg,"d-m-Y H:i:s");
 
 		  	$valida = ModeloEquipos::mdlValidaEquipoBorrar($facturasCompra[$i]["id"]);
 

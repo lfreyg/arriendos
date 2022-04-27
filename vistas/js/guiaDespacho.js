@@ -4,7 +4,7 @@ CARGAR LA TABLA DINÁMICA DE PEDIDOS
 
 $.ajax({
 
-	url: "ajax/datatable-pedido-equipo.ajax.php",
+	url: "ajax/datatable-guia-despacho.ajax.php",
 	success:function(respuesta){
 		
 
@@ -13,8 +13,8 @@ $.ajax({
 });
 
 
-$('.tablaPedido').DataTable( {
-    "ajax": "ajax/datatable-pedido-equipo.ajax.php",
+$('.tablaGuiaDespacho').DataTable( {
+    "ajax": "ajax/datatable-guia-despacho.ajax.php",
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -48,8 +48,8 @@ $('.tablaPedido').DataTable( {
 } );
 
 
-$('#btnNuevoPedido').click(function() {  
-   $('#nuevaPedidoConstructora').val("");
+$('#btnNuevaGuia').click(function() {  
+   $('#nuevaGuiaConstructora').val("");
    genera_combo_obras("");
 });
 
@@ -210,8 +210,8 @@ function genera_combo_obras(id) {
 
 		success: function(html) {	
 
-			$("#nueva_obras_combo_pedido").html("");      
-			$('#nueva_obras_combo_pedido').html(html);
+			$("#nueva_obras_combo").html("");      
+			$('#nueva_obras_combo').html(html);
 
 		}
 	});
@@ -269,10 +269,10 @@ function edita_combo_obras(id,idObra) {
 }
 
 
-$('#nuevaPedidoConstructora').change(function() {
+$('#nuevaGuiaConstructora').change(function() {
 	   
 	
-		id = $('#nuevaPedidoConstructora').val();		
+		id = $('#nuevaGuiaConstructora').val();		
 		genera_combo_obras(id);
 	
 

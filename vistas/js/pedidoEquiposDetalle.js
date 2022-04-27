@@ -285,7 +285,7 @@ $('#btnFinalizarPedido').click(function() {
 		dataType: "json",
 		success: function(r) {
 
-			//envia_correo();
+			envia_correo();
 	       
 
 

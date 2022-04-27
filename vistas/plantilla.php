@@ -182,6 +182,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "descargar-listado-precios-nuevos" || 
          $_GET["ruta"] == "pedido-equipos" ||
          $_GET["ruta"] == "pedido-equipos-detalle" ||
+         $_GET["ruta"] == "guia-despacho-arriendos" ||
 
          
          $_GET["ruta"] == "salir"){

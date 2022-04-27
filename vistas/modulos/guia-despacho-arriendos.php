@@ -12,7 +12,9 @@ if($_SESSION["perfil"] != "Administrador"){
 
 }
 
-$_SESSION['idPedidoEquipo'] = '';
+$hoy = date('Y-m-d');
+
+$_SESSION['idGuiaDespachoArriendo'] = '';
 
 ?>
 <div class="content-wrapper">
@@ -21,7 +23,7 @@ $_SESSION['idPedidoEquipo'] = '';
     
     <h1>
       
-      Pedido de equipos para obra
+      Guia de Despacho para arriendos
     
     </h1>
 
@@ -29,7 +31,7 @@ $_SESSION['idPedidoEquipo'] = '';
       
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
       
-      <li class="active">Pedido de equipos</li>
+      <li class="active">Guía despacho arriendos</li>
     
     </ol>
 
@@ -41,9 +43,9 @@ $_SESSION['idPedidoEquipo'] = '';
 
       <div class="box-header with-border">
   
-        <button class="btn btn-primary" id="btnNuevoPedido" data-toggle="modal" data-target="#modalAgregarPedido">
+        <button class="btn btn-primary" id="btnNuevaGuia" data-toggle="modal" data-target="#modalAgregarGuia">
           
-          Nuevo Pedido
+          Nueva Guía Despacho
 
         </button>
 
@@ -51,19 +53,18 @@ $_SESSION['idPedidoEquipo'] = '';
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped table-hover dt-responsive tablaPedido" width="100%">
+       <table class="table table-bordered table-striped table-hover dt-responsive tablaGuiaDespacho" width="100%">
          
         <thead style="background-color: #ccc;color: black; font-weight: bold;">
          
-         <tr>
-           
-           <th style="width:10px">#</th>           
-           <th>Constructora </th>
-           <th>Obra</th>
-           <th>Sucursal</th>           
-           <th>OC</th>   
-           <th>Documento</th>        
-           <th>Fecha Pedido</th>
+         <tr>                      
+           <th>Empresa</th>
+           <th>N° Guía</th> 
+           <th>Fecha Guía</th>          
+           <th>Constructora</th>
+           <th>Obra</th>  
+           <th>OC</th>         
+           <th>Guía Firmada</th>
            <th>Estado</th>
            <th>Acciones</th>
            
@@ -86,7 +87,7 @@ $_SESSION['idPedidoEquipo'] = '';
 MODAL AGREGAR 
 ======================================-->
 
-<div id="modalAgregarPedido" class="modal fade" role="dialog">
+<div id="modalAgregarGuia" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -102,7 +103,7 @@ MODAL AGREGAR
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Agregar Pedido</h4>
+          <h4 class="modal-title">Nueva Guía Despacho</h4>
 
         </div>
 
@@ -114,6 +115,38 @@ MODAL AGREGAR
 
           <div class="box-body">
 
+             <!-- ENTRADA PARA SELECCIONAR EMPRESA -->
+
+             <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                <select class="form-control input-lg" id="nuevaEmpresaOperativa" name="nuevaEmpresaOperativa" required>                 
+               
+
+                  <?php
+
+                  $item = null;
+                  $valor = null;
+                  $tabla = "empresas_operativas";
+
+                  $empresas = ModeloEmpresasOperativas::mdlMostrarEmpresas($tabla,$item, $valor);
+
+                  foreach ($empresas as $key => $value) {
+                    
+                    echo '<option value="'.$value["id"].'">'.$value["razon_social"].'</option>';
+                  }
+
+                  ?>
+  
+                </select>
+
+              </div>
+
+            </div>
+
             <!-- COMBO CLIENTE -->
 
             <div class="form-group">
@@ -122,7 +155,7 @@ MODAL AGREGAR
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <select class="form-control input-lg select2" id="nuevaPedidoConstructora" style="width: 100%;" name="nuevaPedidoConstructora" required>
+                <select class="form-control input-lg select2" id="nuevaGuiaConstructora" style="width: 100%;" name="nuevaGuiaConstructora" required>
                   
                   <option value="">Seleccionar Constructora</option>
 
@@ -151,44 +184,25 @@ MODAL AGREGAR
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span>                
-                   <div id="nueva_obras_combo_pedido"></div>               
+                   <div id="nueva_obras_combo"></div>               
               </div>
 
-            </div>
+            </div>      
 
-            <!-- ENTRADA PARA SELECCIONAR SUCURSAL -->
+            <!-- ENTRADA FECHA -->
 
              <div class="form-group">
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <select class="form-control input-lg" id="nuevaSucursalPedido" name="nuevaSucursalPedido" required>
-                  
-                  <option value="">Seleccionar sucursal</option>
-
-                  <?php
-
-                  $item = null;
-                  $valor = null;
-
-                  $sucursales = ControladorSucursales::ctrMostrarSucursales($item, $valor);
-
-                  foreach ($sucursales as $key => $value) {
-                    
-                    echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                  }
-
-                  ?>
-  
-                </select>
+                <input type="date" class="form-control input-lg" name="nuevoFechaGuia" value="<?php echo $hoy?>" id="nuevoFechaGuia" autocomplete="off" placeholder="Fecha" required>
 
               </div>
 
-            </div>
+            </div>             
 
-           
 
             <!-- ENTRADA ORDEN COMPRA -->
 
@@ -198,7 +212,7 @@ MODAL AGREGAR
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoPedidoOC" id="nuevoPedidoOC" autocomplete="off" placeholder="Orden Compra">
+                <input type="text" class="form-control input-lg" name="nuevoGuiaOC" id="nuevoGuiaOC" autocomplete="off" placeholder="Orden Compra">
 
               </div>
 
@@ -223,8 +237,8 @@ MODAL AGREGAR
 
         <?php
 
-          $crearPedido = new ControladorPedidoEquipo();
-          $crearPedido -> ctrCrearPedidoEquipo();
+          $crearGuia = new ControladorGuiaDespacho();
+          $crearGuia -> ctrCrearGuiaDespacho();
 
         ?>
 
@@ -303,8 +317,7 @@ MODAL EDITAR
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span>                
-                   <div id="edita_obras_combo_pedido"></div>
-                                  
+                   <div id="edita_obras_combo_pedido"></div>               
               </div>
 
             </div>
@@ -413,4 +426,4 @@ MODAL EDITAR
 
 
 
-<script src="vistas/js/pedidoEquipos.js?v=<?php echo(rand());?>"></script>
+<script src="vistas/js/guiaDespacho.js?v=<?php echo(rand());?>"></script>
