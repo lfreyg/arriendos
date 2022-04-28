@@ -61,8 +61,8 @@ $_SESSION['idGuiaDespachoArriendo'] = '';
            <th>Empresa</th>
            <th>N° Guía</th> 
            <th>Fecha Guía</th>          
-           <th>Constructora</th>
-           <th>Obra</th>  
+           <th>Cliente</th>
+           <th>Destino</th>  
            <th>OC</th>         
            <th>Guía Firmada</th>
            <th>Estado</th>
@@ -198,6 +198,7 @@ MODAL AGREGAR
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
                 <input type="date" class="form-control input-lg" name="nuevoFechaGuia" value="<?php echo $hoy?>" id="nuevoFechaGuia" autocomplete="off" placeholder="Fecha" required>
+                <input type="hidden" name="tipoGuia" value="A">
 
               </div>
 
@@ -257,7 +258,7 @@ MODAL AGREGAR
 MODAL EDITAR 
 ======================================-->
 
-<div id="modalEditarPedidoEquipo" class="modal fade" role="dialog">
+<div id="modalEditarGuiaDespacho" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -273,7 +274,7 @@ MODAL EDITAR
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar Pedido</h4>
+          <h4 class="modal-title">Editar Guía Despacho</h4>
 
         </div>
 
@@ -285,13 +286,59 @@ MODAL EDITAR
 
           <div class="box-body">
 
+             <!-- COMBO CLIENTE -->
+
              <div class="form-group">
+              
+              <div class="input-group">   
+              
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                <select class="form-control input-lg" id="editaEmpresaOperativa" name="editaEmpresaOperativa" disabled>                 
+               
+
+                  <?php
+
+                  $item = null;
+                  $valor = null;
+                  $tabla = "empresas_operativas";
+
+                  $empresas = ModeloEmpresasOperativas::mdlMostrarEmpresas($tabla,$item, $valor);
+
+                  foreach ($empresas as $key => $value) {
+                    
+                    echo '<option value="'.$value["id"].'">'.$value["razon_social"].'</option>';
+                  }
+
+                  ?>
+  
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
               
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <select class="form-control input-lg" id="editaPedidoConstructora" style="width: 100%;" name="editaPedidoConstructora" required>                 
+                <input type="text" class="form-control input-lg" name="editaNumGuia" id="editaNumGuia" autocomplete="off" disabled>
+                <input type="hidden" id="idGuiaEdita" name="idGuiaEdita">
+                <input type="hidden" id="docAnteriorGuia" name="docAnteriorGuia">
+
+              </div>
+
+            </div>  
+
+            <div class="form-group">
+              
+              <div class="input-group">  
+              
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                <select class="form-control input-lg" id="editaGuiaConstructora" style="width: 100%;" name="editaGuiaConstructora" required>                 
               
                   <?php
 
@@ -317,41 +364,25 @@ MODAL EDITAR
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span>                
-                   <div id="edita_obras_combo_pedido"></div>               
+                   <div id="edita_obras_combo"></div>               
               </div>
 
             </div>
 
-            <!-- ENTRADA PARA SELECCIONAR SUCURSAL -->
+           <!-- ENTRADA FECHA -->
 
              <div class="form-group">
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <select class="form-control input-lg" id="editaSucursalPedido" name="editaSucursalPedido" required>
-                  
-                
-                  <?php
-
-                  $item = null;
-                  $valor = null;
-
-                  $sucursales = ControladorSucursales::ctrMostrarSucursales($item, $valor);
-
-                  foreach ($sucursales as $key => $value) {
-                    
-                    echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                  }
-
-                  ?>
-  
-                </select>
+                <input type="date" class="form-control input-lg" name="editaFechaGuia" value="<?php echo $hoy?>" id="editaFechaGuia" autocomplete="off" placeholder="Fecha" required>
 
               </div>
 
-            </div>
+            </div>             
+
 
             <!-- ENTRADA ORDEN COMPRA -->
 
@@ -361,22 +392,22 @@ MODAL EDITAR
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editaPedidoOC" id="editaPedidoOC" autocomplete="off" placeholder="Orden Compra">
-                <input type="hidden" id="idPedidoEquipoEdita" name="idPedidoEquipoEdita">
-                <input type="hidden" id="docAnteriorPedido" name="docAnteriorPedido">
+                <input type="text" class="form-control input-lg" name="editaGuiaOC" id="editaGuiaOC" autocomplete="off" placeholder="Orden Compra">
 
               </div>
 
-            </div>   
+            </div>    
+
+           
 
 
             <!-- ENTRADA PARA SUBIR FOTO -->
 
              <div class="form-group">
               
-              <div class="panel">SUBIR DOCUMENTO</div>
+              <div class="panel">SUBIR GUIA FIRMADA</div>
 
-              <input type="file" name="editaPedidoDoc" id="editaPedidoDoc">
+              <input type="file" name="editaGuiaDoc" id="editaGuiaDoc">
               <p class="help-block">Peso máximo archivo 2MB</p>
 
              
@@ -402,8 +433,8 @@ MODAL EDITAR
 
         <?php
 
-          $editarPedido = new ControladorPedidoEquipo();
-          $editarPedido -> ctrEditarPedidoEquipo();
+          $editarPedido = new ControladorGuiaDespacho();
+          $editarPedido -> ctrEditarGuiaDespacho();
 
         ?>
 
@@ -419,8 +450,8 @@ MODAL EDITAR
 
 <?php
 
-  $eliminarPedido = new ControladorPedidoEquipo();
-  $eliminarPedido -> ctrEliminarPedidoEquipo();
+  $eliminarGuia = new ControladorGuiaDespacho();
+  $eliminarGuia -> ctrEliminarGuiaDEspacho();
 
 ?>      
 

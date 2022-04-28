@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-04-2022 a las 08:00:54
+-- Tiempo de generación: 28-04-2022 a las 08:02:39
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -305,6 +305,7 @@ CREATE TABLE `guia_despacho` (
   `adjunto` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `oc` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `estado_guia` int(11) NOT NULL DEFAULT 12,
+  `tipo_guia` text COLLATE utf8_spanish_ci NOT NULL,
   `creado_por` text COLLATE utf8_spanish_ci NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -313,10 +314,28 @@ CREATE TABLE `guia_despacho` (
 -- Volcado de datos para la tabla `guia_despacho`
 --
 
-INSERT INTO `guia_despacho` (`id`, `id_empresa`, `numero_guia`, `fecha_guia`, `id_constructoras`, `id_obras`, `id_sucursal`, `id_transporte_guia`, `adjunto`, `oc`, `estado_guia`, `creado_por`, `fecha_creacion`) VALUES
-(1, 1, 5200, '2022-04-27', 3, 3, 1, 0, '', '', 12, '', '2022-04-27 05:00:08'),
-(2, 1, NULL, '2022-04-27', 3, 5, 1, NULL, NULL, '', 12, 'LEONARDO FREY', '2022-04-27 05:58:26'),
-(3, 1, NULL, '2022-04-27', 5, 10, 1, NULL, NULL, '85411', 12, 'LEONARDO FREY', '2022-04-27 05:58:46');
+INSERT INTO `guia_despacho` (`id`, `id_empresa`, `numero_guia`, `fecha_guia`, `id_constructoras`, `id_obras`, `id_sucursal`, `id_transporte_guia`, `adjunto`, `oc`, `estado_guia`, `tipo_guia`, `creado_por`, `fecha_creacion`) VALUES
+(1, 1, 5200, '2022-04-28', 3, 6, 1, 0, 'vistas/img/GuiasDespacho/1.pdf', '', 14, '', '', '2022-04-27 05:00:08'),
+(3, 1, NULL, '2022-04-13', 3, 3, 1, NULL, '', '', 14, '', 'LEONARDO FREY', '2022-04-27 05:58:46'),
+(5, 1, NULL, '2022-04-28', 3, 5, 1, NULL, NULL, '', 12, 'A', 'LEONARDO FREY', '2022-04-28 04:23:22');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `guia_despacho_detalle`
+--
+
+CREATE TABLE `guia_despacho_detalle` (
+  `id` int(11) NOT NULL,
+  `id_guia` int(11) NOT NULL,
+  `id_equipo` int(11) NOT NULL,
+  `precio_arriendo` int(11) NOT NULL,
+  `fecha_arriendo` date NOT NULL,
+  `fecha_devolucion` date DEFAULT NULL,
+  `id_tipo_movimiento` int(11) NOT NULL COMMENT 'arriendo=10, cambio=11',
+  `match_cambio` int(11) DEFAULT NULL COMMENT 'id equipo por el que sale, cambio',
+  `contrato` int(11) DEFAULT NULL COMMENT 'id guia despacho cuando es cambio'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -371,7 +390,8 @@ INSERT INTO `nombre_equipos` (`id`, `id_categoria`, `id_marca`, `descripcion`, `
 (11, 6, 2, 'CINCELADOR 10 KGS', '', 1, 3400, 'AVR', 24, 40, '2022-03-11 21:39:02'),
 (15, 6, 6, 'CINCELADOR 10 KGS', '', 1, 5500, 'TGB', 24, 40, '2022-03-11 21:39:02'),
 (16, 9, 3, 'DEMOLEDOR  7 KGS', 'vistas/img/productos/16/866.jpg', 1, 7500, 'TYU', 24, NULL, '2022-03-11 21:39:02'),
-(17, 9, 3, 'DEMOLEDOR 10 KGS', '', 1, 8500, 'SDR', 24, NULL, '2022-03-14 14:17:08');
+(17, 9, 3, 'DEMOLEDOR 10 KGS', '', 1, 8500, 'SDR', 24, NULL, '2022-03-14 14:17:08'),
+(19, 9, 2, 'DEMOLEDOR 15 KILOS', '', 1, 3500, 'BYU', 24, 12, '2022-04-28 04:12:56');
 
 -- --------------------------------------------------------
 
@@ -429,9 +449,8 @@ CREATE TABLE `pedido_equipo` (
 --
 
 INSERT INTO `pedido_equipo` (`id`, `id_constructoras`, `id_obras`, `id_sucursal`, `id_usuario`, `estado`, `compartido`, `documento`, `orden_compra`, `creado`) VALUES
-(1, 3, 7, 1, 1, 8, 0, 'vistas/img/PedidoEquipos/1.pdf', '', '2022-03-31 01:13:14'),
-(3, 3, 6, 1, 1, 8, 0, '', '65211', '2022-03-31 04:33:06'),
-(4, 4, 8, 1, 1, 8, 0, 'vistas/img/PedidoEquipos/4.pdf', '', '2022-03-31 05:06:32'),
+(3, 3, 6, 1, 1, 8, 0, '', '85477', '2022-03-31 04:33:06'),
+(4, 3, 9, 1, 1, 8, 0, 'vistas/img/PedidoEquipos/4.pdf', '', '2022-03-31 05:06:32'),
 (6, 5, 10, 1, 1, 8, 0, NULL, '', '2022-03-31 20:34:04');
 
 -- --------------------------------------------------------
@@ -446,8 +465,8 @@ CREATE TABLE `pedido_equipo_detalle` (
   `id_nombre_equipo` int(11) NOT NULL,
   `cantidad_solicita` int(11) NOT NULL,
   `observaciones` text COLLATE utf8_spanish_ci DEFAULT NULL,
-  `tipo` int(11) NOT NULL,
-  `id_guia_despacho` int(11) DEFAULT NULL,
+  `tipo` int(11) NOT NULL COMMENT 'arriendo=10, cambio=11',
+  `id_guia_despacho` int(11) DEFAULT NULL COMMENT 'id guia_despacho_detalle',
   `cantidad_guia` int(11) DEFAULT NULL,
   `fecha_entrega` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -457,12 +476,11 @@ CREATE TABLE `pedido_equipo_detalle` (
 --
 
 INSERT INTO `pedido_equipo_detalle` (`id`, `id_pedido_equipo`, `id_nombre_equipo`, `cantidad_solicita`, `observaciones`, `tipo`, `id_guia_despacho`, `cantidad_guia`, `fecha_entrega`) VALUES
-(30, 1, 16, 0, '', 11, NULL, NULL, NULL),
-(31, 1, 17, 0, '', 11, NULL, NULL, NULL),
 (32, 3, 7, 0, '', 11, NULL, NULL, NULL),
 (33, 6, 16, 0, 'con mango y discos', 10, NULL, 1, NULL),
 (34, 6, 16, 0, 'con botones', 10, NULL, NULL, NULL),
-(35, 6, 6, 0, '', 10, NULL, NULL, NULL);
+(35, 6, 6, 0, '', 10, NULL, NULL, NULL),
+(36, 6, 6, 0, '', 10, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -607,7 +625,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `id_sucursal`, `creacion`) VALUES
-(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-04-27 01:48:23', '2022-04-27 05:48:23', 1, '2022-03-11 21:40:11'),
+(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-04-27 22:57:16', '2022-04-28 02:57:16', 1, '2022-03-11 21:40:11'),
 (2, 'CRISTIAN VALLEJOS', 'cvallejos', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 2, 'vistas/img/usuarios/cvallejos/678.jpg', 1, '2022-02-23 18:16:46', '2022-03-03 13:35:00', 1, '2022-03-11 21:40:11'),
 (3, 'BASTIAN FREY', 'bfrey', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 1, '', 1, '2022-04-01 19:28:06', '2022-04-01 22:28:06', 1, '2022-04-01 22:21:17'),
 (4, 'ADMINISTRADOR', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, '', 1, '0000-00-00 00:00:00', '2022-04-27 06:00:09', 1, '2022-04-27 06:00:09');
@@ -668,6 +686,12 @@ ALTER TABLE `forma_pago`
 -- Indices de la tabla `guia_despacho`
 --
 ALTER TABLE `guia_despacho`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `guia_despacho_detalle`
+--
+ALTER TABLE `guia_despacho_detalle`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -798,7 +822,13 @@ ALTER TABLE `forma_pago`
 -- AUTO_INCREMENT de la tabla `guia_despacho`
 --
 ALTER TABLE `guia_despacho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `guia_despacho_detalle`
+--
+ALTER TABLE `guia_despacho_detalle`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -810,7 +840,7 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de la tabla `nombre_equipos`
 --
 ALTER TABLE `nombre_equipos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `obras`
@@ -828,7 +858,7 @@ ALTER TABLE `pedido_equipo`
 -- AUTO_INCREMENT de la tabla `pedido_equipo_detalle`
 --
 ALTER TABLE `pedido_equipo_detalle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `precios_clientes`

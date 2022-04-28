@@ -42,9 +42,16 @@ class TablaGuiaDespacho{
 		  	$dateReg = date_create($guiaDespacho[$i]["fecha"]);
 		  	$fechaReg = date_format($dateReg,"d-m-Y");
 
-		  	
-		  		$disable = '';
-		  	
+		  	$disable_editar = "";
+            $disable_anular = "";
+            $disable_detalle = "";
+
+		  	    //ESTADO GUIA 12 = NO ENVIADA, 13 = ENVIADA A SII, 14 = NULA 
+		  		if($guiaDespacho[$i]["idestado"] == 14){
+                   $disable_editar = 'disabled';
+                   $disable_anular = 'disabled';
+                   $disable_detalle = 'disabled';
+		  		}
 
 		  	            	  	
 
@@ -54,7 +61,7 @@ class TablaGuiaDespacho{
 
   			
 
-  				 $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarPedidoEquipo' idPedido='".$guiaDespacho[$i]["id"]."'><i class='fa fa-pencil'></i></button><button ".$disable." class='btn btn-danger btnEliminarPedidoEquipo' idPedido='".$guiaDespacho[$i]["id"]."'><i class='fa fa-times'></i></button><button class='btn btn-info btnDetallePedidoEquipo' title='Detalle' idPedido='".$guiaDespacho[$i]["id"]."'><i class='fa fa-th'></i></button></div>";
+  				 $botones =  "<div class='btn-group'><button ".$disable_editar." class='btn btn-warning btnEditarGuiaDespacho' idGuia='".$guiaDespacho[$i]["id"]."'><i class='fa fa-pencil'></i></button><button ".$disable_anular." class='btn btn-success btnEliminarGuiaDespacho' idEstado ='".$guiaDespacho[$i]["idestado"]."' idGuia='".$guiaDespacho[$i]["id"]."'><i class='fa fa-times'></i></button><button ".$disable_detalle." class='btn btn-info btnDetalleGuiaDespacho' title='Detalle' idGuia='".$guiaDespacho[$i]["id"]."'><i class='fa fa-th'></i></button></div>";
 
   				  			           
 		 

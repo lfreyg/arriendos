@@ -51,6 +51,7 @@ class ControladorGuiaDespacho{
 							   "id_sucursal" => $_SESSION['idSucursalParaUsuario'],
 							   "adjunto" => $ruta,
 							   "oc" => $_POST["nuevoGuiaOC"],
+							   "tipoGuia" => $_POST["tipoGuia"],
 							   "creado_por"=>$_SESSION["nombre"]);
 
                
@@ -79,32 +80,32 @@ class ControladorGuiaDespacho{
 	EDITAR 
 	=============================================*/
 
-	static public function ctrEditarPedidoEquipo(){
+	static public function ctrEditarGuiaDespacho(){
 
-		if(isset($_POST["editaPedidoConstructora"])){
+		if(isset($_POST["editaGuiaConstructora"])){
 
 				   		
 
-			   	$ruta = $_POST['docAnteriorPedido'];	                 		
+			   	$ruta = $_POST['docAnteriorGuia'];	                 		
 
-			if(isset($_FILES['editaPedidoDoc']) && $_FILES['editaPedidoDoc']['type']=='application/pdf'){
-				  $ruta = 'vistas/img/PedidoEquipos/'.$_POST["idPedidoEquipoEdita"].".pdf";
-	               move_uploaded_file ($_FILES['editaPedidoDoc']['tmp_name'] , $ruta);
+			if(isset($_FILES['editaGuiaDoc']) && $_FILES['editaGuiaDoc']['type']=='application/pdf'){
+				  $ruta = 'vistas/img/GuiasDespacho/'.$_POST["idGuiaEdita"].".pdf";
+	               move_uploaded_file ($_FILES['editaGuiaDoc']['tmp_name'] , $ruta);
               }
 
 
-				$tabla = "pedido_equipo";
+				$tabla = "guia_despacho";
 
-				$datos = array("id_constructora" => $_POST["editaPedidoConstructora"],
-							   "id_obra" => $_POST["editaComboObras"],
-							   "id_sucursal" => $_POST["editaSucursalPedido"],
-							   "documento" => $ruta,
-							   "oc" => $_POST["editaPedidoOC"],
-							   "id" => $_POST["idPedidoEquipoEdita"]);
-							   
+				$datos = array("fecha_guia" => $_POST["editaFechaGuia"],
+					           "id_constructora" => $_POST["editaGuiaConstructora"],
+							   "id_obra" => $_POST["editaComboObras"],							   
+							   "adjunto" => $ruta,
+							   "oc" => $_POST["editaGuiaOC"],
+				               "id" => $_POST["idGuiaEdita"]);
+							  
 
 				
-				$respuesta = ModeloPedidoEquipo::mdlEditarPedidoEquipo($tabla, $datos);
+				$respuesta = ModeloGuiaDespacho::mdlEditarGuiaDespacho($tabla, $datos);
 
 				if($respuesta == "ok"){
 
@@ -112,13 +113,13 @@ class ControladorGuiaDespacho{
 
 							swal({
 						  type: "success",
-						  title: "Pedido de equipos ha sido modificada correctamente",
+						  title: "Guía de Despacho ha sido modificada correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "pedido-equipos";
+									window.location = "guia-despacho-arriendos";
 
 									}
 								})
@@ -136,15 +137,16 @@ class ControladorGuiaDespacho{
 	/*=============================================
 	BORRAR 
 	=============================================*/
-	static public function ctrEliminarPedidoEquipo(){
+	static public function ctrEliminarGuiaDEspacho(){
 
-		if(isset($_GET["idPedido"])){
-
-			$tabla ="pedido_equipo";
-			$datos = $_GET["idPedido"];
+		if(isset($_GET["idGuia"]) && isset($_GET["idEstado"])){
 
 			
-			$respuesta = ModeloPedidoEquipo::mdlEliminarPedidoEquipo($tabla, $datos);
+			$id = $_GET["idGuia"];
+			$idEstado = $_GET["idEstado"];
+
+	if($idEstado == 13)	{	
+			$respuesta = ModeloGuiaDespacho::mdlAnularGuiaDespacho($id);
 
 			if($respuesta == "ok"){
 
@@ -152,20 +154,68 @@ class ControladorGuiaDespacho{
 
 				swal({
 					  type: "success",
-					  title: "Pedido ha sido borrado correctamente",
+					  title: "Guía de despacho ha sido ANULADA correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "pedido-equipos";
+								window.location = "guia-despacho-arriendos";
 
 								}
 							})
 
 				</script>';
 
-			}		
+			}	
+
+		}
+
+		if($idEstado == 12)	{	
+			$respuesta = ModeloGuiaDespacho::mdlEliminarGuiaDespacho($id);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "Guía de despacho ha sido ELIMINADA correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "guia-despacho-arriendos";
+
+								}
+							})
+
+				</script>';
+
+			}else{
+				echo'<script>
+
+				swal({
+					  type: "error",
+					  title: "Ocurrio un error al eliminar",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "guia-despacho-arriendos";
+
+								}
+							})
+
+				</script>';
+			}	
+		}
+
+
+
+
 		}
 
 

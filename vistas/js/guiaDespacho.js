@@ -1,16 +1,6 @@
 /*=============================================
-CARGAR LA TABLA DINÁMICA DE PEDIDOS
+CARGAR LA TABLA DINÁMICA
 =============================================*/
-
-$.ajax({
-
-	url: "ajax/datatable-guia-despacho.ajax.php",
-	success:function(respuesta){
-		
-
-	}
-
-});
 
 
 $('.tablaGuiaDespacho').DataTable( {
@@ -58,29 +48,60 @@ $('#btnNuevaGuia').click(function() {
 ELIMINAR 
 =============================================*/
 
-$(".tablaPedido tbody").on("click", "button.btnEliminarPedidoEquipo", function(){
+$(".tablaGuiaDespacho tbody").on("click", "button.btnEliminarGuiaDespacho", function(){
 
-	var idPedido = $(this).attr("idPedido");
+	var idGuia = $(this).attr("idGuia");
+	var idEstado = $(this).attr("idEstado");
 
+
+  if(idEstado == 13){
 	swal({
 
-		title: '¿Está seguro de borrar el Pedido de Equipos?',
+		title: '¿Está seguro de ANULAR la Guía de despacho?',
 		text: "¡Si no lo está puede cancelar la accíón!",
 		type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, borrar Pedido!'
+        confirmButtonText: 'Si, ANULAR Guía de Despacho!'
         }).then(function(result) {
-        if (result.value) {
+        if (result.value) {        
 
-        	window.location = "index.php?ruta=pedido-equipos&idPedido="+idPedido;
+        	window.location = "index.php?ruta=guia-despacho-arriendos&idGuia="+idGuia+"&idEstado="+idEstado;
 
         }
 
 
 	})
+ }
+
+
+ if(idEstado == 12){
+	swal({
+
+		title: '¿Está seguro de ELIMINAR la Guía de despacho sin enviar a SII?',
+		text: "¡Si no lo está puede cancelar la accíón!",
+		type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, ELIMINAR Guía de Despacho!'
+        }).then(function(result) {
+        if (result.value) {
+
+        	window.location = "index.php?ruta=guia-despacho-arriendos&idGuia="+idGuia+"&idEstado="+idEstado;
+
+        }
+
+
+	})
+ }
+
+
+
+
 
 })
 	
@@ -97,15 +118,15 @@ $(".tablaPedido tbody").on("click", "button.btnDetallePedidoEquipo", function(){
 /*=============================================
 EDITAR 
 =============================================*/
-$(".tablaPedido tbody").on("click", "button.btnEditarPedidoEquipo", function(){
+$(".tablaGuiaDespacho tbody").on("click", "button.btnEditarGuiaDespacho", function(){
 
-	var idPedido = $(this).attr("idPedido");
+	var idGuia = $(this).attr("idGuia");
 
 	var datos = new FormData();
-	datos.append("idPedido", idPedido);
+	datos.append("idGuia", idGuia);
 
 	$.ajax({
-	    url:"ajax/pedido-equipo.ajax.php",
+	    url:"ajax/guia-despacho.ajax.php",
 	    method:"POST",
 	    data: datos,
 	    cache: false,
@@ -114,17 +135,22 @@ $(".tablaPedido tbody").on("click", "button.btnEditarPedidoEquipo", function(){
 	    dataType: "json",
 	    success:function(respuesta){
 
-     		$("#editaPedidoConstructora").val(respuesta["id_constructoras"]);
-     		$("#editaSucursalPedido").val(respuesta["id_sucursal"]);
-     		$("#editaPedidoOC").val(respuesta["orden_compra"]);
-     		$("#idPedidoEquipoEdita").val(respuesta["id"]); 
-     		$("#docAnteriorPedido").val(respuesta["documento"]); 
+     		
+         $("#editaEmpresaOperativa").val(respuesta["id_empresa"]);
+         $("#editaNumGuia").val(respuesta["numero_guia"]);
+         $("#idGuiaEdita").val(respuesta["id"]); 
+         $("#docAnteriorGuia").val(respuesta["adjunto"]);
+     		$("#editaGuiaConstructora").val(respuesta["id_constructoras"]); 
+     		$("#editaFechaGuia").val(respuesta["fecha_guia"]); 
+     		$("#editaGuiaOC").val(respuesta["oc"]);
+     		
+     		 
             edita_combo_obras(respuesta["id_constructoras"],respuesta["id_obras"]);
          
             
 
 
-     		$("#modalEditarPedidoEquipo").modal("show"); 
+     		$("#modalEditarGuiaDespacho").modal("show"); 
      		   		
 
      	}
@@ -136,13 +162,13 @@ $(".tablaPedido tbody").on("click", "button.btnEditarPedidoEquipo", function(){
 
 
 
-$("#nuevoPedidoDoc").change(function(){
+$("#editaGuiaDoc").change(function(){
 
 	var imagen = this.files[0];
 	
  if(imagen["type"] != "application/pdf"){
 
-  		$("#nuevoPedidoDoc").val("");
+  		$("#editaGuiaDoc").val("");
 
   		 swal({
 		      title: "Error al adjuntar",
@@ -152,7 +178,7 @@ $("#nuevoPedidoDoc").change(function(){
 		    });
   }else if(imagen["size"] > 2000000){
 
-  		$("#nuevoPedidoDoc").val("");
+  		$("#editaGuiaDoc").val("");
 
   		 swal({
 		      title: "Error al adjuntar",
@@ -164,33 +190,6 @@ $("#nuevoPedidoDoc").change(function(){
   	}
 })	 
 
-$("#editarArchivoPdf").change(function(){
-
-	var imagen = this.files[0];
-		
-	if(imagen["type"] != "application/pdf"){
-
-  		$("#editarArchivoPdf").val("");
-
-  		 swal({
-		      title: "Error al adjuntar",
-		      text: "¡El adjunto debe estar en formato PDF!",
-		      type: "error",
-		      confirmButtonText: "¡Cerrar!"
-		    });
-  }else if(imagen["size"] > 2000000){
-
-  		$("#editarArchivoPdf").val("");
-
-  		 swal({
-		      title: "Error al adjuntar",
-		      text: "¡El adjunto no debe pesar más de 2MB!",
-		      type: "error",
-		      confirmButtonText: "¡Cerrar!"
-		    });
-
-  	}
-});	 
 
 function genera_combo_obras(id) {
 
@@ -236,7 +235,7 @@ function genera_edita_combo_obras(id) {
 
 		success: function(html) {	
 
-			$('#edita_obras_combo_pedido').html(html);
+			$('#edita_obras_combo').html(html);
 
 		}
 	});
@@ -262,7 +261,7 @@ function edita_combo_obras(id,idObra) {
 
 		success: function(html) {	
 		   
-			$('#edita_obras_combo_pedido').html(html);
+			$('#edita_obras_combo').html(html);
 
 		}
 	});
@@ -278,9 +277,9 @@ $('#nuevaGuiaConstructora').change(function() {
 
 	});
 
-$('#editaPedidoConstructora').change(function() {	   
+$('#editaGuiaConstructora').change(function() {	   
 	
-		id = $('#editaPedidoConstructora').val();		
+		id = $('#editaGuiaConstructora').val();		
 		genera_edita_combo_obras(id);
 	
 

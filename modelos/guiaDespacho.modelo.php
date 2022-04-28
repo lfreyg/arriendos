@@ -44,7 +44,7 @@ class ModeloGuiaDespacho{
 
 		
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM pedido_equipo WHERE id = $id");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho WHERE id = $id");
 
 		   $stmt -> execute();
 
@@ -56,17 +56,7 @@ class ModeloGuiaDespacho{
 
 	}
 
-	static public function mdlValidaExisteFacturaCompra($tabla, $datos){
-
-		$id_proveedor = $datos["id_proveedor"];
-		$factura = $datos["numero_factura"];
-
-		$sql = Conexion::conectar()->prepare("SELECT * FROM facturas_compra_equipos where id_proveedor = $id_proveedor and numero_factura = $factura");
-        
-        $sql -> execute();
-		return $sql -> fetch();
-        
-    }
+	
 
 	/*=============================================
 	REGISTRO 
@@ -74,7 +64,7 @@ class ModeloGuiaDespacho{
 	static public function mdlIngresarGuiaDespacho($tabla, $datos){
 
 		
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_empresa, fecha_guia, id_constructoras, id_obras, id_sucursal, adjunto, oc, creado_por) VALUES (:id_empresa,:fecha_guia,:id_constructora, :id_obra, :id_sucursal, :adjunto, :oc, :creado_por)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_empresa, fecha_guia, id_constructoras, id_obras, id_sucursal, adjunto, oc, creado_por, tipo_guia) VALUES (:id_empresa,:fecha_guia,:id_constructora, :id_obra, :id_sucursal, :adjunto, :oc, :creado_por, :tipoGuia)");
 
 		$stmt->bindParam(":id_empresa", $datos["id_empresa"], PDO::PARAM_INT);
 		$stmt->bindParam(":fecha_guia", $datos["fecha_guia"], PDO::PARAM_STR);
@@ -84,6 +74,7 @@ class ModeloGuiaDespacho{
 		$stmt->bindParam(":adjunto", $datos["adjunto"], PDO::PARAM_STR);
 		$stmt->bindParam(":oc", $datos["oc"], PDO::PARAM_STR);		
 		$stmt->bindParam(":creado_por", $datos["creado_por"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipoGuia", $datos["tipoGuia"], PDO::PARAM_STR);
 		
 		
 		if($stmt->execute()){
@@ -104,17 +95,16 @@ class ModeloGuiaDespacho{
 
 	}
 
-	/*=============================================
-	EDITAR 
-	=============================================*/
+	
+
 	static public function mdlEditarGuiaDespacho($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_constructoras = :id_constructora, id_obras = :id_obra, id_sucursal = :id_sucursal, documento = :documento, orden_compra =:oc where id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET fecha_guia = :fecha_guia, id_constructoras = :id_constructora, id_obras = :id_obra, adjunto = :adjunto, oc =:oc where id = :id");
 
+		$stmt->bindParam(":fecha_guia", $datos["fecha_guia"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_constructora", $datos["id_constructora"], PDO::PARAM_INT);
-		$stmt->bindParam(":id_obra", $datos["id_obra"], PDO::PARAM_INT);
-		$stmt->bindParam(":id_sucursal", $datos["id_sucursal"], PDO::PARAM_INT);			
-		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_obra", $datos["id_obra"], PDO::PARAM_INT);					
+		$stmt->bindParam(":adjunto", $datos["adjunto"], PDO::PARAM_STR);
 		$stmt->bindParam(":oc", $datos["oc"], PDO::PARAM_STR);
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 		
@@ -138,17 +128,48 @@ class ModeloGuiaDespacho{
 	BORRAR 
 	=============================================*/
 
-	static public function mdlEliminarGuiaDespacho($tabla, $datos){
+	static public function mdlEliminarGuiaDespacho($id){
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
-
-		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
-
+		$stmt = Conexion::conectar()->prepare("DELETE FROM guia_despacho WHERE id = $id");
+		
 		if($stmt -> execute()){
-
+           
+           /*
 			$stmt2 = Conexion::conectar()->prepare("DELETE FROM pedido_equipo_detalle WHERE id_pedido_equipo = :id");
 			$stmt2 -> bindParam(":id", $datos, PDO::PARAM_INT);
 			$stmt2 -> execute();
+			*/
+
+			   return "ok";
+			
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	ANULAR 
+	=============================================*/
+
+	static public function mdlAnularGuiaDespacho($id){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho SET estado_guia = 14 WHERE id = $id");
+		
+		if($stmt -> execute()){
+           
+           /*
+			$stmt2 = Conexion::conectar()->prepare("DELETE FROM pedido_equipo_detalle WHERE id_pedido_equipo = :id");
+			$stmt2 -> bindParam(":id", $datos, PDO::PARAM_INT);
+			$stmt2 -> execute();
+			*/
 
 			   return "ok";
 			

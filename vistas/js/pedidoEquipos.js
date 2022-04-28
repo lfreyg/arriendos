@@ -2,16 +2,6 @@
 CARGAR LA TABLA DINÁMICA DE PEDIDOS
 =============================================*/
 
-$.ajax({
-
-	url: "ajax/datatable-pedido-equipo.ajax.php",
-	success:function(respuesta){
-		
-
-	}
-
-});
-
 
 $('.tablaPedido').DataTable( {
     "ajax": "ajax/datatable-pedido-equipo.ajax.php",

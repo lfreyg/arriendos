@@ -2,16 +2,6 @@
 CARGAR LA TABLA DINÁMICA DE FACTURAS
 =============================================*/
 
-$.ajax({
-
-	url: "ajax/datatable-facturas-compra.ajax.php",
-	success:function(respuesta){
-		
-
-	}
-
-})
-
 
 $('.tablaFacturasCompra').DataTable( {
     "ajax": "ajax/datatable-facturas-compra.ajax.php",
