@@ -12,18 +12,18 @@ if($_SESSION["perfil"] != "Administrador"){
 
 }
 
-if(empty($_SESSION["idPedidoEquipo"])){
-  $_SESSION["idPedidoEquipo"] = $_GET["idPedido"];
-  $idPedido = $_GET["idPedido"];
+if(empty($_SESSION["idGuiaDespachoArriendo"])){
+  $_SESSION["idGuiaDespachoArriendo"] = $_GET["idGuia"];
+  $idGuia = $_GET["idGuia"];
 }else{
-  $idPedido = $_SESSION["idPedidoEquipo"];
+  $idGuia = $_SESSION["idGuiaDespachoArriendo"];
 }
 
-if($_SESSION["idPedidoEquipo"] == ''){
+if($_SESSION["idGuiaDespachoArriendo"] == ''){
 
   echo '<script>
 
-    window.location = "pedido-equipos";
+    window.location = "guia-despacho-arriendos";
 
   </script>';
 
@@ -31,7 +31,7 @@ if($_SESSION["idPedidoEquipo"] == ''){
 
 }
 
-$pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
+$guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
 
    
 ?>
@@ -42,16 +42,15 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
     
     <h1>
       
-      Detalle Pedido N° <?php echo $idPedido?>
+      Detalle Guía Despacho <?php echo $guiaDespacho["guia"]?>
     
     </h1>
 
     <ol class="breadcrumb">
       
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      <li><a href="pedido-equipos">Pedido Equipos</a></li>
-      
-      <li class="active">Detalle Pedido </li>
+      <li><a href="guia-despacho-arriendos">Guía Despacho</a></li>      
+      <li class="active">Detalle Guía Despacho </li>
     
     </ol>
 
@@ -72,33 +71,54 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
           <div class="box-header with-border"></div>
         
 
-            <div class="box-body">
-  
+            <div class="box-body">  
               <div class="box">
 
-                           
-                <div class="form-group">
-                
-                  <div class="input-group">
-                    
+          <div class="row"> 
+               <div class="col-lg-4 col-xs-11">
+                 <div class="form-group">                
+                  <div class="input-group">                    
                     <span class="input-group-addon"><i class="fa fa-user"></i></span> 
-
-                    <input type="text" class="form-control" id="constructoraPedido" value="<?php echo $pedido["constructora"];?>" readonly>                    
-
-                    <input type="hidden" id="idPedidoGenerado" name="idPedidoGenerado" value="<?php echo $idPedido; ?>">
-
+                    <input type="text" class="form-control" id="empresaOperativa" value="<?php echo $guiaDespacho["empresa"]; ?>" readonly>
                   </div>
-
                 </div> 
+              </div>
+                           
+                
+            <div class="col-lg-4 col-xs-11">
+                <div class="form-group">                
+                  <div class="input-group">                    
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" class="form-control" id="constructoraGuia" value="<?php echo $guiaDespacho["constructora"];?>" readonly>   
+                    <input type="hidden" id="idPedidoGenerado" name="idGuiaGenerado" value="<?php echo $idGuia; ?>">
+                  </div>
+                </div> 
+            </div>    
 
+                
+            <div class="col-lg-4 col-xs-11">
                 <div class="form-group">                
                   <div class="input-group">                    
                     <span class="input-group-addon"><i class="fa fa-user"></i></span> 
-                    <input type="text" class="form-control" id="obraPedido" value="<?php echo $pedido["obra"]; ?>" readonly>
+                    <input type="text" class="form-control" id="obraPedido" value="<?php echo $guiaDespacho["obra"]; ?>" readonly>
                   </div>
                 </div> 
+            </div>  
+          </div>    
+
+           <div class="row">
+               <div class="col-lg-4 col-xs-11">
+                 <div class="form-group">                
+                  <div class="input-group">                    
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+                    <input type="date" class="form-control" id="fechaGuia" value="<?php echo $guiaDespacho["fecha"]; ?>" readonly>
+                  </div>
+                </div> 
+              </div>
+           </div>     
+
                  <hr>            
-                <h2>Detalle Pedido</h2>
+                <h2>Equipos Guia</h2>
                 <div class="form-group">
                     <div class="form-group">                
                       <div class="input-group">                    
@@ -133,7 +153,8 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
                     <label>Detalles</label>              
                       <div class="input-group">                    
                         <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" autocomplete="off" id="pedidoDetalle" value="">                 
+                        <textarea cols="50" rows="5" id="detalleEquipo"></textarea>
+                                        
                      </div>
                    </div> 
                 </div>

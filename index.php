@@ -42,6 +42,7 @@ require_once "modelos/equipos.modelo.php";
 require_once "modelos/cargaMasivaPrecios.modelo.php";
 require_once "modelos/pedidoEquipo.modelo.php";
 require_once "modelos/empresasOperativas.modelo.php";
+require_once "modelos/transporteGuia.modelo.php";
 require_once "modelos/guiaDespacho.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";

@@ -72,7 +72,8 @@ class TablaGuiaDespacho{
 			      "'.$guiaDespacho[$i]["constructora"].'",	
 			      "'.$guiaDespacho[$i]["obra"].'",	
 			      "'.$guiaDespacho[$i]["oc"].'",
-			      "'.$adjunto.'",			     
+			      "'.$adjunto.'",
+			      "'.$guiaDespacho[$i]["chofer"].'",			     
 			      "'.$guiaDespacho[$i]["estado"].'",			     
 			      "'.$botones.'"
 			    ],';

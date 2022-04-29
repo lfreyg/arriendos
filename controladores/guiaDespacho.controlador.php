@@ -41,6 +41,18 @@ class ControladorGuiaDespacho{
 
 		   $ruta = null;		
 
+		          
+                  $item = $_POST["nuevaTransporte"];
+                 
+
+                  $transporte = ModeloTransporteGuia::mdlMostrarTrasporteGuia($item);
+
+                  
+                  $rut_transportista = $transporte["rut"];
+                  $nombre_transportista = $transporte["nombre"];
+                  $patente_transportista = $transporte["patente"];
+                  $empresa_transportista = $transporte["rut_empresa_transporte"];
+
 			
 				$tabla = "guia_despacho";
 
@@ -51,6 +63,12 @@ class ControladorGuiaDespacho{
 							   "id_sucursal" => $_SESSION['idSucursalParaUsuario'],
 							   "adjunto" => $ruta,
 							   "oc" => $_POST["nuevoGuiaOC"],
+							   "fecha_termino" => $_POST["nuevoFechaTermino"],
+							   "id_transporte_guia" => $_POST["nuevaTransporte"],
+							   "rut_empresa_transporte" => $empresa_transportista,
+							   "rut_transportista"  => $rut_transportista,
+							   "nombre_transportista"  => $nombre_transportista,
+							   "patente_transportista"  => $patente_transportista,
 							   "tipoGuia" => $_POST["tipoGuia"],
 							   "creado_por"=>$_SESSION["nombre"]);
 
@@ -64,7 +82,7 @@ class ControladorGuiaDespacho{
 					$_SESSION['idGuiaDespachoArriendo'] = $respuesta["id"];
 
 					echo'<script>		
-                                     window.location = "guia-despacho-arriendos";
+                                     window.location = "guia-despacho-arriendos-detalle";
 										
 
 						</script>';
@@ -93,6 +111,17 @@ class ControladorGuiaDespacho{
 	               move_uploaded_file ($_FILES['editaGuiaDoc']['tmp_name'] , $ruta);
               }
 
+              $item = $_POST["editaTransporte"];
+                 
+
+                  $transporte = ModeloTransporteGuia::mdlMostrarTrasporteGuia($item);
+
+                  
+                  $rut_transportista = $transporte["rut"];
+                  $nombre_transportista = $transporte["nombre"];
+                  $patente_transportista = $transporte["patente"];
+                  $empresa_transportista = $transporte["rut_empresa_transporte"];
+
 
 				$tabla = "guia_despacho";
 
@@ -100,6 +129,12 @@ class ControladorGuiaDespacho{
 					           "id_constructora" => $_POST["editaGuiaConstructora"],
 							   "id_obra" => $_POST["editaComboObras"],							   
 							   "adjunto" => $ruta,
+							   "fecha_termino" => $_POST["editaFechaTermino"],
+							   "id_transporte_guia" => $_POST["editaTransporte"],
+							   "rut_empresa_transporte" => $empresa_transportista,
+							   "rut_transportista"  => $rut_transportista,
+							   "nombre_transportista"  => $nombre_transportista,
+							   "patente_transportista"  => $patente_transportista,
 							   "oc" => $_POST["editaGuiaOC"],
 				               "id" => $_POST["idGuiaEdita"]);
 							  

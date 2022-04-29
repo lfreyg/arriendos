@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-04-2022 a las 08:02:39
+-- Tiempo de generación: 29-04-2022 a las 07:53:40
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -301,9 +301,14 @@ CREATE TABLE `guia_despacho` (
   `id_constructoras` int(11) NOT NULL,
   `id_obras` int(11) NOT NULL,
   `id_sucursal` int(11) NOT NULL,
-  `id_transporte_guia` int(11) DEFAULT NULL,
   `adjunto` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `oc` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `fecha_termino` date DEFAULT NULL,
+  `id_transporte_guia` int(11) DEFAULT NULL,
+  `rut_empresa_transporte` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `rut_transportista` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `nombre_transportista` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `patente_transportista` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `estado_guia` int(11) NOT NULL DEFAULT 12,
   `tipo_guia` text COLLATE utf8_spanish_ci NOT NULL,
   `creado_por` text COLLATE utf8_spanish_ci NOT NULL,
@@ -314,10 +319,15 @@ CREATE TABLE `guia_despacho` (
 -- Volcado de datos para la tabla `guia_despacho`
 --
 
-INSERT INTO `guia_despacho` (`id`, `id_empresa`, `numero_guia`, `fecha_guia`, `id_constructoras`, `id_obras`, `id_sucursal`, `id_transporte_guia`, `adjunto`, `oc`, `estado_guia`, `tipo_guia`, `creado_por`, `fecha_creacion`) VALUES
-(1, 1, 5200, '2022-04-28', 3, 6, 1, 0, 'vistas/img/GuiasDespacho/1.pdf', '', 14, '', '', '2022-04-27 05:00:08'),
-(3, 1, NULL, '2022-04-13', 3, 3, 1, NULL, '', '', 14, '', 'LEONARDO FREY', '2022-04-27 05:58:46'),
-(5, 1, NULL, '2022-04-28', 3, 5, 1, NULL, NULL, '', 12, 'A', 'LEONARDO FREY', '2022-04-28 04:23:22');
+INSERT INTO `guia_despacho` (`id`, `id_empresa`, `numero_guia`, `fecha_guia`, `id_constructoras`, `id_obras`, `id_sucursal`, `adjunto`, `oc`, `fecha_termino`, `id_transporte_guia`, `rut_empresa_transporte`, `rut_transportista`, `nombre_transportista`, `patente_transportista`, `estado_guia`, `tipo_guia`, `creado_por`, `fecha_creacion`) VALUES
+(1, 1, 5200, '2022-04-28', 3, 6, 1, 'vistas/img/GuiasDespacho/1.pdf', '', NULL, NULL, NULL, NULL, NULL, NULL, 14, 'A', '', '2022-04-27 05:00:08'),
+(3, 1, 222, '2022-04-13', 3, 3, 1, '', '85477', '2022-05-21', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 12, 'A', 'LEONARDO FREY', '2022-04-27 05:58:46'),
+(6, 1, NULL, '2022-04-29', 3, 5, 1, '', '', '2022-04-30', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 12, 'A', 'LEONARDO FREY', '2022-04-29 02:11:07'),
+(7, 1, 5844, '2022-04-29', 4, 8, 1, '', '', NULL, NULL, NULL, NULL, NULL, NULL, 12, 'A', 'LEONARDO FREY', '2022-04-29 02:12:00'),
+(8, 1, NULL, '2022-04-29', 3, 5, 1, '', '', NULL, NULL, NULL, NULL, NULL, NULL, 12, 'A', 'LEONARDO FREY', '2022-04-29 03:27:43'),
+(9, 1, NULL, '2022-04-29', 3, 7, 1, NULL, '', NULL, 1, NULL, NULL, NULL, NULL, 12, 'A', 'LEONARDO FREY', '2022-04-29 04:44:20'),
+(15, 1, NULL, '2022-04-29', 5, 10, 1, NULL, '985474', '2022-05-14', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 12, 'A', 'LEONARDO FREY', '2022-04-29 05:25:11'),
+(16, 1, NULL, '2022-04-30', 5, 10, 1, '', '85474', '2022-05-27', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 12, 'A', 'LEONARDO FREY', '2022-04-29 05:39:57');
 
 -- --------------------------------------------------------
 
@@ -331,6 +341,7 @@ CREATE TABLE `guia_despacho_detalle` (
   `id_equipo` int(11) NOT NULL,
   `precio_arriendo` int(11) NOT NULL,
   `fecha_arriendo` date NOT NULL,
+  `detalle` text COLLATE utf8_spanish_ci DEFAULT NULL,
   `fecha_devolucion` date DEFAULT NULL,
   `id_tipo_movimiento` int(11) NOT NULL COMMENT 'arriendo=10, cambio=11',
   `match_cambio` int(11) DEFAULT NULL COMMENT 'id equipo por el que sale, cambio',
@@ -600,6 +611,13 @@ CREATE TABLE `transporte_guia` (
   `rut_empresa_transporte` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `transporte_guia`
+--
+
+INSERT INTO `transporte_guia` (`id`, `rut`, `nombre`, `patente`, `rut_empresa_transporte`) VALUES
+(1, '13485480-4', 'LEONARDO FREY', 'HFJZ-12', '77854789-7');
+
 -- --------------------------------------------------------
 
 --
@@ -625,10 +643,10 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `id_sucursal`, `creacion`) VALUES
-(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-04-27 22:57:16', '2022-04-28 02:57:16', 1, '2022-03-11 21:40:11'),
+(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-04-28 22:10:25', '2022-04-29 02:10:25', 1, '2022-03-11 21:40:11'),
 (2, 'CRISTIAN VALLEJOS', 'cvallejos', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 2, 'vistas/img/usuarios/cvallejos/678.jpg', 1, '2022-02-23 18:16:46', '2022-03-03 13:35:00', 1, '2022-03-11 21:40:11'),
 (3, 'BASTIAN FREY', 'bfrey', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 1, '', 1, '2022-04-01 19:28:06', '2022-04-01 22:28:06', 1, '2022-04-01 22:21:17'),
-(4, 'ADMINISTRADOR', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, '', 1, '0000-00-00 00:00:00', '2022-04-27 06:00:09', 1, '2022-04-27 06:00:09');
+(4, 'ADMINISTRADOR', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, '', 1, '2022-04-28 22:01:38', '2022-04-29 02:01:38', 1, '2022-04-27 06:00:09');
 
 --
 -- Índices para tablas volcadas
@@ -822,7 +840,7 @@ ALTER TABLE `forma_pago`
 -- AUTO_INCREMENT de la tabla `guia_despacho`
 --
 ALTER TABLE `guia_despacho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `guia_despacho_detalle`
@@ -894,7 +912,7 @@ ALTER TABLE `tipo_cobro`
 -- AUTO_INCREMENT de la tabla `transporte_guia`
 --
 ALTER TABLE `transporte_guia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

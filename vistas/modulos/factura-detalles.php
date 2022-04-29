@@ -56,8 +56,8 @@ $proveedor = ModeloProveedores::mdlMostrarProveedores("proveedores","id",$idProv
     <ol class="breadcrumb">
       
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
-      <li class="active">Detalle Factura </li>
+      <li><a href="facturas-compra-equipos">Facturas Compra</a></li>      
+      <li class="active">Detalle Factura Compra</li>
     
     </ol>
 

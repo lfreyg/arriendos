@@ -65,6 +65,7 @@ $_SESSION['idGuiaDespachoArriendo'] = '';
            <th>Destino</th>  
            <th>OC</th>         
            <th>Guía Firmada</th>
+           <th>Chofer</th>
            <th>Estado</th>
            <th>Acciones</th>
            
@@ -89,7 +90,7 @@ MODAL AGREGAR
 
 <div id="modalAgregarGuia" class="modal fade" role="dialog">
   
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
 
     <div class="modal-content">
 
@@ -117,13 +118,11 @@ MODAL AGREGAR
 
              <!-- ENTRADA PARA SELECCIONAR EMPRESA -->
 
-             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+            <div class="row">          
+             <div class="col-lg-6 col-xs-11">
+                <label for="nuevaEmpresaOperativa">Empresa Operativa</label>
+                <select class="form-control input-lg" id="nuevaEmpresaOperativa" name="nuevaEmpresaOperativa" required> 
 
-                <select class="form-control input-lg" id="nuevaEmpresaOperativa" name="nuevaEmpresaOperativa" required>                 
                
 
                   <?php
@@ -141,21 +140,20 @@ MODAL AGREGAR
 
                   ?>
   
-                </select>
+                </select>               
 
               </div>
 
             </div>
 
+           <br>
+
             <!-- COMBO CLIENTE -->
 
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-
-                <select class="form-control input-lg select2" id="nuevaGuiaConstructora" style="width: 100%;" name="nuevaGuiaConstructora" required>
+           <div class="row">          
+             <div class="col-lg-6 col-xs-11"> 
+             <label for="nuevaGuiaConstructora">Cliente</label> 
+                <select class="select2" id="nuevaGuiaConstructora" style="width: 100%;" name="nuevaGuiaConstructora" required>
                   
                   <option value="">Seleccionar Constructora</option>
 
@@ -175,49 +173,79 @@ MODAL AGREGAR
 
               </div>
 
-            </div>
+          
           
 
           <!-- COMBO OBRA -->
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span>                
+               <div class="col-lg-6 col-xs-11">  
+                  <label>Destino</label>         
                    <div id="nueva_obras_combo"></div>               
               </div>
 
-            </div>      
+            </div>  
+
+            <br>             
 
             <!-- ENTRADA FECHA -->
 
-             <div class="form-group">
+           <div class="row">          
+             <div class="col-lg-4 col-xs-11"> 
               
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-
+                <label for="nuevoFechaGuia">Fecha Guía</label> 
                 <input type="date" class="form-control input-lg" name="nuevoFechaGuia" value="<?php echo $hoy?>" id="nuevoFechaGuia" autocomplete="off" placeholder="Fecha" required>
                 <input type="hidden" name="tipoGuia" value="A">
 
               </div>
 
-            </div>             
+                       
 
 
             <!-- ENTRADA ORDEN COMPRA -->
 
-             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-
+             <div class="col-lg-4 col-xs-11">              
+                 <label for="nuevoFechaGuia">Orden Compra</label>  
                 <input type="text" class="form-control input-lg" name="nuevoGuiaOC" id="nuevoGuiaOC" autocomplete="off" placeholder="Orden Compra">
+              </div>
+
+            
+
+            <div class="col-lg-4 col-xs-11">              
+                 <label for="nuevoFechaGuia">Fecha Termino Arriendo</label> 
+                <input type="date" class="form-control input-lg" name="nuevoFechaTermino" id="nuevoFechaTermino" autocomplete="off">
 
               </div>
 
-            </div>                     
+            </div>  
+            
+            <br>
+
+            <!-- ENTRADA PARA TRANSPORTISTA -->
+
+             <div class="row">          
+             <div class="col-lg-6 col-xs-11">
+                <label for="nuevaTransporte">Transportista</label>
+                <select class="form-control input-lg" id="nuevaTransporte" name="nuevaTransporte" required>                 
+               <option value="">Seleccionar Transportista</option>
+
+                  <?php
+
+                  $item = null;
+                 
+
+                  $transporte = ModeloTransporteGuia::mdlMostrarTrasporteGuia($item);
+
+                  foreach ($transporte as $key => $value) {
+                    
+                    echo '<option value="'.$value["id"].'">'.$value["rut"]." --- ".$value["nombre"].'</option>';
+                  }
+
+                  ?>
+  
+                </select>
+
+              </div>
+
+            </div>                   
                       
 
           </div>
@@ -260,7 +288,7 @@ MODAL EDITAR
 
 <div id="modalEditarGuiaDespacho" class="modal fade" role="dialog">
   
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
 
     <div class="modal-content">
 
@@ -288,11 +316,10 @@ MODAL EDITAR
 
              <!-- COMBO CLIENTE -->
 
-             <div class="form-group">
+          <div class="row">          
+             <div class="col-lg-6 col-xs-11">  
               
-              <div class="input-group">   
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+               <label for="editaEmpresaOperativa">Empresa Operativa</label>
 
                 <select class="form-control input-lg" id="editaEmpresaOperativa" name="editaEmpresaOperativa" disabled>                 
                
@@ -316,27 +343,28 @@ MODAL EDITAR
 
               </div>
 
-            </div>
+           
 
-            <div class="form-group">
+
+
+                     
+             <div class="col-lg-6 col-xs-11"> 
               
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                <label for="editaNumGuia">Folio GD Emitido</label> 
 
                 <input type="text" class="form-control input-lg" name="editaNumGuia" id="editaNumGuia" autocomplete="off" disabled>
                 <input type="hidden" id="idGuiaEdita" name="idGuiaEdita">
                 <input type="hidden" id="docAnteriorGuia" name="docAnteriorGuia">
 
               </div>
+           </div>   
 
-            </div>  
+             <br>
 
-            <div class="form-group">
+            <div class="row">          
+             <div class="col-lg-6 col-xs-11">  
               
-              <div class="input-group">  
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                <label for="editaGuiaConstructora">Cliente</label>  
 
                 <select class="form-control input-lg" id="editaGuiaConstructora" style="width: 100%;" name="editaGuiaConstructora" required>                 
               
@@ -356,57 +384,82 @@ MODAL EDITAR
 
               </div>
 
-            </div>
+           
 
              <!-- COMBO OBRA -->
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span>                
+            <div class="col-lg-6 col-xs-11">               
+                <label>Destino</label>              
                    <div id="edita_obras_combo"></div>               
               </div>
 
             </div>
 
+            <br>
+
            <!-- ENTRADA FECHA -->
 
-             <div class="form-group">
+             <div class="row">          
+             <div class="col-lg-4 col-xs-11"> 
               
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+                <label for="editaFechaGuia">Fecha Guía</label> 
 
                 <input type="date" class="form-control input-lg" name="editaFechaGuia" value="<?php echo $hoy?>" id="editaFechaGuia" autocomplete="off" placeholder="Fecha" required>
 
               </div>
 
-            </div>             
+                         
 
 
             <!-- ENTRADA ORDEN COMPRA -->
 
-             <div class="form-group">
+             <div class="col-lg-4 col-xs-11"> 
               
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                <label for="editaGuiaOC">Orden Compra</label>  
 
                 <input type="text" class="form-control input-lg" name="editaGuiaOC" id="editaGuiaOC" autocomplete="off" placeholder="Orden Compra">
 
               </div>
 
-            </div>    
-
-           
+             
 
 
-            <!-- ENTRADA PARA SUBIR FOTO -->
+               <div class="col-lg-4 col-xs-11">               
+                <label for="editaFechaTermino">Fecha Termino Arriendo</label>  
 
-             <div class="form-group">
-              
-              <div class="panel">SUBIR GUIA FIRMADA</div>
+                <input type="date" class="form-control input-lg" name="editaFechaTermino" id="editaFechaTermino" autocomplete="off">
 
+              </div>
+
+            </div>  
+
+            <br> 
+
+            <div class="row">          
+             <div class="col-lg-6 col-xs-11">
+                <label for="editaTransporte">Transportista</label>
+                <select class="form-control input-lg" id="editaTransporte" name="editaTransporte" required>                               
+                  <?php
+
+                  $item = null;                  
+
+                  $transporte = ModeloTransporteGuia::mdlMostrarTrasporteGuia($item);
+
+                  foreach ($transporte as $key => $value) {
+                    
+                    echo '<option value="'.$value["id"].'">'.$value["rut"]." --- ".$value["nombre"].'</option>';
+                  }
+
+                  ?>
+  
+                </select>
+
+              </div>             
+
+
+            <!-- ENTRADA PARA ADJUNTO -->
+
+             <div class="col-lg-6 col-xs-11">              
+               <label for="editaGuiaDoc">Adjuntar Guía Firmada</label>
               <input type="file" name="editaGuiaDoc" id="editaGuiaDoc">
               <p class="help-block">Peso máximo archivo 2MB</p>
 
@@ -414,6 +467,9 @@ MODAL EDITAR
            
 
             </div>
+          </div>  
+
+
 
           </div>
 

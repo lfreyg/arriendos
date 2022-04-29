@@ -64,7 +64,7 @@ $(".tablaGuiaDespacho tbody").on("click", "button.btnEliminarGuiaDespacho", func
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, ANULAR Guía de Despacho!'
+        confirmButtonText: 'Si, ANULAR Guía!'
         }).then(function(result) {
         if (result.value) {        
 
@@ -87,7 +87,7 @@ $(".tablaGuiaDespacho tbody").on("click", "button.btnEliminarGuiaDespacho", func
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, ELIMINAR Guía de Despacho!'
+        confirmButtonText: 'Si, ELIMINAR Guía!'
         }).then(function(result) {
         if (result.value) {
 
@@ -107,11 +107,11 @@ $(".tablaGuiaDespacho tbody").on("click", "button.btnEliminarGuiaDespacho", func
 	
 
 
-$(".tablaPedido tbody").on("click", "button.btnDetallePedidoEquipo", function(){
+$(".tablaGuiaDespacho tbody").on("click", "button.btnDetalleGuiaDespacho", function(){
 
-	var idPedido = $(this).attr("idPedido");
+	var idGuia = $(this).attr("idGuia");
 
-	window.location = "index.php?ruta=pedido-equipos-detalle&idPedido="+idPedido;
+	window.location = "index.php?ruta=guia-despacho-arriendos-detalle&idGuia="+idGuia;
 
 })
 
@@ -143,6 +143,8 @@ $(".tablaGuiaDespacho tbody").on("click", "button.btnEditarGuiaDespacho", functi
      		$("#editaGuiaConstructora").val(respuesta["id_constructoras"]); 
      		$("#editaFechaGuia").val(respuesta["fecha_guia"]); 
      		$("#editaGuiaOC").val(respuesta["oc"]);
+     		$("#editaFechaTermino").val(respuesta["fecha_termino"]);
+     		$("#editaTransporte").val(respuesta["id_transporte_guia"]);
      		
      		 
             edita_combo_obras(respuesta["id_constructoras"],respuesta["id_obras"]);
