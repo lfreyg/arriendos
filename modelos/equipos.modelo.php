@@ -181,7 +181,64 @@ class ModeloEquipos{
 	}
 
 
+    
+    static public function mdlMostrarEquiposGuiaDespacho($id,$filtro){
 
+		
+		if($filtro == null){
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id where id_estado = 1 and id_sucursal = $id order by ne.descripcion");
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id where id_estado = 1 and id_sucursal = $id and e.id_nombre_equipos = $filtro order by ne.descripcion");
+		}	
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+
+	 static public function mdlSeleccionarEquiposGuiaDespacho($id){
+
+		
+		
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.id_nombre_equipos as idTipoEquipo, e.numero_serie as serie,  e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca, ne.precio as precio FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id where e.id = $id");
+		
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+
+	static public function mdlBuscaPrecioConvenio($id,$idObra){
+
+		
+		
+			$stmt = Conexion::conectar()->prepare("SELECT precio FROM precios_clientes where id_obras = $idObra and id_nombre_equipos = $id");
+		
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
 
 
 

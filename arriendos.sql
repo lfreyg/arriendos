@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-04-2022 a las 07:53:40
+-- Tiempo de generación: 06-05-2022 a las 06:01:59
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -111,6 +111,28 @@ INSERT INTO `constructoras` (`id`, `rut`, `nombre`, `direccion`, `telefono`, `co
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `dte`
+--
+
+CREATE TABLE `dte` (
+  `id` int(11) NOT NULL,
+  `id_empresa_operativa` int(11) NOT NULL,
+  `numero_guia` int(11) NOT NULL,
+  `numero_factura` int(11) NOT NULL,
+  `numero_nc` int(11) NOT NULL,
+  `numero_nd` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `dte`
+--
+
+INSERT INTO `dte` (`id`, `id_empresa_operativa`, `numero_guia`, `numero_factura`, `numero_nc`, `numero_nd`) VALUES
+(1, 1, 5208, 3652, 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `empresas_operativas`
 --
 
@@ -158,41 +180,41 @@ CREATE TABLE `equipos` (
 --
 
 INSERT INTO `equipos` (`id`, `id_nombre_equipos`, `id_factura`, `codigo`, `numero_serie`, `precio_compra`, `tiene_movimiento`, `id_estado`, `fecha_creado`, `creacion`, `id_sucursal`) VALUES
-(2, 7, 1, '654111', '654111', 165000, 0, 1, '2022-03-14 14:04:38', '2022-03-14 14:04:38', 1),
-(7, 7, 1, '9658445', '9658445', 36500, 0, 1, '2022-03-14 14:51:53', '2022-03-14 14:51:53', 1),
+(2, 7, 1, '654111', '654111', 165000, 1, 1, '2022-03-14 14:04:38', '2022-03-14 14:04:38', 1),
+(7, 7, 1, '9658445', '9658445', 36500, 1, 1, '2022-03-14 14:51:53', '2022-03-14 14:51:53', 1),
 (8, 16, 1, '6541110', '6541110', 36222, 0, 1, '2022-03-14 17:06:50', '2022-03-14 17:06:50', 1),
 (9, 16, 3, '3652', '3652', 650000, 0, 1, '2022-03-14 18:08:36', '2022-03-14 18:08:36', 1),
-(10, 16, 6, '365211', '365211', 65222, 0, 1, '2022-03-14 18:13:02', '2022-03-14 18:13:02', 1),
-(11, 7, 7, '362541', '362541', 96000, 0, 1, '2022-03-14 18:24:18', '2022-03-14 18:24:18', 1),
-(12, 11, 8, '8544', '8544', 200000, 0, 1, '2022-03-14 19:46:51', '2022-03-14 19:46:51', 1),
-(13, 15, 7, '854741', '854741', 365000, 0, 1, '2022-03-14 20:22:19', '2022-03-14 20:22:19', 1),
+(10, 16, 6, '365211', '365211', 65222, 1, 1, '2022-03-14 18:13:02', '2022-03-14 18:13:02', 1),
+(11, 7, 7, '362541', '362541', 96000, 1, 1, '2022-03-14 18:24:18', '2022-03-14 18:24:18', 1),
+(12, 11, 8, '8544', '8544', 200000, 1, 1, '2022-03-14 19:46:51', '2022-03-14 19:46:51', 1),
+(13, 15, 7, '854741', '854741', 365000, 1, 1, '2022-03-14 20:22:19', '2022-03-14 20:22:19', 1),
 (14, 6, 9, '98544', '98544', 652000, 0, 1, '2022-03-14 20:39:02', '2022-03-14 20:39:02', 1),
-(15, 15, 9, '985474', '985474', 562000, 0, 1, '2022-03-14 20:39:18', '2022-03-14 20:39:18', 1),
-(16, 15, 1, '36521', '36521', 65000, 0, 1, '2022-03-14 20:55:40', '2022-03-14 20:55:40', 1),
-(17, 8, 10, '652144', '652144', 320000, 0, 1, '2022-03-14 21:08:35', '2022-03-14 21:08:35', 1),
-(18, 8, 10, '658455', '658455', 320000, 0, 1, '2022-03-14 21:08:49', '2022-03-14 21:08:49', 1),
+(15, 15, 9, '985474', '985474', 562000, 1, 1, '2022-03-14 20:39:18', '2022-03-14 20:39:18', 1),
+(16, 15, 1, '36521', '36521', 65000, 1, 2, '2022-03-14 20:55:40', '2022-03-14 20:55:40', 1),
+(17, 8, 10, '652144', '652144', 320000, 1, 1, '2022-03-14 21:08:35', '2022-03-14 21:08:35', 1),
+(18, 8, 10, '658455', '658455', 320000, 1, 1, '2022-03-14 21:08:49', '2022-03-14 21:08:49', 1),
 (19, 8, 10, 'PCG524', '854545', 320000, 0, 1, '2022-03-14 21:09:40', '2022-03-14 21:09:40', 1),
 (25, 6, 14, '6521', '6521', 36500, 0, 1, '2022-03-15 21:45:46', '2022-03-15 21:45:46', 1),
-(26, 6, 14, '6522', '6521', 36500, 0, 1, '2022-03-15 21:46:09', '2022-03-15 21:46:09', 1),
+(26, 6, 14, '6522', '6521', 36500, 1, 1, '2022-03-15 21:46:09', '2022-03-15 21:46:09', 1),
 (27, 6, 14, '6522365', '6522', 36500, 0, 1, '2022-03-15 21:46:12', '2022-03-15 21:46:12', 1),
-(28, 8, 14, '6521', '6521', 36800, 0, 1, '2022-03-15 21:52:10', '2022-03-15 21:52:10', 1),
+(28, 8, 14, '6521', '6521', 36800, 1, 1, '2022-03-15 21:52:10', '2022-03-15 21:52:10', 1),
 (29, 8, 14, '698542541', '69854', 36800, 0, 1, '2022-03-15 21:52:30', '2022-03-15 21:52:30', 1),
-(30, 8, 3, '3621', '3652', 36800, 0, 1, '2022-03-15 21:59:21', '2022-03-15 21:59:21', 1),
-(31, 8, 3, '3622', '3621', 36800, 0, 1, '2022-03-15 21:59:41', '2022-03-15 21:59:41', 1),
+(30, 8, 3, '3621', '3652', 36800, 1, 1, '2022-03-15 21:59:21', '2022-03-15 21:59:21', 1),
+(31, 8, 3, '3622', '3621', 36800, 1, 2, '2022-03-15 21:59:41', '2022-03-15 21:59:41', 1),
 (32, 7, 15, '36545', '36521', 38500, 1, 1, '2022-03-15 22:01:33', '2022-03-15 22:01:33', 1),
-(36, 8, 15, '36545', '36545', 69800, 0, 1, '2022-03-15 22:19:04', '2022-03-15 22:19:04', 1),
-(44, 8, 12, '6521', '6521', 98544, 0, 1, '2022-03-15 22:46:36', '2022-03-15 22:46:36', 1),
-(45, 8, 12, '6521', '6521', 65200, 0, 1, '2022-03-15 22:46:58', '2022-03-15 22:46:58', 1),
-(46, 8, 12, '6521', '6521', 65200, 0, 1, '2022-03-15 22:47:54', '2022-03-15 22:47:54', 1),
+(36, 8, 15, '36545', '36545', 69800, 1, 2, '2022-03-15 22:19:04', '2022-03-15 22:19:04', 1),
+(44, 8, 12, '6521', '6521', 98544, 1, 1, '2022-03-15 22:46:36', '2022-03-15 22:46:36', 1),
+(45, 8, 12, '6521', '6521', 65200, 1, 1, '2022-03-15 22:46:58', '2022-03-15 22:46:58', 1),
+(46, 8, 12, '6521', '6521', 65200, 1, 1, '2022-03-15 22:47:54', '2022-03-15 22:47:54', 1),
 (47, 11, 12, '6521', '6521', 6522, 0, 1, '2022-03-15 22:48:12', '2022-03-15 22:48:12', 1),
-(48, 11, 12, '6521', '6521', 85445, 0, 1, '2022-03-15 22:48:49', '2022-03-15 22:48:49', 1),
+(48, 11, 12, '6521', '6521', 85445, 1, 2, '2022-03-15 22:48:49', '2022-03-15 22:48:49', 1),
 (49, 11, 12, '6521', '6521', 96500, 0, 1, '2022-03-15 22:49:52', '2022-03-15 22:49:52', 1),
-(51, 7, 11, '65212', '65212', 985445, 0, 1, '2022-03-15 22:53:55', '2022-03-15 22:53:55', 1),
-(52, 7, 11, '6521', '6521', 985445, 0, 1, '2022-03-15 22:54:02', '2022-03-15 22:54:02', 1),
-(58, 8, 13, '65844', '65844', 98500, 0, 1, '2022-03-15 23:05:12', '2022-03-15 23:05:12', 1),
-(59, 15, 11, '65211', '65214', 69800, 0, 1, '2022-03-16 22:28:03', '2022-03-16 22:28:03', 1),
+(51, 7, 11, '65212', '65212', 985445, 1, 1, '2022-03-15 22:53:55', '2022-03-15 22:53:55', 1),
+(52, 7, 11, '6521', '6521', 985445, 1, 2, '2022-03-15 22:54:02', '2022-03-15 22:54:02', 1),
+(58, 8, 13, '65844', '65844', 98500, 1, 1, '2022-03-15 23:05:12', '2022-03-15 23:05:12', 1),
+(59, 15, 11, '65211', '65214', 69800, 1, 1, '2022-03-16 22:28:03', '2022-03-16 22:28:03', 1),
 (60, 6, 16, '85474', '25412', 63254, 0, 1, '2022-03-16 22:53:15', '2022-03-16 22:53:15', 1),
-(61, 6, 16, '32100', '32100', 65200, 0, 1, '2022-03-21 15:47:23', '2022-03-21 15:47:23', 1),
+(61, 6, 16, '32100', '32100', 65200, 1, 1, '2022-03-21 15:47:23', '2022-03-21 15:47:23', 1),
 (62, 8, 15, '6528744L', '5212', 63200, 0, 1, '2022-04-08 01:33:45', '2022-04-08 01:33:45', 1);
 
 -- --------------------------------------------------------
@@ -212,7 +234,7 @@ CREATE TABLE `estados` (
 
 INSERT INTO `estados` (`id`, `descripcion`) VALUES
 (1, 'DISPONIBLE'),
-(2, 'EN OBRA'),
+(2, 'ARRENDADO'),
 (3, 'SERVICIO TECNICO'),
 (4, 'DE BAJA'),
 (5, 'EN TRASLADO'),
@@ -320,14 +342,10 @@ CREATE TABLE `guia_despacho` (
 --
 
 INSERT INTO `guia_despacho` (`id`, `id_empresa`, `numero_guia`, `fecha_guia`, `id_constructoras`, `id_obras`, `id_sucursal`, `adjunto`, `oc`, `fecha_termino`, `id_transporte_guia`, `rut_empresa_transporte`, `rut_transportista`, `nombre_transportista`, `patente_transportista`, `estado_guia`, `tipo_guia`, `creado_por`, `fecha_creacion`) VALUES
-(1, 1, 5200, '2022-04-28', 3, 6, 1, 'vistas/img/GuiasDespacho/1.pdf', '', NULL, NULL, NULL, NULL, NULL, NULL, 14, 'A', '', '2022-04-27 05:00:08'),
-(3, 1, 222, '2022-04-13', 3, 3, 1, '', '85477', '2022-05-21', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 12, 'A', 'LEONARDO FREY', '2022-04-27 05:58:46'),
-(6, 1, NULL, '2022-04-29', 3, 5, 1, '', '', '2022-04-30', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 12, 'A', 'LEONARDO FREY', '2022-04-29 02:11:07'),
-(7, 1, 5844, '2022-04-29', 4, 8, 1, '', '', NULL, NULL, NULL, NULL, NULL, NULL, 12, 'A', 'LEONARDO FREY', '2022-04-29 02:12:00'),
-(8, 1, NULL, '2022-04-29', 3, 5, 1, '', '', NULL, NULL, NULL, NULL, NULL, NULL, 12, 'A', 'LEONARDO FREY', '2022-04-29 03:27:43'),
-(9, 1, NULL, '2022-04-29', 3, 7, 1, NULL, '', NULL, 1, NULL, NULL, NULL, NULL, 12, 'A', 'LEONARDO FREY', '2022-04-29 04:44:20'),
-(15, 1, NULL, '2022-04-29', 5, 10, 1, NULL, '985474', '2022-05-14', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 12, 'A', 'LEONARDO FREY', '2022-04-29 05:25:11'),
-(16, 1, NULL, '2022-04-30', 5, 10, 1, '', '85474', '2022-05-27', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 12, 'A', 'LEONARDO FREY', '2022-04-29 05:39:57');
+(1, 1, 5207, '2022-04-28', 3, 6, 1, 'vistas/img/GuiasDespacho/1.pdf', '', '0000-00-00', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', '', '2022-04-27 05:00:08'),
+(19, 1, 5206, '2022-05-03', 5, 10, 1, NULL, '', '0000-00-00', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', 'LEONARDO FREY', '2022-05-03 22:33:55'),
+(20, 1, 5205, '2022-05-03', 4, 8, 1, 'vistas/img/GuiasDespacho/20.pdf', '', '0000-00-00', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', 'LEONARDO FREY', '2022-05-04 01:42:51'),
+(21, 1, 5204, '2022-05-03', 3, 3, 1, NULL, '', '0000-00-00', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', 'LEONARDO FREY', '2022-05-04 01:52:35');
 
 -- --------------------------------------------------------
 
@@ -345,8 +363,20 @@ CREATE TABLE `guia_despacho_detalle` (
   `fecha_devolucion` date DEFAULT NULL,
   `id_tipo_movimiento` int(11) NOT NULL COMMENT 'arriendo=10, cambio=11',
   `match_cambio` int(11) DEFAULT NULL COMMENT 'id equipo por el que sale, cambio',
-  `contrato` int(11) DEFAULT NULL COMMENT 'id guia despacho cuando es cambio'
+  `contrato` int(11) DEFAULT NULL COMMENT 'id guia despacho cuando es cambio',
+  `devuelto` int(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `guia_despacho_detalle`
+--
+
+INSERT INTO `guia_despacho_detalle` (`id`, `id_guia`, `id_equipo`, `precio_arriendo`, `fecha_arriendo`, `detalle`, `fecha_devolucion`, `id_tipo_movimiento`, `match_cambio`, `contrato`, `devuelto`) VALUES
+(33, 1, 52, 1200, '2022-05-03', '', '0000-00-00', 10, NULL, 1, 0),
+(34, 20, 31, 7500, '2022-05-03', '', '0000-00-00', 10, NULL, 20, 0),
+(35, 19, 16, 5000, '2022-05-03', '', '0000-00-00', 10, NULL, 19, 0),
+(36, 20, 36, 7500, '2022-05-03', '', '0000-00-00', 10, NULL, 20, 0),
+(38, 21, 48, 3400, '2022-05-04', '', '0000-00-00', 10, NULL, 21, 0);
 
 -- --------------------------------------------------------
 
@@ -395,9 +425,9 @@ CREATE TABLE `nombre_equipos` (
 --
 
 INSERT INTO `nombre_equipos` (`id`, `id_categoria`, `id_marca`, `descripcion`, `foto`, `estado`, `precio`, `modelo`, `meses_garantia`, `vida_util`, `creacion`) VALUES
-(6, 6, 6, 'CINCELADOR 10 KGS', '', 1, 5600, 'TGH', 24, 50, '2022-03-11 21:39:02'),
+(6, 10, 6, 'CINCELADOR 10 KGS', '', 1, 5600, 'TGH', 24, 50, '2022-03-11 21:39:02'),
 (7, 8, 2, 'SONDA FLEXIBLE 4X5MTS', 'vistas/img/productos/7/445.jpg', 1, 1200, 'FLX', 6, NULL, '2022-03-11 21:39:02'),
-(8, 6, 3, 'CINCELADOR 10 KGS', '', 1, 7500, 'AVR', 24, 40, '2022-03-11 21:39:02'),
+(8, 10, 3, 'CINCELADOR 10 KGS', '', 1, 7500, 'XYZ', 24, 40, '2022-03-11 21:39:02'),
 (11, 6, 2, 'CINCELADOR 10 KGS', '', 1, 3400, 'AVR', 24, 40, '2022-03-11 21:39:02'),
 (15, 6, 6, 'CINCELADOR 10 KGS', '', 1, 5500, 'TGB', 24, 40, '2022-03-11 21:39:02'),
 (16, 9, 3, 'DEMOLEDOR  7 KGS', 'vistas/img/productos/16/866.jpg', 1, 7500, 'TYU', 24, NULL, '2022-03-11 21:39:02'),
@@ -462,7 +492,8 @@ CREATE TABLE `pedido_equipo` (
 INSERT INTO `pedido_equipo` (`id`, `id_constructoras`, `id_obras`, `id_sucursal`, `id_usuario`, `estado`, `compartido`, `documento`, `orden_compra`, `creado`) VALUES
 (3, 3, 6, 1, 1, 8, 0, '', '85477', '2022-03-31 04:33:06'),
 (4, 3, 9, 1, 1, 8, 0, 'vistas/img/PedidoEquipos/4.pdf', '', '2022-03-31 05:06:32'),
-(6, 5, 10, 1, 1, 8, 0, NULL, '', '2022-03-31 20:34:04');
+(6, 5, 10, 1, 1, 8, 0, NULL, '', '2022-03-31 20:34:04'),
+(7, 3, 5, 2, 1, 8, 0, NULL, '', '2022-05-03 03:17:59');
 
 -- --------------------------------------------------------
 
@@ -491,7 +522,9 @@ INSERT INTO `pedido_equipo_detalle` (`id`, `id_pedido_equipo`, `id_nombre_equipo
 (33, 6, 16, 0, 'con mango y discos', 10, NULL, 1, NULL),
 (34, 6, 16, 0, 'con botones', 10, NULL, NULL, NULL),
 (35, 6, 6, 0, '', 10, NULL, NULL, NULL),
-(36, 6, 6, 0, '', 10, NULL, NULL, NULL);
+(36, 6, 6, 0, '', 10, NULL, NULL, NULL),
+(37, 7, 7, 0, '', 10, NULL, NULL, NULL),
+(38, 3, 6, 0, '', 11, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -508,6 +541,20 @@ CREATE TABLE `precios_clientes` (
   `creado` timestamp NOT NULL DEFAULT current_timestamp(),
   `usuario` text COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `precios_clientes`
+--
+
+INSERT INTO `precios_clientes` (`id`, `id_constructoras`, `id_obras`, `id_nombre_equipos`, `precio`, `creado`, `usuario`) VALUES
+(150, 5, 10, 11, 4600, '2022-05-03 21:05:24', 'LEONARDO FREY'),
+(151, 5, 10, 15, 5000, '2022-05-03 21:05:24', 'LEONARDO FREY'),
+(152, 5, 10, 6, 8500, '2022-05-03 21:05:24', 'LEONARDO FREY'),
+(153, 5, 10, 8, 9000, '2022-05-03 21:05:24', 'LEONARDO FREY'),
+(154, 5, 10, 16, 9000, '2022-05-03 21:05:24', 'LEONARDO FREY'),
+(155, 5, 10, 17, 8000, '2022-05-03 21:05:24', 'LEONARDO FREY'),
+(156, 5, 10, 19, 3000, '2022-05-03 21:05:24', 'LEONARDO FREY'),
+(157, 5, 10, 7, 1000, '2022-05-03 21:05:24', 'LEONARDO FREY');
 
 -- --------------------------------------------------------
 
@@ -575,7 +622,8 @@ CREATE TABLE `sucursales` (
 --
 
 INSERT INTO `sucursales` (`id`, `nombre`, `direccion`, `contacto`, `telefono`, `email`, `creacion`) VALUES
-(1, 'OFICINA CENTRAL', 'SANTIAGO CENTRO', 'LEO FREY', '967564098', 'l.frey.g@gmail.com', '2022-03-11 21:39:48');
+(1, 'OFICINA CENTRAL', 'SANTIAGO CENTRO', 'LEO FREY', '967564098', 'l.frey.g@gmail.com', '2022-03-11 21:39:48'),
+(2, 'SAN BERNARDO', 'SAN BERNARDO 3422', 'CARLOS GALAZ', '225698745', 'l.frey.g@gmail.com', '2022-05-03 03:17:44');
 
 -- --------------------------------------------------------
 
@@ -643,7 +691,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `id_sucursal`, `creacion`) VALUES
-(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-04-28 22:10:25', '2022-04-29 02:10:25', 1, '2022-03-11 21:40:11'),
+(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-05-04 18:46:49', '2022-05-04 22:46:49', 1, '2022-03-11 21:40:11'),
 (2, 'CRISTIAN VALLEJOS', 'cvallejos', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 2, 'vistas/img/usuarios/cvallejos/678.jpg', 1, '2022-02-23 18:16:46', '2022-03-03 13:35:00', 1, '2022-03-11 21:40:11'),
 (3, 'BASTIAN FREY', 'bfrey', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 1, '', 1, '2022-04-01 19:28:06', '2022-04-01 22:28:06', 1, '2022-04-01 22:21:17'),
 (4, 'ADMINISTRADOR', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, '', 1, '2022-04-28 22:01:38', '2022-04-29 02:01:38', 1, '2022-04-27 06:00:09');
@@ -668,6 +716,12 @@ ALTER TABLE `categorias`
 -- Indices de la tabla `constructoras`
 --
 ALTER TABLE `constructoras`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `dte`
+--
+ALTER TABLE `dte`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -807,6 +861,12 @@ ALTER TABLE `constructoras`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT de la tabla `dte`
+--
+ALTER TABLE `dte`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `empresas_operativas`
 --
 ALTER TABLE `empresas_operativas`
@@ -840,13 +900,13 @@ ALTER TABLE `forma_pago`
 -- AUTO_INCREMENT de la tabla `guia_despacho`
 --
 ALTER TABLE `guia_despacho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `guia_despacho_detalle`
 --
 ALTER TABLE `guia_despacho_detalle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -870,19 +930,19 @@ ALTER TABLE `obras`
 -- AUTO_INCREMENT de la tabla `pedido_equipo`
 --
 ALTER TABLE `pedido_equipo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido_equipo_detalle`
 --
 ALTER TABLE `pedido_equipo_detalle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `precios_clientes`
 --
 ALTER TABLE `precios_clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -900,7 +960,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `sucursales`
 --
 ALTER TABLE `sucursales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_cobro`

@@ -37,6 +37,8 @@ class ModeloTipoEquipos{
 
 	}
 
+	
+
 	static public function mdlMostrarTipoEquiposIdCategoria($tabla, $item, $valor){
 
 		if($item != null){

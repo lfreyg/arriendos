@@ -31,9 +31,11 @@ if($_SESSION["idGuiaDespachoArriendo"] == ''){
 
 }
 
+$hoy = date('Y-m-d');
+
 $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
 
-   
+
 ?>
 
 <div class="content-wrapper">
@@ -74,114 +76,162 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
             <div class="box-body">  
               <div class="box">
 
+      <!--=====================================
+      ENCABEZADO GUIA DESPACHO
+      ======================================-->       
+
           <div class="row"> 
-               <div class="col-lg-4 col-xs-11">
-                 <div class="form-group">                
-                  <div class="input-group">                    
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span> 
-                    <input type="text" class="form-control" id="empresaOperativa" value="<?php echo $guiaDespacho["empresa"]; ?>" readonly>
-                  </div>
-                </div> 
-              </div>
-                           
+               <div class="col-lg-5 col-xs-11">  
+                     <label for="empresaOperativa">Empresa</label> 
+                    <input type="text" class="form-control" id="empresaOperativa" value="<?php echo $guiaDespacho["empresa"]?>" readonly> 
+                    <input type="hidden" id="idGuiaGenerado" name="idGuiaGenerado" value="<?php echo $idGuia?>">
+                    <input type="hidden" id="estadoGuia" name="estadoGuia" value="<?php echo $guiaDespacho["estadoGuia"]?>"> 
+                    <input type="hidden" id="idEmpresaOperativa" name="idEmpresaOperativa" value="<?php echo $guiaDespacho["idEmpresa"]?>">                 
                 
-            <div class="col-lg-4 col-xs-11">
-                <div class="form-group">                
-                  <div class="input-group">                    
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control" id="constructoraGuia" value="<?php echo $guiaDespacho["constructora"];?>" readonly>   
-                    <input type="hidden" id="idPedidoGenerado" name="idGuiaGenerado" value="<?php echo $idGuia; ?>">
-                  </div>
-                </div> 
+              </div>
+
+               <div class="col-lg-2 col-xs-11">                                   
+                     <label for="fechaGuia">Fecha Guía</label> 
+                    <input type="date" class="form-control" id="fechaGuia" value="<?php echo $guiaDespacho["fecha"]?>" readonly>                  
+              </div>
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="ordenCompra">Orden Compra</label> 
+                    <input type="text" class="form-control" id="ordenCompra" value="<?php echo $guiaDespacho["oc"]?>" readonly>                  
+              </div>            
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="fechaTerminoGuia">Fecha Termino</label> 
+                    <input type="date" class="form-control" id="fechaTerminoGuia" value="<?php echo $guiaDespacho["fechaTermino"]?>" readonly>                  
+              </div>
+              
+          </div> 
+          <br>   
+                           
+           <div class="row"> 
+            
+            <div class="col-lg-2 col-xs-11">                                    
+                    <label for="rutConstructoraGuia">Rut Cliente</label>
+                    <input type="text" class="form-control" id="rutConstructoraGuia" value="<?php echo str_replace(".","",$guiaDespacho["rutConstructora"])?>" readonly> 
+                    <input type="hidden" id="idConstructora" name="idConstructora" value="<?php echo $guiaDespacho["idConstructora"]?>">
+                                   
+            </div> 
+
+
+            <div class="col-lg-5 col-xs-11">                                    
+                    <label for="constructoraGuia">Cliente</label>
+                    <input type="text" class="form-control" id="constructoraGuia" value="<?php echo $guiaDespacho["constructora"]?>" readonly>   
+                                   
             </div>    
 
                 
-            <div class="col-lg-4 col-xs-11">
-                <div class="form-group">                
-                  <div class="input-group">                    
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span> 
-                    <input type="text" class="form-control" id="obraPedido" value="<?php echo $guiaDespacho["obra"]; ?>" readonly>
-                  </div>
-                </div> 
+            <div class="col-lg-5 col-xs-11">
+                                   
+                     <label for="obraPedido">Destino</label> 
+                    <input type="text" class="form-control" id="obraPedido" value="<?php echo $guiaDespacho["obra"]?>" readonly> 
+                    <input type="hidden" id="idObra" name="idObra" value="<?php echo $guiaDespacho["idObra"]?>">                
             </div>  
-          </div>    
+          </div>  
+          <br>  
 
            <div class="row">
-               <div class="col-lg-4 col-xs-11">
-                 <div class="form-group">                
-                  <div class="input-group">                    
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-                    <input type="date" class="form-control" id="fechaGuia" value="<?php echo $guiaDespacho["fecha"]; ?>" readonly>
-                  </div>
-                </div> 
+              
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="transporteGuia">Transporte</label> 
+                    <input type="text" class="form-control" id="transporteGuia" value="<?php echo $guiaDespacho["rutTransporte"]?>" readonly>                  
               </div>
-           </div>     
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="patenteGuia">Patente</label> 
+                    <input type="text" class="form-control" id="patenteGuia" value="<?php echo $guiaDespacho["patente"]?>" readonly>                  
+              </div>
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="rutChoferGuia">Rut Chofer</label> 
+                    <input type="text" class="form-control" id="rutChoferGuia" value="<?php echo $guiaDespacho["rutChofer"]?>" readonly>                  
+              </div>
+
+              <div class="col-lg-6 col-xs-11">                                   
+                     <label for="choferGuia">Nombre Chofer</label> 
+                    <input type="text" class="form-control" id="choferGuia" value="<?php echo $guiaDespacho["chofer"]?>" readonly>                  
+              </div>
+
+
+           </div> 
+
+      <!--=====================================
+      DETALLE EQUIPOS GUIA DESPACHO
+      ======================================-->       
 
                  <hr>            
-                <h2>Equipos Guia</h2>
-                <div class="form-group">
-                    <div class="form-group">                
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" id="compraDetalleMarca" value="" readonly>                 
-                     </div>
-                   </div> 
-                </div>
-                <div class="form-group">
-                    <div class="form-group">                
-                      <div class="input-group">                    
-                       <span class="input-group-addon"><i class="fa fa-th"></i></span>  
-                         <input type="text" class="form-control" id="compraDetalleDescripcion" value="" readonly> 
-                         <input type="hidden" id="idEquipoDetalle" name="idEquipoDetalle">                
-                     </div>
-                   </div> 
-                </div>
-                <div class="form-group">
-                    <div class="form-group">                
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" id="compraDetalleModelo" value="" readonly>                 
-                     </div>
-                   </div> 
-                </div>
+                <h2>Equipos en esta Guía</h2>
 
-                <div class="form-group row">
+          <div class="row">             
 
-                   <div class="col-xs-8" style="padding-right:0px">
-                     <div class="form-group">
-                    <div class="form-group">   
-                    <label>Detalles</label>              
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                        <textarea cols="50" rows="5" id="detalleEquipo"></textarea>
-                                        
-                     </div>
-                   </div> 
-                </div>
-                  </div>
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="codigoEquipo">Código</label> 
+                    <input type="text" class="form-control" id="codigoEquipo" value="" readonly>
+                     <input type="hidden" id="idEquipoDetalle" name="idEquipoDetalle">                  
+              </div>
 
-                  <div class="col-xs-3" style="padding-right:0px">
-                   <div class="form-group">
-                    <div class="form-group"> 
-                     <label>Tipo</label>               
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <select class="form-control" id="pedidoTipo" style="width: 100%;" name="pedidoTipo" required> 
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="codigoEquipo">Serie</label> 
+                    <input type="text" class="form-control" id="serieEquipo" value="" readonly>                  
+              </div>
+
+              <div class="col-lg-6 col-xs-11">                                   
+                     <label for="descripcionEquipo">Descripción</label> 
+                    <input type="text" class="form-control" id="descripcionEquipo" value="" readonly>                  
+              </div>
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="modeloEquipo">Modelo</label> 
+                    <input type="text" class="form-control" id="modeloEquipo" value="" readonly>                  
+              </div>              
+
+           </div> 
+
+           <br>
+
+            <!--=====================================
+            PRECIO Y DETALLE EQUIPOS GUIA DESPACHO
+            ======================================--> 
+
+            <div class="row">    
+
+             <div class="col-lg-2 col-xs-11">                                   
+                     <label for="precioEquipo">Precio</label> 
+                    <input type="text" class="form-control" id="precioEquipo" value="" readonly>
+                    <input type="hidden" class="form-control" id="precioEquipoSinFormato" readonly>                  
+              </div> 
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="fechaArriendo">Fecha Arriendo</label> 
+                    <input type="date" class="form-control" id="fechaArriendo" value="<?php echo $hoy?>">                  
+              </div>           
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="guiaTipoMovimiento">Movimiento</label> 
+                    <select class="form-control" id="guiaTipoMovimiento" style="width: 100%;" name="guiaTipoMovimiento" required>
                            <option value="<?php echo ARRIENDO?>">ARRIENDO</option>   
                            <option value="<?php echo CAMBIO?>">CAMBIO</option>
-                         </select>            
-                     </div>
-                   </div> 
-                </div>
-                  </div>
+                     </select>                    
+              </div>
 
-                 
+              <div class="col-lg-6 col-xs-11">                                   
+                     <label for="detalleEquipo">Detalle</label> 
+                    <input type="text" class="form-control" id="detalleEquipo" value="">                  
+              </div>
+                            
 
-                </div>
+           </div>               
+                
+           <br>
 
                   <div class="pull-right">
 
-                        <button class="btn btn-primary" id="btnAgregarDetalle">Agregar Equipo</button>
+                        <button class="btn btn-primary" id="btnAgregarEquipo">Agregar Equipo</button>
             
                    </div>       
                 
@@ -200,8 +250,12 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
           </div>
 
           <div class="box-footer">
-            <div class="pull-right">
-             <span class="btn btn-lg btn-success btn-block text-uppercase" id="btnFinalizarPedido">Finalizar Pedido</span>  
+             <div class="pull-right-container">
+             <button class="btn btn-lg btn-warning btn-block text-uppercase" id="btnVolver">Volver a Lista</button> 
+             </div> 
+             <br>   
+              <div class="pull-right-container">       
+             <button class="btn btn-lg btn-success btn-block text-uppercase" id="btnFinalizarGuia">Enviar a SII</button>  
             </div>
           </div>
 
@@ -229,16 +283,16 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
                       
                         <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                        <select class="form-control input-lg select2" id="seleccionaMarcaEquipo" name="seleccionaMarcaEquipo"> 
-                         <option value="">Seleccionar Marca</option>              
+                        <select class="form-control input-lg select2" id="seleccionaTipoEquipo" name="seleccionaTipoEquipo"> 
+                         <option value="">Seleccionar Tipo de Equipo</option>              
                           
                           <?php                 
 
-                          $marca = ControladorMarcas::ctrMostrarMarcas(null,null);
+                          $marca = ControladorTipoEquipos::ctrMostrarTipoEquipo(null,null);
 
                           foreach ($marca as $key => $value) {
                                       
-                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"].'</option>';
+                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"]." ".$value["modelo"].'</option>';
                                     }
                                           
 
@@ -250,17 +304,14 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
 
                     </div>
             
-            <table class="table table-bordered table-striped table-hover dt-responsive tablaEquiposFactura">
+            <table class="table table-bordered table-striped table-hover dt-responsive tablaEquiposGuia">
               
              <thead style="background-color: #ccc;color: black; font-weight: bold;">
 
-                 <tr>
-                  <th style="width: 10px">#</th>
-                  <th>Imagen</th>
-                  <th>Marca</th>
+                 <tr>                  
+                  <th>Código</th>                  
                   <th>Descripcion</th>
-                  <th>Modelo</th>
-                  <th>Acciones</th>
+                  <th>Selección</th>
                 </tr>
 
               </thead>
@@ -390,15 +441,21 @@ MODAL EDITAR
 </div>
 
 
-<script src="vistas/js/pedidoEquiposDetalle.js?v=<?php echo(rand());?>"></script>
+<script src="vistas/js/guiaDespachoDetalle.js?v=<?php echo(rand());?>"></script>
 
 <script type="text/javascript">
   
   
   
   $(document).ready(function(){
+
+     if($('#estadoGuia').val() == 13){
+        $('#btnFinalizarGuia').attr('disabled', true)
+
+
+     }
     
-     genera_tabla_compras();
+     genera_tabla_arriendos();
 
    });     
 

@@ -85,6 +85,9 @@ if($_SESSION["perfil"] != "Administrador"){
 
            $perfil = ControladorPerfiles::ctrMostrarPerfiles("id",$value["perfil"]);
            $nombrePerfil = $perfil["descripcion"];
+
+           $dateReg = date_create($value["ultimo_login"]);
+           $fechaReg = date_format($dateReg,"d-m-Y H:i:s");
                    
           echo ' <tr>                 
                   <td>'.$value["nombre"].'</td>
@@ -114,7 +117,7 @@ if($_SESSION["perfil"] != "Administrador"){
 
                   echo '<td>'.$nombreSucursal.'</td>';
 
-                  echo '<td>'.$value["ultimo_login"].'</td>
+                  echo '<td>'.$fechaReg.'</td>
                   <td>
 
                     <div class="btn-group">
@@ -494,7 +497,7 @@ MODAL EDITAR USUARIO
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Modificar usuario</button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
 
         </div>
 

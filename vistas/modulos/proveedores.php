@@ -351,7 +351,7 @@ MODAL EDITAR PROVEEDOR
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar Proveedor</button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
 
         </div>
 

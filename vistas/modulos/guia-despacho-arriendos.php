@@ -192,7 +192,7 @@ MODAL AGREGAR
              <div class="col-lg-4 col-xs-11"> 
               
                 <label for="nuevoFechaGuia">Fecha Guía</label> 
-                <input type="date" class="form-control input-lg" name="nuevoFechaGuia" value="<?php echo $hoy?>" id="nuevoFechaGuia" autocomplete="off" placeholder="Fecha" required>
+                <input type="date" class="form-control input-lg" name="nuevoFechaGuia" value="<?php echo $hoy?>" id="nuevoFechaGuia" readonly autocomplete="off" placeholder="Fecha" required>
                 <input type="hidden" name="tipoGuia" value="A">
 
               </div>
@@ -403,7 +403,7 @@ MODAL EDITAR
               
                 <label for="editaFechaGuia">Fecha Guía</label> 
 
-                <input type="date" class="form-control input-lg" name="editaFechaGuia" value="<?php echo $hoy?>" id="editaFechaGuia" autocomplete="off" placeholder="Fecha" required>
+                <input type="date" class="form-control input-lg" name="editaFechaGuia" id="editaFechaGuia" autocomplete="off" readonly placeholder="Fecha" required>
 
               </div>
 

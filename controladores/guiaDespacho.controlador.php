@@ -148,7 +148,7 @@ class ControladorGuiaDespacho{
 
 							swal({
 						  type: "success",
-						  title: "Guía de Despacho ha sido modificada correctamente",
+						  title: "Datos actualizados correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){

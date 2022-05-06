@@ -492,7 +492,7 @@ MODAL EDITAR
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Modificar Tipo</button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
 
         </div>
 

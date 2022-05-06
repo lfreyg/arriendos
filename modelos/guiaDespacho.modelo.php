@@ -28,7 +28,7 @@ class ModeloGuiaDespacho{
 
 		
 			
-			$stmt = Conexion::conectar()->prepare("SELECT eo.razon_social as empresa, gd.numero_guia as guia, gd.fecha_guia as fecha, c.nombre as constructora, o.nombre as obra, gd.oc as oc FROM guia_despacho gd JOIN empresas_operativas eo ON gd.id_empresa = eo.id JOIN constructoras c ON gd.id_constructoras = c.id JOIN obras o ON gd.id_obras = o.id where gd.id = $id");
+			$stmt = Conexion::conectar()->prepare("SELECT gd.estado_guia as estadoGuia, eo.id as idEmpresa, eo.razon_social as empresa, gd.numero_guia as guia, gd.fecha_guia as fecha, c.rut as rutConstructora, c.nombre as constructora, o.nombre as obra, gd.oc as oc, gd.fecha_termino as fechaTermino, gd.rut_empresa_transporte as rutTransporte, gd.patente_transportista as patente, gd.rut_transportista as rutChofer, gd.nombre_transportista as chofer, gd.id_constructoras as idConstructora, gd.id_obras as idObra FROM guia_despacho gd JOIN empresas_operativas eo ON gd.id_empresa = eo.id JOIN constructoras c ON gd.id_constructoras = c.id JOIN obras o ON gd.id_obras = o.id where gd.id = $id");
 
 			$stmt -> execute();
 
