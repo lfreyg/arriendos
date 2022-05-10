@@ -12,7 +12,7 @@ class ModeloGuiaDespacho{
 
 		
 			
-			$stmt = Conexion::conectar()->prepare("SELECT gd.id as id, eo.razon_social as empresa, gd.numero_guia as guia, gd.fecha_guia as fecha, c.nombre as constructora, o.nombre as obra, gd.oc as oc, gd.adjunto as adjunto, gd.estado_guia as idestado, e.descripcion as estado, tg.id as idtransporte, tg.nombre as chofer FROM guia_despacho gd JOIN empresas_operativas eo ON gd.id_empresa = eo.id JOIN constructoras c ON gd.id_constructoras = c.id JOIN obras o ON gd.id_obras = o.id JOIN estados e ON gd.estado_guia = e.id LEFT JOIN transporte_guia tg ON gd.id_transporte_guia = tg.id  where gd.id_sucursal = $idSucursal and gd.tipo_guia = 'A' order by gd.fecha_guia desc");
+			$stmt = Conexion::conectar()->prepare("SELECT gd.id as id, eo.razon_social as empresa, gd.numero_guia as guia, gd.fecha_guia as fecha, c.nombre as constructora, o.nombre as obra, gd.oc as oc, gd.adjunto as adjunto, gd.estado_guia as idestado, e.descripcion as estado, tg.id as idtransporte, tg.nombre as chofer FROM guia_despacho gd JOIN empresas_operativas eo ON gd.id_empresa = eo.id JOIN constructoras c ON gd.id_constructoras = c.id JOIN obras o ON gd.id_obras = o.id JOIN estados e ON gd.estado_guia = e.id LEFT JOIN transporte_guia tg ON gd.id_transporte_guia = tg.id  where gd.id_sucursal = $idSucursal and gd.tipo_guia = 'A' order by gd.id desc");
 
 			$stmt -> execute();
 
@@ -141,16 +141,20 @@ class ModeloGuiaDespacho{
 	=============================================*/
 
 	static public function mdlEliminarGuiaDespacho($id){
+       
+       $estado = 1; //VUELVE LOS EQUIPOS A DISPONIBLE
+		
+       $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado WHERE gdd.id_guia = $id"); 
+               $sqlGuia->execute();
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM guia_despacho WHERE id = $id");
 		
 		if($stmt -> execute()){
            
-           /*
-			$stmt2 = Conexion::conectar()->prepare("DELETE FROM pedido_equipo_detalle WHERE id_pedido_equipo = :id");
-			$stmt2 -> bindParam(":id", $datos, PDO::PARAM_INT);
+           
+			$stmt2 = Conexion::conectar()->prepare("DELETE FROM guia_despacho_detalle WHERE id_guia = $id");		
 			$stmt2 -> execute();
-			*/
+			
 
 			   return "ok";
 			
@@ -173,15 +177,18 @@ class ModeloGuiaDespacho{
 
 	static public function mdlAnularGuiaDespacho($id){
 
+		$estado = 1; //VUELVE LOS EQUIPOS A DISPONIBLE
+
+		 $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado WHERE gdd.id_guia = $id"); 
+               $sqlGuia->execute();
+
 		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho SET estado_guia = 14 WHERE id = $id");
 		
 		if($stmt -> execute()){
            
-           /*
-			$stmt2 = Conexion::conectar()->prepare("DELETE FROM pedido_equipo_detalle WHERE id_pedido_equipo = :id");
-			$stmt2 -> bindParam(":id", $datos, PDO::PARAM_INT);
-			$stmt2 -> execute();
-			*/
+           $stmt2 = Conexion::conectar()->prepare("DELETE FROM guia_despacho_detalle WHERE id_guia = $id");		
+		   $stmt2 -> execute();
+			
 
 			   return "ok";
 			
@@ -198,11 +205,11 @@ class ModeloGuiaDespacho{
 
 	}
 
-	static public function mdlValidaEquipoPedido($valor){
+	static public function mdlValidaEquipoDevueltoParaGuiaCompleta($idGuia){
 
 		
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM pedido_equipo_detalle WHERE cantidad_guia > 0 and id_pedido_equipo = $valor");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho_detalle WHERE devuelto > 0 and id_guia = $idGuia");
 
 			
 			$stmt -> execute();

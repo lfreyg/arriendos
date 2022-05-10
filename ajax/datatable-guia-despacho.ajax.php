@@ -53,6 +53,12 @@ class TablaGuiaDespacho{
                    $disable_detalle = 'disabled';
 		  		}
 
+		  		$validaEquipoDevuelto = ModeloGuiaDespacho::mdlValidaEquipoDevueltoParaGuiaCompleta($guiaDespacho[$i]["id"]);
+
+		  		if($validaEquipoDevuelto){		  		  
+                   $disable_anular = 'disabled';
+		  		}
+
 		  	            	  	
 
 		  	/*=============================================

@@ -10,13 +10,13 @@ class AjaxEquiposGuiaArriendos{
 	EDITAR 
 	=============================================*/	
 
-	public $idEquipo;
+	public $idArriendo;
 
 	public function ajaxEditarEquiposGuiaArriendo(){
 
-		$valor = $this->idEquipo;
+		$idArriendo = $this->idArriendo;
 
-		$respuesta = ModeloPedidoDetalles::mdlEquipoPorId($valor);
+		$respuesta = ModeloGuiaDespachoDetalles::mdlEquipoArriendoPorId($idArriendo);
 
 		echo json_encode($respuesta);
 	}
@@ -82,10 +82,10 @@ class AjaxEquiposGuiaArriendos{
 /*=============================================
 EDITAR 
 =============================================*/
-if(isset($_POST["idEquipo"])){
+if(isset($_POST["idArriendo"])){
 
 	$editar = new AjaxEquiposGuiaArriendos();
-	$editar -> idEquipo = $_POST["idEquipo"];
+	$editar -> idArriendo = $_POST["idArriendo"];
 	$editar -> ajaxEditarEquiposGuiaArriendo();
 
 }

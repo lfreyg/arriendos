@@ -72,24 +72,20 @@ class ModeloGuiaDespachoDetalles{
 
 		$stmt = null;
 
-	}
+	}	
 
 	static public function mdlFinalizaGuia($idGuia,$idEmpresa){
-
-		       $sqlGuia = Conexion::conectar()->prepare("UPDATE guia_despacho gd JOIN dte d ON gd.id_empresa = d.id_empresa_operativa SET gd.numero_guia = d.numero_guia WHERE gd.id = $idGuia and d.id_empresa_operativa = gd.id_empresa"); 
+               
+               $estado = 13;
+		       
+		       $sqlGuia = Conexion::conectar()->prepare("UPDATE guia_despacho gd JOIN dte d ON gd.id_empresa = d.id_empresa_operativa SET gd.numero_guia = d.numero_guia, gd.estado_guia = $estado WHERE gd.id = $idGuia and d.id_empresa_operativa = gd.id_empresa"); 
                $sqlGuia->execute();                  
 
                $sqlNuevaGuia = Conexion::conectar()->prepare("UPDATE dte SET numero_guia = numero_guia + 1 where id_empresa_operativa = $idEmpresa"); 
-               $sqlNuevaGuia->execute();
+              	
 
-
-
-		$estado = 13;
-
-		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho SET estado_guia = $estado WHERE id = $idGuia");
-
-		
-		if($stmt -> execute()){
+				
+		if($sqlNuevaGuia -> execute()){
 
 			return "ok";
 		
@@ -109,7 +105,7 @@ class ModeloGuiaDespachoDetalles{
 
 	static public function mdlGuiaDespachoPorId($idGuia){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, es.descripcion as movimiento FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.id_tipo_movimiento = es.id WHERE gd.id_guia = $idGuia order by gd.id desc");
+		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, es.descripcion as movimiento,  gd.devuelto as devuelto FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.id_tipo_movimiento = es.id WHERE gd.id_guia = $idGuia order by gd.id desc");
 
 		
 		$stmt -> execute();
@@ -122,9 +118,9 @@ class ModeloGuiaDespachoDetalles{
 
 	}
 
-	static public function mdlEquipoPorId($id){
+	static public function mdlEquipoArriendoPorId($idArriendo){
 
-		$stmt = Conexion::conectar()->prepare("SELECT m.descripcion as marca, ne.descripcion as tipo_equipo, ne.modelo as modelo, e.descripcion as tipo, e.id as idTipo, pde.observaciones as detalle, pde.cantidad_guia as entrega, pde.id as id FROM pedido_equipo_detalle pde join nombre_equipos ne on pde.id_nombre_equipo = ne.id join marcas m on ne.id_marca = m.id join categorias c on ne.id_categoria = c.id join estados e on pde.tipo = e.id where pde.id = $id");
+		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, gd.id_tipo_movimiento as movimiento, gd.detalle as detalle FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id WHERE gd.id = $idArriendo");
 
 		
 		$stmt -> execute();
@@ -138,17 +134,18 @@ class ModeloGuiaDespachoDetalles{
 	}
 
 	/*=============================================
-	EDITAR 
+	GUARDAR EDITAR 
 	=============================================*/
 
-	static public function mdlEditarEquiposPedido($tabla, $datos){
+	static public function mdlEditarEquiposGuiaDespacho($datos){
 	
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  tipo = :tipo, observaciones = :detalle WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET fecha_arriendo = :fecha_arriendo, id_tipo_movimiento = :id_tipo_movimiento, detalle = :detalle WHERE id = :id");
 
-		$stmt -> bindParam(":tipo", strtoupper($datos["tipo"]), PDO::PARAM_STR);
-		$stmt -> bindParam(":detalle", $datos["detalle"], PDO::PARAM_STR);	
 		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
-
+		$stmt -> bindParam(":fecha_arriendo", strtoupper($datos["fecha_arriendo"]), PDO::PARAM_STR);
+		$stmt -> bindParam(":id_tipo_movimiento", $datos["id_tipo_movimiento"], PDO::PARAM_INT);
+		$stmt -> bindParam(":detalle", $datos["detalle"], PDO::PARAM_STR);	
+		
 		if($stmt -> execute()){
 
 			return "ok";
@@ -162,6 +159,22 @@ class ModeloGuiaDespachoDetalles{
 		$stmt -> close();
 
 		$stmt = null;
+
+	}
+
+	
+
+	static public function mdlValidaEquipoDevuelto($idRegistroDetalle){
+
+		
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho_detalle WHERE devuelto > 0 and id = $idRegistroDetalle");
+
+			
+			$stmt -> execute();
+   		    return $stmt -> fetch();
+		    $stmt -> close();
+		    $stmt = null;
 
 	}
 

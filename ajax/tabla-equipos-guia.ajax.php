@@ -50,7 +50,13 @@ $idGuia = $_POST['id'];
            
            $disabled = '';
 
+           if($value["devuelto"] > 0){
+              $disabled = "disabled";
+           }
+
            $arriendo = $equipo." ".$modelo." ".$marca;
+
+           $precio = "$ " . number_format($precio,0,"",".")
             
   ?>
   <tr>

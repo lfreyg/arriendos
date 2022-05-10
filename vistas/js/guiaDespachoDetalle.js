@@ -234,14 +234,14 @@ function recargaTabla(id) {
 
 function editar(id) {
 
-	var idEquipo = id;
+	var idArriendo = id;
 
 	var datos = new FormData();
-	datos.append("idEquipo", idEquipo);
+	datos.append("idArriendo", idArriendo);
 
 	$.ajax({
 
-		url: "ajax/equipos-pedido.ajax.php",
+		url: "ajax/equipos-guia-arriendo.ajax.php",
 		method: "POST",
 		data: datos,
 		cache: false,
@@ -251,21 +251,23 @@ function editar(id) {
 		success: function(equipo) {
             
 
-			var marca = equipo["marca"];
-			var tipoEquipo = equipo["tipo_equipo"];
-			var modelo = equipo["modelo"];
-			var id = equipo["id"];
-			var idTipo = equipo["idTipo"];
+			var idRegistroDetalle = equipo["idRegistro"];
+			var codigo = equipo["codigo"];
+			var descripcion = equipo["equipo"] + " " + equipo["modelo"] + " " + equipo["marca"];			
+			var fecha = equipo["fecha"];
+			var movimiento = equipo["movimiento"];
 			var detalle = equipo["detalle"];
+
+
 			
 
-			    $("#compraDetalleMarcaEdita").val(marca);
-				$("#compraDescripcionEdita").val(tipoEquipo);
-				$("#compraModeloEdita").val(modelo);
-				$("#idEquipoDetalleEdita").val(id);
-				$('#pedidoTipoEdita').val(idTipo);
-				$('#editaDetalles').val(detalle);				
-				$('#editaDetalles').focus();
+			    $("#ecodigoEquipo").val(codigo);
+				$("#edescripcionEquipo").val(descripcion);
+				$("#efechaArriendo").val(fecha);
+				$("#eidArriendo").val(idRegistroDetalle);
+				$('#eguiaTipoMovimiento').val(movimiento);
+				$('#edetalleEquipo').val(detalle);			
+				
 
 					
 
@@ -285,21 +287,23 @@ $('#btnGuardarEdita').click(function() {
 
 	
 
-	idEquipo = $('#idEquipoDetalleEdita').val();
-	tipo = $('#pedidoTipoEdita').val();
-	detalle = $('#editaDetalles').val();
+	idArriendo = $('#eidArriendo').val();
+	fechaArriendo = $('#efechaArriendo').val();
+	movimiento = $("#eguiaTipoMovimiento").val();
+	detalle = $('#edetalleEquipo').val();
 			
 				
 
-	datos = "idEquipo=" + idEquipo +
-		"&tipo=" + tipo +		
+	datos = "idArriendo=" + idArriendo +
+		"&fechaArriendo=" + fechaArriendo +		
+		"&movimiento=" + movimiento + 
 		"&detalle=" + detalle;
 
 
 	$.ajax({
 
 		type: "POST",
-		url: "ajax/edita-equipo-detalle-pedido.ajax.php",
+		url: "ajax/edita-equipo-detalle-guia-arriendo.ajax.php",
 		data: datos,
 
 		success: function(res) {
@@ -316,6 +320,17 @@ $('#btnFinalizarGuia').click(function() {
 	
 	id = $('#idGuiaGenerado').val();
 	idEmpresa = $('#idEmpresaOperativa').val();
+   
+	alertify.confirm('GENERAR GUIA DESPACHO', 'Esta seguro de Generar la Guía de despacho y enviarla al SII?', function() {
+		finalizaGuiaDespachoArriendo(id,idEmpresa)
+	}, function() {});
+
+
+	 
+
+});
+
+function finalizaGuiaDespachoArriendo(id,idEmpresa){
 
 	var datos = new FormData();
 	datos.append("finalizaGuia", id);
@@ -340,12 +355,7 @@ $('#btnFinalizarGuia').click(function() {
 		}
 	});
 
-
-	 
-
-});
-
-
+}
 
 
 $('#btnVolver').click(function() {	

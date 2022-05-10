@@ -331,13 +331,19 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
 
 </div>
 
+
+
+
+
+
+
 <!--=====================================
 MODAL EDITAR 
 ======================================-->
 
 <div id="modalEditarEquipo" class="modal fade" role="dialog">
   
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
 
     <div class="modal-content">
 
@@ -351,7 +357,7 @@ MODAL EDITAR
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar Equipo</h4>
+          <h4 class="modal-title">Editar Arriendo</h4>
 
         </div>
 
@@ -362,58 +368,54 @@ MODAL EDITAR
         <div class="modal-body">
 
           <div class="box-body">
-           
 
-            <!-- ENTRADA PARA RAZON SOCIAL -->            
-            
-               <div class="form-group row">              
-                   <div class="input-group">              
-                     <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                     <input type="text" class="form-control input-lg" name="compraDetalleMarcaEdita" id="compraDetalleMarcaEdita" autocomplete="off" readonly>
-                  </div>
-               </div>  
+             <div class="row">             
 
-               <div class="form-group row">              
-                   <div class="input-group">              
-                     <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                     <input type="text" class="form-control input-lg" name="compraDescripcionEdita" id="compraDescripcionEdita" autocomplete="off" readonly>
-                     <input type="hidden" id="idEquipoDetalleEdita" name="idEquipoDetalleEdita">
-                  </div>
-               </div>  
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="ecodigoEquipo">Código</label> 
+                    <input type="text" class="form-control" id="ecodigoEquipo" value="" readonly>
+                     <input type="hidden" id="eidArriendo" name="eidArriendo">                  
+              </div>
 
-               <div class="form-group row">              
-                   <div class="input-group">              
-                     <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                     <input type="text" class="form-control input-lg" name="compraModeloEdita" id="compraModeloEdita" autocomplete="off" readonly>
-                  </div>
-               </div> 
 
-               
-                 
-                   <div class="form-group">
-                    <div class="form-group"> 
-                     <label>Detalles</label>               
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" autocomplete="off" id="editaDetalles">
-                     </div>
-                   </div> 
-                </div>
+              <div class="col-lg-6 col-xs-11">                                   
+                     <label for="edescripcionEquipo">Descripción</label> 
+                    <input type="text" class="form-control" id="edescripcionEquipo" value="" readonly>                  
+              </div>                            
 
-                <div class="form-group">
-                    <div class="form-group"> 
-                     <label>Tipo</label>               
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <select class="form-control" id="pedidoTipoEdita" style="width: 100%;" name="pedidoTipoEdita" required> 
+           </div> 
+
+           <br>
+
+            <!--=====================================
+            PRECIO Y DETALLE EQUIPOS GUIA DESPACHO
+            ======================================--> 
+
+            <div class="row">   
+
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="efechaArriendo">Fecha Arriendo</label> 
+                    <input type="date" class="form-control" id="efechaArriendo">                  
+              </div>           
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="eguiaTipoMovimiento">Movimiento</label> 
+                    <select class="form-control" id="eguiaTipoMovimiento" style="width: 100%;" name="eguiaTipoMovimiento" required>
                            <option value="<?php echo ARRIENDO?>">ARRIENDO</option>   
                            <option value="<?php echo CAMBIO?>">CAMBIO</option>
-                         </select>            
-                     </div>
-                   </div> 
-                </div>
-                                              
-              
+                     </select>                    
+              </div>
+
+              <div class="col-lg-7 col-xs-11">                                   
+                     <label for="edetalleEquipo">Detalle</label> 
+                    <input type="text" class="form-control" autocomplete="off" id="edetalleEquipo" value="">                  
+              </div>
+                            
+
+           </div>               
+           
+
               
           </div>
 
