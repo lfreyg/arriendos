@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2022 a las 07:48:19
+-- Tiempo de generación: 12-05-2022 a las 08:40:51
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -367,22 +367,23 @@ CREATE TABLE `guia_despacho_detalle` (
   `id_tipo_movimiento` int(11) NOT NULL COMMENT 'arriendo=10, cambio=11',
   `match_cambio` int(11) DEFAULT NULL COMMENT 'id equipo por el que sale, cambio',
   `contrato` int(11) DEFAULT NULL COMMENT 'id guia despacho cuando es cambio',
-  `devuelto` int(1) DEFAULT 0
+  `devuelto` int(1) DEFAULT 0,
+  `id_devolucion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `guia_despacho_detalle`
 --
 
-INSERT INTO `guia_despacho_detalle` (`id`, `id_guia`, `id_equipo`, `precio_arriendo`, `fecha_arriendo`, `detalle`, `fecha_devolucion`, `id_tipo_movimiento`, `match_cambio`, `contrato`, `devuelto`) VALUES
-(33, 1, 52, 1200, '2022-05-03', '', '0000-00-00', 10, NULL, 1, 0),
-(34, 20, 31, 7500, '2022-05-03', '', '0000-00-00', 10, NULL, 20, 0),
-(35, 19, 16, 5000, '2022-05-03', '', '0000-00-00', 10, NULL, 19, 1),
-(36, 20, 36, 7500, '2022-05-03', '', '0000-00-00', 11, NULL, 20, 0),
-(39, 21, 11, 1200, '2022-05-09', '', '0000-00-00', 11, NULL, 21, 0),
-(40, 21, 48, 3400, '2022-05-09', 'sin detalles', '0000-00-00', 11, NULL, 21, 0),
-(45, 21, 10, 7500, '2022-05-09', '', '0000-00-00', 10, NULL, 21, 0),
-(46, 21, 32, 1200, '2022-05-09', '', '0000-00-00', 10, NULL, 21, 0);
+INSERT INTO `guia_despacho_detalle` (`id`, `id_guia`, `id_equipo`, `precio_arriendo`, `fecha_arriendo`, `detalle`, `fecha_devolucion`, `id_tipo_movimiento`, `match_cambio`, `contrato`, `devuelto`, `id_devolucion`) VALUES
+(33, 1, 52, 1200, '2022-05-12', '', '0000-00-00', 10, NULL, 1, 0, NULL),
+(34, 20, 31, 7500, '2022-05-03', '', '0000-00-00', 10, NULL, 20, 0, NULL),
+(35, 19, 16, 5000, '2022-05-03', '', '0000-00-00', 10, NULL, 19, 1, NULL),
+(36, 20, 36, 7500, '2022-05-03', '', '0000-00-00', 11, NULL, 20, 0, NULL),
+(39, 21, 11, 1200, '2022-05-09', '', '0000-00-00', 11, NULL, 21, 0, NULL),
+(40, 21, 48, 3400, '2022-05-09', 'sin detalles', '0000-00-00', 11, NULL, 21, 0, NULL),
+(45, 21, 10, 7500, '2022-05-09', '', '0000-00-00', 10, NULL, 21, 0, NULL),
+(46, 21, 32, 1200, '2022-05-09', '', '0000-00-00', 10, NULL, 21, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -591,6 +592,29 @@ INSERT INTO `proveedores` (`id`, `rut`, `nombre`, `contacto`, `direccion`, `tele
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `report_devolucion`
+--
+
+CREATE TABLE `report_devolucion` (
+  `id` int(11) NOT NULL,
+  `id_constructoras` int(11) NOT NULL,
+  `id_obras` int(11) NOT NULL,
+  `fecha_report` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id_usuario` int(11) NOT NULL,
+  `documento` text COLLATE utf8_spanish_ci DEFAULT NULL,
+  `estado` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `report_devolucion`
+--
+
+INSERT INTO `report_devolucion` (`id`, `id_constructoras`, `id_obras`, `fecha_report`, `id_usuario`, `documento`, `estado`) VALUES
+(1, 5, 10, '2022-05-12 04:30:09', 1, 'vistas/img/Report/1.pdf', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `roles`
 --
 
@@ -698,7 +722,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `id_sucursal`, `creacion`) VALUES
-(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-05-09 22:59:45', '2022-05-10 02:59:45', 1, '2022-03-11 21:40:11'),
+(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, 'vistas/img/usuarios/lfrey/524.jpg', 1, '2022-05-11 22:40:58', '2022-05-12 02:40:58', 1, '2022-03-11 21:40:11'),
 (2, 'CRISTIAN VALLEJOS', 'cvallejos', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 2, 'vistas/img/usuarios/cvallejos/678.jpg', 1, '2022-02-23 18:16:46', '2022-03-03 13:35:00', 1, '2022-03-11 21:40:11'),
 (3, 'BASTIAN FREY', 'bfrey', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 1, '', 1, '2022-04-01 19:28:06', '2022-04-01 22:28:06', 1, '2022-04-01 22:21:17'),
 (4, 'ADMINISTRADOR', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, '', 1, '2022-04-28 22:01:38', '2022-04-29 02:01:38', 1, '2022-04-27 06:00:09');
@@ -813,6 +837,12 @@ ALTER TABLE `precios_clientes`
 -- Indices de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `report_devolucion`
+--
+ALTER TABLE `report_devolucion`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -956,6 +986,12 @@ ALTER TABLE `precios_clientes`
 --
 ALTER TABLE `proveedores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `report_devolucion`
+--
+ALTER TABLE `report_devolucion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`

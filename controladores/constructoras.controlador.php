@@ -310,6 +310,15 @@ class ControladorConstructoras{
 
 		}
 		
+
+		static public function ctrMostrarConstructoraSoloConArriendosActivos(){		
+
+				$respuesta = ModeloConstructoras::mdlMostrarConstructoraSoloConArriendosActivos();
+
+		       return $respuesta;
+	
+	}
+		
 	
 	
 		

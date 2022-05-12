@@ -224,7 +224,14 @@ class ControladorObras{
 			}
 		}
 		
+	   static public function ctrMostrarObrasSoloConEquiposActivos($idConstructora){
+
+		
+		$respuesta = ModeloObras::mdlMostrarObrasSoloConEquiposActivos($idConstructora);
+
+		return $respuesta;
 	
+	}
 	
 		
 	}

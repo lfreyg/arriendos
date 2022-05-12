@@ -176,6 +176,18 @@ class ModeloConstructoras{
 		$stmt = null;
 
 	}
+
+	static public function mdlMostrarConstructoraSoloConArriendosActivos(){
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT c.id as id, c.nombre as nombre FROM guia_despacho_detalle gdd join guia_despacho gd on gdd.id_guia = gd.id join constructoras c on gd.id_constructoras = c.id where gdd.devuelto = 0;");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();		
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
 	
 
 }

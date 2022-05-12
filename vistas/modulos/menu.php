@@ -114,6 +114,14 @@
 
 							</li>
 
+							<li>
+								<a href="devolucion-equipos-arriendos">
+									<i class="fa fa-circle-o"></i>
+									<span>Report Devolución</span>
+								</a>
+
+							</li>
+
 
 
 				         </ul>
