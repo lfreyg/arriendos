@@ -202,6 +202,26 @@ class ModeloEquipos{
 
 	}	
 
+	static public function mdlMostrarEquiposArrendados($filtro,$idObra){
+
+		
+		if($filtro == null){
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id where gd.id_obras = $idObra and gdd.devuelto = 0 order by ne.descripcion");
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id where gd.id_obras = $idObra and gdd.devuelto = 0 and e.id_nombre_equipos = $filtro order by ne.descripcion");
+		}	
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
 
 	 static public function mdlSeleccionarEquiposGuiaDespacho($id){
 

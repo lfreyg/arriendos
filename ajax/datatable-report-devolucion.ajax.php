@@ -49,13 +49,15 @@ class TablaReportDevolucion{
             $disable_anular = "";
             $disable_detalle = "";
             $estado = 'ACTIVO';
+            $editable = 1;
 
 		  	if($valida == true){
 		  		$disable_anular = 'disabled';
 		  	} 	
 
 		  	if($validaEditar == true){
-		  		$disable_editar = 'disabled';
+		  		$disable_editar = "";
+		  		$editable = 0;
 		  	} 
 
 		     //ESTADO 1 = ACTIVO , 0 = ANULADO
@@ -74,7 +76,7 @@ class TablaReportDevolucion{
 
   			
 
-  				 $botones =  "<div class='btn-group'><button ".$disable_editar." class='btn btn-warning btnEditarReport' idReport='".$report[$i]["idReport"]."'><i class='fa fa-pencil'></i></button><button ".$disable_anular." class='btn btn-success btnEliminarReport' idReport='".$report[$i]["idReport"]."'><i class='fa fa-times'></i></button><button ".$disable_detalle." class='btn btn-info btnDetalleReport' title='Detalle' idReport='".$report[$i]["idReport"]."'><i class='fa fa-th'></i></button></div>";
+  				 $botones =  "<div class='btn-group'><button ".$disable_editar." class='btn btn-warning btnEditarReport' editable='".$editable."', idReport='".$report[$i]["idReport"]."'><i class='fa fa-pencil'></i></button><button ".$disable_anular." class='btn btn-success btnEliminarReport' idReport='".$report[$i]["idReport"]."'><i class='fa fa-times'></i></button><button ".$disable_detalle." class='btn btn-info btnDetalleReport' title='Detalle' idReport='".$report[$i]["idReport"]."'><i class='fa fa-th'></i></button></div>";
 
   				  	       
 		 

@@ -116,7 +116,7 @@ MODAL AGREGAR
 
             <!-- COMBO CLIENTE -->
 
-           <div class="row">          
+           <div class="row" id="idDivConstructora">          
              <div class="col-lg-8 col-xs-11"> 
              <label for="nuevaConstructoraReport">Cliente</label> 
                 <select class="select2" id="nuevaConstructoraReport" style="width: 100%;" name="nuevaConstructoraReport" required>
@@ -171,8 +171,8 @@ MODAL AGREGAR
 
         <?php
 
-          $crearGuia = new ControladorGuiaDespacho();
-          $crearGuia -> ctrCrearGuiaDespacho();
+          $crearGuia = new ControladorReportDevolucion();
+          $crearGuia -> ctrCrearReportDevolucion();
 
         ?>
 
@@ -235,7 +235,7 @@ MODAL EDITAR
 
              <br>
 
-            <div class="row">
+            <div class="row" id="mostrarConstructora">
              <div class="col-lg-8 col-xs-11"> 
              <label for="editaConstructoraReport">Cliente</label> 
                 <select class="form-control input-lg" id="editaConstructoraReport" style="width: 100%;" name="editaConstructoraReport" required>
@@ -258,7 +258,7 @@ MODAL EDITAR
            <br>
 
              <!-- COMBO OBRA -->
-         <div class="row"> 
+         <div class="row" id="mostrarObra"> 
             <div class="col-lg-6 col-xs-11">               
                 <label>Destino</label>              
                    <div id="edita_obras_combo"></div>               
@@ -320,8 +320,8 @@ MODAL EDITAR
 
 <?php
 
-  $eliminarGuia = new ControladorGuiaDespacho();
-  $eliminarGuia -> ctrEliminarGuiaDEspacho();
+  $eliminarGuia = new ControladorReportDevolucion();
+  $eliminarGuia -> ctrEliminarReportDevolucion();
 
 ?>      
 

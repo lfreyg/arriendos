@@ -12,7 +12,7 @@ class ModeloReportDevolucion{
 
 		
 			
-			$stmt = Conexion::conectar()->prepare("SELECT rd.id as idReport, rd.id_constructoras as idConstructora, c.nombre as constructora, rd.id_obras as idObra, o.nombre as obra, rd.id_usuario as idUsuario, u.nombre, rd.documento as documento, rd.estado as estado, rd.fecha_report as creado FROM report_devolucion rd LEFT JOIN constructoras c ON rd.id_constructoras = c.id LEFT JOIN obras o ON rd.id_obras = o.id LEFT JOIN usuarios u ON rd.id_usuario = u.id where rd.id_usuario =  $idUsuario ORDER BY rd.id desc");
+			$stmt = Conexion::conectar()->prepare("SELECT rd.id as idReport, rd.id_constructoras as idConstructora, c.nombre as constructora, rd.id_obras as idObra, o.nombre as obra, rd.id_usuario as idUsuario, u.nombre, rd.documento as documento, rd.estado as estado, rd.fecha_report as creado FROM report_devolucion rd JOIN constructoras c ON rd.id_constructoras = c.id JOIN obras o ON rd.id_obras = o.id JOIN usuarios u ON rd.id_usuario = u.id where rd.id_usuario =  $idUsuario ORDER BY rd.id desc");
 
 			$stmt -> execute();
 
@@ -60,21 +60,20 @@ class ModeloReportDevolucion{
 	/*=============================================
 	REGISTRO 
 	=============================================*/
-	static public function mdlIngresarPedidoEquipo($tabla, $datos){
+	static public function mdlIngresarReportDevolucion($tabla, $datos){
 
 		
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_constructoras, id_obras, id_sucursal, id_usuario, documento, orden_compra) VALUES (:id_constructora, :id_obra, :id_sucursal, :id_usuario, :documento, :oc)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_constructoras, id_obras, id_usuario, documento) VALUES (:id_constructora, :id_obra, :id_usuario, :documento)");
 
 		$stmt->bindParam(":id_constructora", $datos["id_constructora"], PDO::PARAM_INT);
-		$stmt->bindParam(":id_obra", $datos["id_obra"], PDO::PARAM_INT);
-		$stmt->bindParam(":id_sucursal", $datos["id_sucursal"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_obra", $datos["id_obra"], PDO::PARAM_INT);		
 		$stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);		
 		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
-		$stmt->bindParam(":oc", $datos["oc"], PDO::PARAM_STR);
+		
 		
 		if($stmt->execute()){
 
-			$sql = Conexion::conectar()->prepare("SELECT MAX(id) as id from pedido_equipo");
+			$sql = Conexion::conectar()->prepare("SELECT MAX(id) as id from report_devolucion");
  
                $sql->execute();
                return $sql -> fetch();                 
@@ -122,20 +121,19 @@ class ModeloReportDevolucion{
 	BORRAR 
 	=============================================*/
 
-	static public function mdlEliminarPedidoEquipo($tabla, $datos){
+	static public function mdlEliminarReportDevolucion($idReport){
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+		$estado = 2; //VUELVE LOS EQUIPOS A ARRENDADO
+		
+       $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado, e.tiene_movimiento = 1, gdd.devuelto = 0, gdd.id_devolucion = NULL WHERE gdd.id_devolucion = $idReport"); 
+               $sqlGuia->execute();
 
-		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+		$stmt = Conexion::conectar()->prepare("DELETE FROM report_devolucion WHERE id = $idReport");
 
+	
 		if($stmt -> execute()){
-
-			$stmt2 = Conexion::conectar()->prepare("DELETE FROM pedido_equipo_detalle WHERE id_pedido_equipo = :id");
-			$stmt2 -> bindParam(":id", $datos, PDO::PARAM_INT);
-			$stmt2 -> execute();
-
-			   return "ok";
 			
+			   return "ok";	
 		
 		}else{
 

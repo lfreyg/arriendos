@@ -29,11 +29,11 @@ class ControladorReportDevolucion{
 	CREAR 
 	=============================================*/
 
-	static public function ctrCrearPedidoEquipo(){
+	static public function ctrCrearReportDevolucion(){
 
 		
 
-		if(isset($_POST["nuevaPedidoConstructora"])){
+		if(isset($_POST["nuevaConstructoraReport"])){
 			   	
 		   		/*=============================================
 				VALIDAR IMAGEN
@@ -42,26 +42,24 @@ class ControladorReportDevolucion{
 		   $ruta = null;		
 
 			
-				$tabla = "pedido_equipo";
+				$tabla = "report_devolucion";
 
-				$datos = array("id_constructora" => $_POST["nuevaPedidoConstructora"],
-							   "id_obra" => $_POST["comboObras"],
-							   "id_sucursal" => $_POST["nuevaSucursalPedido"],
-							   "documento" => $ruta,
-							   "oc" => $_POST["nuevoPedidoOC"],
+				$datos = array("id_constructora" => $_POST["nuevaConstructoraReport"],
+							   "id_obra" => $_POST["comboObras"],							   
+							   "documento" => $ruta,							   
 							   "id_usuario"=>$_SESSION["id"]);
 
                
                 
 
-				$respuesta = ModeloPedidoEquipo::mdlIngresarPedidoEquipo($tabla, $datos);
+				$respuesta = ModeloReportDevolucion::mdlIngresarReportDevolucion($tabla, $datos);
 
 				if($respuesta != "error"){
                       
-					$_SESSION['idPedidoEquipo'] = $respuesta["id"];
+					$_SESSION['idReportDevolucion'] = $respuesta["id"];
 
 					echo'<script>		
-                                     window.location = "pedido-equipos-detalle";
+                                     window.location = "devolucion-equipos-arriendos";
 										
 
 						</script>';
@@ -132,15 +130,15 @@ class ControladorReportDevolucion{
 	/*=============================================
 	BORRAR 
 	=============================================*/
-	static public function ctrEliminarPedidoEquipo(){
+	static public function ctrEliminarReportDevolucion(){
 
-		if(isset($_GET["idPedido"])){
-
-			$tabla ="pedido_equipo";
-			$datos = $_GET["idPedido"];
+		if(isset($_GET["idReport"])){
 
 			
-			$respuesta = ModeloPedidoEquipo::mdlEliminarPedidoEquipo($tabla, $datos);
+			$idReport = $_GET["idReport"];
+
+			
+			$respuesta = ModeloReportDevolucion::mdlEliminarReportDevolucion($idReport);
 
 			if($respuesta == "ok"){
 
@@ -148,13 +146,13 @@ class ControladorReportDevolucion{
 
 				swal({
 					  type: "success",
-					  title: "Pedido ha sido borrado correctamente",
+					  title: "Report ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "pedido-equipos";
+								window.location = "devolucion-equipos-arriendos";
 
 								}
 							})

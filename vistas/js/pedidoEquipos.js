@@ -7,6 +7,7 @@ $('.tablaPedido').DataTable( {
     "ajax": "ajax/datatable-pedido-equipo.ajax.php",
     "deferRender": true,
 	"retrieve": true,
+	"order":[[0,"desc"]],
 	"processing": true,
 	 "language": {
 

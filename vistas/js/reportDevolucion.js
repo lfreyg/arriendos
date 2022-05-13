@@ -7,6 +7,7 @@ $('.tablaReportDevolucion').DataTable( {
     "ajax": "ajax/datatable-report-devolucion.ajax.php",
     "deferRender": true,
 	"retrieve": true,
+	"order":[[0,"desc"]],
 	"processing": true,
 	 "language": {
 
@@ -94,6 +95,7 @@ EDITAR
 $(".tablaReportDevolucion tbody").on("click", "button.btnEditarReport", function(){
 
 	var idReport = $(this).attr("idReport");
+	var editable = $(this).attr("editable");
 
 	var datos = new FormData();
 	datos.append("idReport", idReport);
@@ -117,10 +119,19 @@ $(".tablaReportDevolucion tbody").on("click", "button.btnEditarReport", function
      		 
             edita_combo_obras(respuesta["id_constructoras"],respuesta["id_obras"]);
          
-            
+          if(editable == 0){
+          	$('#mostrarConstructora').css("display", "none"); 	
+          	$('#mostrarObra').css("display", "none");
+          }else{
+          	$('#mostrarConstructora').css("display", "block");
+          	$('#mostrarObra').css("display", "block");
+          }
+         
+         
 
 
      		$("#modalEditarReport").modal("show"); 
+
      		   		
 
      	}
@@ -136,70 +147,40 @@ $(".tablaReportDevolucion tbody").on("click", "button.btnEditarReport", function
 ELIMINAR 
 =============================================*/
 
-$(".tablaReportDevolucion tbody").on("click", "button.btnEliminarGuiaDespacho", function(){
+$(".tablaReportDevolucion tbody").on("click", "button.btnEliminarReport", function(){
 
-	var idGuia = $(this).attr("idGuia");
-	var idEstado = $(this).attr("idEstado");
-
-
-  if(idEstado == 13){
+	var idReport = $(this).attr("idReport");
+	
+ 
 	swal({
 
-		title: '¿Está seguro de ANULAR la Guía de despacho?',
+		title: '¿Está seguro de ELIMINAR el Report de Devolución?',
 		text: "¡Si no lo está puede cancelar la accíón!",
 		type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, ANULAR Guía!'
-        }).then(function(result) {
-        if (result.value) {        
-
-        	window.location = "index.php?ruta=guia-despacho-arriendos&idGuia="+idGuia+"&idEstado="+idEstado;
-
-        }
-
-
-	})
- }
-
-
- if(idEstado == 12){
-	swal({
-
-		title: '¿Está seguro de ELIMINAR la Guía de despacho sin enviar a SII?',
-		text: "¡Si no lo está puede cancelar la accíón!",
-		type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, ELIMINAR Guía!'
+        confirmButtonText: 'Si, ELIMINAR Report!'
         }).then(function(result) {
         if (result.value) {
 
-        	window.location = "index.php?ruta=guia-despacho-arriendos&idGuia="+idGuia+"&idEstado="+idEstado;
+        	window.location = "index.php?ruta=devolucion-equipos-arriendos&idReport="+idReport;
 
         }
 
 
 	})
- }
-
-
-
-
 
 })
 	
 
 
-$(".tablaReportDevolucion tbody").on("click", "button.btnDetalleGuiaDespacho", function(){
+$(".tablaReportDevolucion tbody").on("click", "button.btnDetalleReport", function(){
 
-	var idGuia = $(this).attr("idGuia");
+	var idReport = $(this).attr("idReport");
 
-	window.location = "index.php?ruta=guia-despacho-arriendos-detalle&idGuia="+idGuia;
+	window.location = "index.php?ruta=devolucion-equipos-arriendos-detalle&idReport="+idReport;
 
 })
 
@@ -239,10 +220,11 @@ $("#editaReportDoc").change(function(){
 function genera_edita_combo_obras(id) {
 
 	id = id;
-   idObra = 0;
+   idObra = 0;  
 
 	datos = "id=" + id +
 	        "&idObra=" + idObra;
+	        
 
 
 	$.ajax({
@@ -269,6 +251,7 @@ function edita_combo_obras(id,idObra) {
 
 	datos = "id=" + id +
 	        "&idObra=" + idObra;
+	        
 
 
 	$.ajax({

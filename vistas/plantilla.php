@@ -155,9 +155,10 @@ CUERPO DOCUMENTO
     define("PENDIENTE",8);
     define("FINALIZADO",9);
 
-    //ESTADO EQUIPO PEDIDO
+    //ESTADO EQUIPO PEDIDO, GUIA, REPORT
     define("ARRIENDO",10);
     define("CAMBIO",11);
+    define("TERMINO",15);
 
     /*=============================================
     CONTENIDO
@@ -185,6 +186,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "guia-despacho-arriendos" ||
          $_GET["ruta"] == "guia-despacho-arriendos-detalle" ||
          $_GET["ruta"] == "devolucion-equipos-arriendos" ||
+         $_GET["ruta"] == "devolucion-equipos-arriendos-detalle" ||
 
          
          $_GET["ruta"] == "salir"){
