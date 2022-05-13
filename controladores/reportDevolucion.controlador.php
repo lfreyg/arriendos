@@ -59,7 +59,7 @@ class ControladorReportDevolucion{
 					$_SESSION['idReportDevolucion'] = $respuesta["id"];
 
 					echo'<script>		
-                                     window.location = "devolucion-equipos-arriendos";
+                                     window.location = "devolucion-equipos-arriendos-detalle";
 										
 
 						</script>';
