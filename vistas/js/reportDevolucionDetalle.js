@@ -1,7 +1,7 @@
 recargaTabla();
 
 
-function genera_tabla_arriendos() {
+function genera_tabla_retiro() {
 
 	id = $('#idReport').val();    
 
@@ -10,7 +10,7 @@ function genera_tabla_arriendos() {
 	$.ajax({
 
 
-		url: "ajax/tabla-equipos-guia.ajax.php",
+		url: "ajax/tabla-equipos-retirados.ajax.php",
 		method: "POST",
 		data: datos,
 
@@ -24,10 +24,11 @@ function genera_tabla_arriendos() {
 
 
 
-$(".tablaEquiposGuia tbody").on("click", "button.agregarEquipoArriendo", function() {
+$(".tablaEquiposGuia tbody").on("click", "button.agregarEquipo", function() {
 
 
-	var idEquipoParaArriendo = $(this).attr("idEquipoParaArriendo");
+	var idEquipoParaArriendo = $(this).attr("idEquipoParaRetiro");
+	var idGuiaDetalle = $(this).attr("idGuiaDetalle");
 
 	var datos = new FormData();
 	datos.append("idEquipoParaArriendo", idEquipoParaArriendo);
@@ -45,51 +46,22 @@ $(".tablaEquiposGuia tbody").on("click", "button.agregarEquipoArriendo", functio
 
 			var descripcion = respuesta["descripcion"] + ' ' + respuesta["marca"];
 			var idTipoEquipo = respuesta["idTipoEquipo"];
-			var idObra = $('#idObra').val();
+			var idObra = $('#idObra').val();			              
 
-			               precio = formatterPeso.format(respuesta["precio"])
-
+			                $('#idGuiaDetalle').val(idGuiaDetalle);
 			                $('#idEquipoDetalle').val(respuesta["idEquipo"]);
-							$('#codigoEquipo').val(respuesta["codigo"]);
-							$('#serieEquipo').val(respuesta["serie"]);
-							$('#descripcionEquipo').val(descripcion);
-							$('#modeloEquipo').val(respuesta["modelo"]);
-							$('#precioEquipo').val(precio);
-							$('#precioEquipoSinFormato').val(respuesta["precio"]);
-							$('#detalleEquipo').val('');	
-			                //$('#guiaTipoMovimiento').val(10);
+					  $('#codigoEquipo').val(respuesta["codigo"]);
+					  $('#serieEquipo').val(respuesta["serie"]);
+					  $('#descripcionEquipo').val(descripcion);
+					  $('#modeloEquipo').val(respuesta["modelo"]);	
+					  $('#detalleEquipo').val('');
+					  $('#detalleEquipo').focus();	
+			               // $('#reportTipoMovimiento').val(15);
 
 
-                        var datos2 = new FormData();
-                        datos2.append("idTipoEquipo", idTipoEquipo);
-	                    datos2.append("idObra", idObra);
+                       
 
-	                    //alert(idTipoEquipo);
-	                  //  alert(idObra);
-
-                     $.ajax({  
-			            url: "ajax/equipos-guia-arriendo.ajax.php",
-						method: "POST",
-						data: datos2,
-						cache: false,
-						contentType: false,
-						processData: false,
-						dataType: "json",
-						success: function(convenio) {					
-						
-						  if(convenio["precio"] > 0){	
-								
-							precio = formatterPeso.format(convenio["precio"]);
-							$('#precioEquipo').val(precio);
-							$('#precioEquipoSinFormato').val(convenio["precio"]);	
-						  }				
-
-		                }
-		             });
-
-
-
-			
+                     
 		}
 
 	});
@@ -99,53 +71,46 @@ $(".tablaEquiposGuia tbody").on("click", "button.agregarEquipoArriendo", functio
 });
 
 
-$('#btnAgregarEquipo').click(function() {
+$('#btnRetirarEquipo').click(function() {
 
 		
 	if ($('#idEquipoDetalle').val() == '') {
-		alertify.error("Seleccione un equipo de la lista disponible para arriendos");
+		alertify.error("Seleccione un equipo de la lista disponible para retiro");
 		return false;
 	}
 
-	idGuia = $('#idGuiaGenerado').val();
-	idEquipo = $('#idEquipoDetalle').val();
-	precio = $('#precioEquipoSinFormato').val();
-	fechaArriendo = $('#fechaArriendo').val();
-	detalle = $('#detalleEquipo').val();
-	fechaDevolucion = $('#fechaTerminoGuia').val();	
-	movimiento = $('#guiaTipoMovimiento').val();
-	idEmpresa = $('#idEmpresaOperativa').val();
+	idRegistroGuiaDetalle = $('#idGuiaDetalle').val();
+	idEquipo = $('#idEquipoDetalle').val();	
+	fechaRetiro = $('#fechaRetiro').val();
+	detalle = $('#detalleEquipo').val();		
+	movimiento = $('#reportTipoMovimiento').val();	
+	idReportDevolucion = $('#idReport').val();
 	
-	
-	datos = "idGuia=" + idGuia +
-		"&idEquipo=" + idEquipo +
-		"&precio=" + precio +
-		"&fechaArriendo=" + fechaArriendo +
-		"&detalle=" + detalle +
-		"&fechaDevolucion=" + fechaDevolucion +
-		"&contrato=" + idGuia +
-		"&movimiento=" + movimiento +
-		"&idEmpresa=" + idEmpresa;
+	datos = "idRegistroGuiaDetalle=" + idRegistroGuiaDetalle +
+		"&idEquipo=" + idEquipo +		
+		"&fechaRetiro=" + fechaRetiro +
+		"&detalle=" + detalle +		
+		"&movimiento=" + movimiento + 
+		"&idReportDevolucion=" + idReportDevolucion;
+		
 
 
 	$.ajax({
 
 		type: "POST",
-		url: "ajax/guarda-equipo-detalle-guia.ajax.php",
+		url: "ajax/guarda-equipo-detalle-report.ajax.php",
 		data: datos,
 
 		success: function(res) {
 
-			genera_tabla_arriendos();
-			alertify.success("Arriendo agregado a la Guía");			
-			$('#idEquipoDetalle').val('');
+			genera_tabla_retiro();
+			alertify.success("Retiro realizado");			
 			$('#codigoEquipo').val('');
-			$('#serieEquipo').val('');
+			$('#serieEquipo').val('');			
 			$('#descripcionEquipo').val('');
-			$('#modeloEquipo').val('');
-			$('#precioEquipo').val('');
+			$('#modeloEquipo').val('');			
 			$('#detalleEquipo').val('');	
-			$('#guiaTipoMovimiento').val(10);
+			$('#reportTipoMovimiento').val(15);
 			var idTipoEquipo = $('#seleccionaTipoEquipo').val();
 	        $('.tablaEquiposGuia').DataTable().destroy();
 
@@ -166,8 +131,7 @@ $('#seleccionaTipoEquipo').change(function() {
 	$('#codigoEquipo').val('');
 	$('#serieEquipo').val('');
 	$('#descripcionEquipo').val('');
-	$('#modeloEquipo').val('');
-	$('#precioEquipo').val('');
+	$('#modeloEquipo').val('');	
 	$('#detalleEquipo').val('');	
 	//$('#guiaTipoMovimiento').val(10);
 
@@ -243,7 +207,7 @@ function editar(id) {
 
 	$.ajax({
 
-		url: "ajax/equipos-guia-arriendo.ajax.php",
+		url: "ajax/equipos-report-retiro.ajax.php",
 		method: "POST",
 		data: datos,
 		cache: false,
@@ -263,11 +227,11 @@ function editar(id) {
 
 			
 
-			    $("#ecodigoEquipo").val(codigo);
+			       $("#ecodigoEquipo").val(codigo);
 				$("#edescripcionEquipo").val(descripcion);
-				$("#efechaArriendo").val(fecha);
+				$("#efechaTermino").val(fecha);
 				$("#eidArriendo").val(idRegistroDetalle);
-				$('#eguiaTipoMovimiento').val(movimiento);
+				$('#eReportTipoMovimiento').val(movimiento);
 				$('#edetalleEquipo').val(detalle);			
 				
 
@@ -290,14 +254,14 @@ $('#btnGuardarEdita').click(function() {
 	
 
 	idArriendo = $('#eidArriendo').val();
-	fechaArriendo = $('#efechaArriendo').val();
-	movimiento = $("#eguiaTipoMovimiento").val();
+	fechaTermino = $('#efechaTermino').val();
+	movimiento = $("#eReportTipoMovimiento").val();
 	detalle = $('#edetalleEquipo').val();
 			
 				
 
 	datos = "idArriendo=" + idArriendo +
-		"&fechaArriendo=" + fechaArriendo +		
+		"&fechaTermino=" + fechaTermino +		
 		"&movimiento=" + movimiento + 
 		"&detalle=" + detalle;
 
@@ -305,13 +269,13 @@ $('#btnGuardarEdita').click(function() {
 	$.ajax({
 
 		type: "POST",
-		url: "ajax/edita-equipo-detalle-guia-arriendo.ajax.php",
+		url: "ajax/edita-equipo-detalle-report-devolucion.ajax.php",
 		data: datos,
 
 		success: function(res) {
 
-			alertify.success("Equipo actualizado");
-			genera_tabla_arriendos();
+			alertify.success("Retiro actualizado");
+			genera_tabla_retiro();
 
 
 		}
@@ -371,7 +335,7 @@ $('#btnVolver').click(function() {
 
 function eliminarConsulta(idRegistro,idEquipo) {
 	
-	alertify.confirm('ELIMINAR EQUIPO', 'Esta seguro de eliminar el equipo de la guía de despacho?', function() {
+	alertify.confirm('ANULAR RETIRO', 'Esta seguro de ANULAR el retiro de este equipo?', function() {
 		elimina_equipo(idRegistro,idEquipo)
 	}, function() {});
 }
@@ -388,7 +352,7 @@ function elimina_equipo(idRegistro,idEquipo) {
 
 
 	$.ajax({
-		url: "ajax/equipos-guia-arriendo.ajax.php",
+		url: "ajax/equipos-report-retiro.ajax.php",
 		method: "POST",
 		data: datos,
 		cache: false,
@@ -397,8 +361,8 @@ function elimina_equipo(idRegistro,idEquipo) {
 		dataType: "json",
 		success: function(r) {
 
-			alertify.success("Equipo Eliminado de la guía de despacho");
-			genera_tabla_arriendos();
+			alertify.success("Retiro anulado para este equipo");
+			genera_tabla_retiro();
 
 			var idTipoEquipo = $('#seleccionaTipoEquipo').val();
 	        $('.tablaEquiposGuia').DataTable().destroy();

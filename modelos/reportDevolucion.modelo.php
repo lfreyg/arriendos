@@ -125,7 +125,7 @@ class ModeloReportDevolucion{
 
 		$estado = 2; //VUELVE LOS EQUIPOS A ARRENDADO
 		
-       $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado, e.tiene_movimiento = 1, gdd.devuelto = 0, gdd.id_devolucion = NULL WHERE gdd.id_devolucion = $idReport"); 
+       $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado, e.tiene_movimiento = 1, gdd.devuelto = 0, gdd.fecha_devolucion_real = NULL, gdd.contrato = gdd.id_guia, gdd.match_cambio = NULL, gdd.id_report_devolucion = NULL, gdd.devolucion_tipo = NULL, gdd.detalle_devolucion = NULL WHERE gdd.id_report_devolucion = $idReport"); 
                $sqlGuia->execute();
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM report_devolucion WHERE id = $idReport");
@@ -151,10 +151,10 @@ class ModeloReportDevolucion{
 
 		
 
-			$stmt = Conexion::conectar()->prepare("SELECT gdd.* FROM guia_despacho_detalle gdd join equipos e ON gdd.id_equipo = e.id where gdd.devuelto = 1 and e.id_estado != 1 and gdd.id_devolucion = $idDevolucion");
+			$stmt = Conexion::conectar()->prepare("SELECT gdd.* FROM guia_despacho_detalle gdd join equipos e ON gdd.id_equipo = e.id where gdd.devuelto = 1 and e.id_estado != 1 and gdd.id_report_devolucion  = $idDevolucion");
 
 			
-			$stmt -> execute();
+		    $stmt -> execute();
    		    return $stmt -> fetchAll();
 		    $stmt -> close();
 		    $stmt = null;
@@ -165,7 +165,7 @@ class ModeloReportDevolucion{
 
 		
 
-			$stmt = Conexion::conectar()->prepare("SELECT gdd.* FROM guia_despacho_detalle gdd where gdd.id_devolucion = $idDevolucion");
+			$stmt = Conexion::conectar()->prepare("SELECT gdd.* FROM guia_despacho_detalle gdd where gdd.id_report_devolucion = $idDevolucion");
 
 			
 			$stmt -> execute();

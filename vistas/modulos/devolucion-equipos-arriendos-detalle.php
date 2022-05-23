@@ -44,7 +44,7 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
     
     <h1>
       
-      Detalle Report Devolución <?php echo $report["numReport"]?>
+      Report Devolución N° <?php echo $report["numReport"]?>
     
     </h1>
 
@@ -52,7 +52,7 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
       
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
       <li><a href="devolucion-equipos-arriendos">Lista de Report</a></li>      
-      <li class="active">Detalle Report Devolución </li>
+      <li class="active">Report Devolución </li>
     
     </ol>
 
@@ -61,6 +61,68 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
   <section class="content">
 
     <div class="row">
+     <!--=====================================
+      LA TABLA DE PRODUCTOS
+      ======================================-->
+
+      <div class="col-lg-5 col-xs-11">
+        
+        <div class="box box-warning">
+
+          <div class="box-header with-border"></div>
+
+          <div class="box-body">
+
+                     <div class="form-group">
+                      
+                      <div class="input-group">
+                      
+                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                        <select class="form-control input-lg select2" id="seleccionaTipoEquipo" name="seleccionaTipoEquipo"> 
+                         <option value="">Seleccionar Tipo de Equipo</option>              
+                          
+                          <?php                 
+
+                          $marca = ControladorTipoEquipos::ctrMostrarTipoEquipo(null,null);
+
+                          foreach ($marca as $key => $value) {
+                                      
+                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"]." ".$value["modelo"].'</option>';
+                                    }
+                                          
+
+                          ?>
+
+                        </select>
+
+                      </div>
+
+                    </div>
+            
+            <table class="table table-bordered table-striped table-hover dt-responsive tablaEquiposGuia">
+              
+             <thead style="background-color: #ccc;color: black; font-weight: bold;">
+
+                 <tr>                  
+                  <th>Selección</th>
+                  <th>Código</th>                  
+                  <th>Descripcion</th>                  
+                </tr>
+
+              </thead>
+
+            </table>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+
 
       <!--=====================================
       EL FORMULARIO
@@ -105,14 +167,15 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
       DETALLE EQUIPOS REPORT
       ======================================-->      
                 
-                <h2>Equipos Retirados</h2>
+                <h3>Equipo a retirar</h3>
 
           <div class="row">             
 
               <div class="col-lg-2 col-xs-11">                                   
                      <label for="codigoEquipo">Código</label> 
                     <input type="text" class="form-control" id="codigoEquipo" value="" readonly>
-                     <input type="hidden" id="idEquipoDetalle" name="idEquipoDetalle">                  
+                    <input type="hidden" id="idEquipoDetalle" name="idEquipoDetalle"> 
+                    <input type="hidden" id="idGuiaDetalle" name="idGuiaDetalle">                 
               </div>
 
               <div class="col-lg-2 col-xs-11">                                   
@@ -135,19 +198,19 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
            <br>
 
             <!--=====================================
-            PRECIO Y DETALLE EQUIPOS GUIA DESPACHO
+            DETALLE EQUIPOS DEVOLUCIÓN
             ======================================--> 
 
             <div class="row">  
 
               <div class="col-lg-2 col-xs-11">                                   
-                     <label for="fechaArriendo">Fecha Retiro</label> 
-                    <input type="date" class="form-control" id="fechaArriendo" value="<?php echo $hoy?>">                  
+                     <label for="fechaRetiro">Fecha Retiro</label> 
+                    <input type="date" class="form-control" id="fechaRetiro" value="<?php echo $hoy?>">                  
               </div>           
 
-              <div class="col-lg-2 col-xs-11">                                   
-                     <label for="guiaTipoMovimiento">Movimiento</label> 
-                    <select class="form-control" id="reportTipoMovimiento" style="width: 100%;" name="guiaTipoMovimiento" required>
+              <div class="col-lg-3 col-xs-11">                                   
+                     <label for="reportTipoMovimiento">Movimiento</label> 
+                    <select class="form-control" id="reportTipoMovimiento" style="width: 100%;" name="reportTipoMovimiento" required>
                            <option value="<?php echo TERMINO?>">TERMINO ARRIENDO</option>   
                            <option value="<?php echo CAMBIO?>">CAMBIO</option>
                      </select>                    
@@ -165,7 +228,7 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
 
                   <div class="pull-right">
 
-                        <button class="btn btn-primary" id="btnAgregarEquipo">Retirar Equipo</button>
+                        <button class="btn btn-primary" id="btnRetirarEquipo">Retirar Equipo</button>
             
                    </div>       
                 
@@ -199,65 +262,7 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
             
       </div>
 
-      <!--=====================================
-      LA TABLA DE PRODUCTOS
-      ======================================-->
 
-      <div class="col-lg-5 col-xs-11">
-        
-        <div class="box box-warning">
-
-          <div class="box-header with-border"></div>
-
-          <div class="box-body">
-
-                     <div class="form-group">
-                      
-                      <div class="input-group">
-                      
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-
-                        <select class="form-control input-lg select2" id="seleccionaTipoEquipo" name="seleccionaTipoEquipo"> 
-                         <option value="">Seleccionar Tipo de Equipo</option>              
-                          
-                          <?php                 
-
-                          $marca = ControladorTipoEquipos::ctrMostrarTipoEquipo(null,null);
-
-                          foreach ($marca as $key => $value) {
-                                      
-                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"]." ".$value["modelo"].'</option>';
-                                    }
-                                          
-
-                          ?>
-
-                        </select>
-
-                      </div>
-
-                    </div>
-            
-            <table class="table table-bordered table-striped table-hover dt-responsive tablaEquiposGuia">
-              
-             <thead style="background-color: #ccc;color: black; font-weight: bold;">
-
-                 <tr>                  
-                  <th>Código</th>                  
-                  <th>Descripcion</th>
-                  <th>Selección</th>
-                </tr>
-
-              </thead>
-
-            </table>
-
-          </div>
-
-        </div>
-
-
-      </div>
 
     </div>
    
@@ -277,7 +282,7 @@ MODAL EDITAR
 
 <div id="modalEditarEquipo" class="modal fade" role="dialog">
   
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog">
 
     <div class="modal-content">
 
@@ -291,7 +296,7 @@ MODAL EDITAR
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar Arriendo</h4>
+          <h4 class="modal-title">Editar Retiro</h4>
 
         </div>
 
@@ -305,14 +310,14 @@ MODAL EDITAR
 
              <div class="row">             
 
-              <div class="col-lg-2 col-xs-11">                                   
+              <div class="col-lg-4 col-xs-11">                                   
                      <label for="ecodigoEquipo">Código</label> 
                     <input type="text" class="form-control" id="ecodigoEquipo" value="" readonly>
                      <input type="hidden" id="eidArriendo" name="eidArriendo">                  
               </div>
 
 
-              <div class="col-lg-6 col-xs-11">                                   
+              <div class="col-lg-8 col-xs-11">                                   
                      <label for="edescripcionEquipo">Descripción</label> 
                     <input type="text" class="form-control" id="edescripcionEquipo" value="" readonly>                  
               </div>                            
@@ -322,29 +327,34 @@ MODAL EDITAR
            <br>
 
             <!--=====================================
-            PRECIO Y DETALLE EQUIPOS GUIA DESPACHO
+            DETALLE EQUIPOS
             ======================================--> 
 
             <div class="row">   
 
 
-              <div class="col-lg-2 col-xs-11">                                   
-                     <label for="efechaArriendo">Fecha Arriendo</label> 
-                    <input type="date" class="form-control" id="efechaArriendo">                  
+              <div class="col-lg-4 col-xs-11">                                   
+                     <label for="efechaTermino">Fecha Termino</label> 
+                    <input type="date" class="form-control" id="efechaTermino">                  
               </div>           
 
-              <div class="col-lg-2 col-xs-11">                                   
-                     <label for="eguiaTipoMovimiento">Movimiento</label> 
-                    <select class="form-control" id="eguiaTipoMovimiento" style="width: 100%;" name="eguiaTipoMovimiento" required>
-                           <option value="<?php echo ARRIENDO?>">ARRIENDO</option>   
+              <div class="col-lg-6 col-xs-11">                                   
+                     <label for="eReportTipoMovimiento">Movimiento</label> 
+                    <select class="form-control" id="eReportTipoMovimiento" style="width: 100%;" name="eReportTipoMovimiento" required>
+                           <option value="<?php echo TERMINO?>">TERMINO ARRIENDO</option>   
                            <option value="<?php echo CAMBIO?>">CAMBIO</option>
                      </select>                    
               </div>
+          </div>
+          <br>
 
-              <div class="col-lg-7 col-xs-11">                                   
+              <div class="row">
+
+              <div class="col-lg-10 col-xs-11">                                   
                      <label for="edetalleEquipo">Detalle</label> 
                     <input type="text" class="form-control" autocomplete="off" id="edetalleEquipo" value="">                  
               </div>
+
                             
 
            </div>               
@@ -386,7 +396,7 @@ MODAL EDITAR
   $(document).ready(function(){
 
     
-     genera_tabla_arriendos();
+     genera_tabla_retiro();
 
    });     
 
