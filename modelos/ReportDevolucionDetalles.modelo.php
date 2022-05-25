@@ -16,14 +16,18 @@ class ModeloReportDevolucionDetalles{
 
 	          $stmt2->execute();
 
+        date_default_timezone_set('America/Santiago');
+        $fecha_retiro_obra = date('Y-m-d H:i:s');
         
-        $stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET id_report_devolucion = :idReportDevolucion, fecha_devolucion_real = :fechaRetiro, devuelto = 1, devolucion_tipo = :movimiento, detalle_devolucion = :detalle  WHERE id = :idRegistroGuiaDetalle");
+
+        $stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET id_report_devolucion = :idReportDevolucion, fecha_devolucion_real = :fechaRetiro, devuelto = 1, devolucion_tipo = :movimiento, detalle_devolucion = :detalle, fecha_retiro_obra = :fecha_retiro_obra  WHERE id = :idRegistroGuiaDetalle");
 
 	        $stmt->bindParam(":idRegistroGuiaDetalle", $datos["idRegistroGuiaDetalle"], PDO::PARAM_INT);
 			$stmt->bindParam(":fechaRetiro", strtoupper($datos["fechaRetiro"]), PDO::PARAM_STR);
 			$stmt->bindParam(":detalle", strtoupper($datos["detalle"]), PDO::PARAM_STR);		
 			$stmt->bindParam(":movimiento", strtoupper($datos["movimiento"]), PDO::PARAM_INT);	
-			$stmt->bindParam(":idReportDevolucion", strtoupper($datos["idReportDevolucion"]), PDO::PARAM_INT);          				
+			$stmt->bindParam(":idReportDevolucion", strtoupper($datos["idReportDevolucion"]), PDO::PARAM_INT);
+			$stmt->bindParam(":fecha_retiro_obra", $fecha_retiro_obra, PDO::PARAM_STR);          				
 		
 		
 		if($stmt->execute()){	
@@ -51,7 +55,7 @@ class ModeloReportDevolucionDetalles{
 
 		$estado = 2; //VUELVE LOS EQUIPOS A ARRENDADO
 		
-       $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado, e.tiene_movimiento = 1, gdd.devuelto = 0, gdd.fecha_devolucion_real = NULL, gdd.contrato = gdd.id_guia, gdd.match_cambio = NULL, gdd.id_report_devolucion = NULL, gdd.devolucion_tipo = NULL, gdd.detalle_devolucion = NULL WHERE gdd.id = $id"); 
+       $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado, e.tiene_movimiento = 1, gdd.devuelto = 0, gdd.fecha_devolucion_real = NULL, gdd.contrato = gdd.id_guia, gdd.match_cambio = NULL, gdd.id_report_devolucion = NULL, gdd.devolucion_tipo = NULL, gdd.detalle_devolucion = NULL, gdd.fecha_retiro_obra = NULL WHERE gdd.id = $id"); 
             	
 
 	
@@ -76,7 +80,7 @@ class ModeloReportDevolucionDetalles{
 
 	static public function mdlRetiroPorId($id_report_devolucion){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.fecha_devolucion_real as fecha, es.descripcion as movimiento FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.devolucion_tipo = es.id WHERE gd.id_report_devolucion = $id_report_devolucion order by gd.id desc");
+		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.fecha_devolucion_real as fecha, es.descripcion as movimiento, gd.fecha_retiro_obra as fechaRetiroObra FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.devolucion_tipo = es.id WHERE gd.id_report_devolucion = $id_report_devolucion order by gd.id desc");
 
 		
 		$stmt -> execute();

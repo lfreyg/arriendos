@@ -76,7 +76,7 @@ class TablaReportDevolucion{
 
   			
 
-  				 $botones =  "<div class='btn-group'><button ".$disable_editar." class='btn btn-warning btnEditarReport' editable='".$editable."', idReport='".$report[$i]["idReport"]."'><i class='fa fa-pencil'></i></button><button ".$disable_anular." class='btn btn-success btnEliminarReport' idReport='".$report[$i]["idReport"]."'><i class='fa fa-times'></i></button><button ".$disable_detalle." class='btn btn-info btnDetalleReport' title='Detalle' idReport='".$report[$i]["idReport"]."'><i class='fa fa-th'></i></button></div>";
+  				 $botones =  "<div class='btn-group'><button ".$disable_editar." class='btn btn-warning btnEditarReport' editable='".$editable."', idReport='".$report[$i]["idReport"]."'><i class='fa fa-pencil'></i></button><button ".$disable_anular." class='btn btn-danger btnEliminarReport' idReport='".$report[$i]["idReport"]."'><i class='fa fa-times'></i></button><button ".$disable_detalle." class='btn btn-info btnDetalleReport' title='Detalle' idReport='".$report[$i]["idReport"]."'><i class='fa fa-th'></i></button><button class='btn btn-primary btnImprimeReport' title='Imprimir' idReport='".$report[$i]["idReport"]."'><i class='fa fa-print'></i></button></div>";
 
   				  	       
 		 

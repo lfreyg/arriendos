@@ -252,7 +252,7 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
              </div> 
              <br>   
               <div class="pull-right-container">       
-             <button class="btn btn-lg btn-success btn-block text-uppercase" id="btnFinalizarReport">FINALIZAR REPORT</button>  
+             <button class="btn btn-lg btn-success btn-block text-uppercase" id="btnFinalizarReport">GENERAR REPORT</button>  
             </div>
           </div>
 

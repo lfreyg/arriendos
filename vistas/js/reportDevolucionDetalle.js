@@ -282,44 +282,25 @@ $('#btnGuardarEdita').click(function() {
 	});
 });
 
-$('#btnFinalizarGuia').click(function() {
+$('#btnFinalizarReport').click(function() {
 	
-	id = $('#idGuiaGenerado').val();
-	idEmpresa = $('#idEmpresaOperativa').val();
+	id = $('#idReport').val();
+	
    
-	alertify.confirm('GENERAR GUIA DESPACHO', 'Esta seguro de Generar la Guía de despacho y enviarla al SII?', function() {
-		finalizaGuiaDespachoArriendo(id,idEmpresa)
-	}, function() {});
+	
+		finalizaReport(id);
+	
 
 
 	 
 
 });
 
-function finalizaGuiaDespachoArriendo(id,idEmpresa){
+function finalizaReport(id){
 
-	var datos = new FormData();
-	datos.append("finalizaGuia", id);
-	datos.append("idEmpresa", idEmpresa);
+	var id = id;
 
-
-	$.ajax({
-		url: "ajax/equipos-guia-arriendo.ajax.php",
-		method: "POST",
-		data: datos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType: "json",
-		success: function(r) {
-
-		
-	       window.location = "index.php?ruta=guia-despacho-arriendos";
-
-
-
-		}
-	});
+	window.open("extensiones/pdf/TCPDF/report-retiro.php?id="+id, "_blank");
 
 }
 

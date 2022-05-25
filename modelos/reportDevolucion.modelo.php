@@ -125,7 +125,7 @@ class ModeloReportDevolucion{
 
 		$estado = 2; //VUELVE LOS EQUIPOS A ARRENDADO
 		
-       $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado, e.tiene_movimiento = 1, gdd.devuelto = 0, gdd.fecha_devolucion_real = NULL, gdd.contrato = gdd.id_guia, gdd.match_cambio = NULL, gdd.id_report_devolucion = NULL, gdd.devolucion_tipo = NULL, gdd.detalle_devolucion = NULL WHERE gdd.id_report_devolucion = $idReport"); 
+       $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado, e.tiene_movimiento = 1, gdd.devuelto = 0, gdd.fecha_devolucion_real = NULL, gdd.contrato = gdd.id_guia, gdd.match_cambio = NULL, gdd.id_report_devolucion = NULL, gdd.devolucion_tipo = NULL, gdd.detalle_devolucion = NULL, gdd.fecha_retiro_obra = NULL WHERE gdd.id_report_devolucion = $idReport"); 
                $sqlGuia->execute();
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM report_devolucion WHERE id = $idReport");
@@ -174,6 +174,23 @@ class ModeloReportDevolucion{
 		    $stmt = null;
 
 	}
+
+	static public function mdlMostrarCabeceraReportParaImprimir($id){
+
+		
+
+		  $stmt = Conexion::conectar()->prepare("SELECT rd.id as report, c.nombre as constructora, o.nombre as obra, u.nombre as retira, rd.fecha_report as fechaReport, o.contacto as bodeguero FROM report_devolucion rd JOIN constructoras c ON rd.id_constructoras = c.id JOIN obras o ON rd.id_obras = o.id JOIN usuarios u ON rd.id_usuario = u.id where rd.id = $id");
+
+		   $stmt -> execute();
+
+		  return $stmt -> fetch();
+
+		  $stmt -> close();
+
+		  $stmt = null;
+
+	}
+
 
 		
 

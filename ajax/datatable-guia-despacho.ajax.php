@@ -67,7 +67,7 @@ class TablaGuiaDespacho{
 
   			
 
-  				 $botones =  "<div class='btn-group'><button ".$disable_editar." class='btn btn-warning btnEditarGuiaDespacho' idGuia='".$guiaDespacho[$i]["id"]."'><i class='fa fa-pencil'></i></button><button ".$disable_anular." class='btn btn-success btnEliminarGuiaDespacho' idEstado ='".$guiaDespacho[$i]["idestado"]."' idGuia='".$guiaDespacho[$i]["id"]."'><i class='fa fa-times'></i></button><button ".$disable_detalle." class='btn btn-info btnDetalleGuiaDespacho' title='Detalle' idGuia='".$guiaDespacho[$i]["id"]."'><i class='fa fa-th'></i></button></div>";
+  				 $botones =  "<div class='btn-group'><button ".$disable_editar." class='btn btn-warning btnEditarGuiaDespacho' idGuia='".$guiaDespacho[$i]["id"]."'><i class='fa fa-pencil'></i></button><button ".$disable_anular." class='btn btn-danger btnEliminarGuiaDespacho' idEstado ='".$guiaDespacho[$i]["idestado"]."' idGuia='".$guiaDespacho[$i]["id"]."'><i class='fa fa-times'></i></button><button ".$disable_detalle." class='btn btn-info btnDetalleGuiaDespacho' title='Detalle' idGuia='".$guiaDespacho[$i]["id"]."'><i class='fa fa-th'></i></button></div>";
 
   				  			           
 		 
