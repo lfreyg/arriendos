@@ -80,7 +80,7 @@ class ModeloReportDevolucionDetalles{
 
 	static public function mdlRetiroPorId($id_report_devolucion){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.fecha_devolucion_real as fecha, es.descripcion as movimiento, gd.fecha_retiro_obra as fechaRetiroObra FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.devolucion_tipo = es.id WHERE gd.id_report_devolucion = $id_report_devolucion order by gd.id desc");
+		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.fecha_devolucion_real as fecha, es.descripcion as movimiento, gd.fecha_retiro_obra as fechaRetiroObra, es.id as idEstado, gd.id_guia as contrato FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.devolucion_tipo = es.id WHERE gd.id_report_devolucion = $id_report_devolucion order by gd.id desc");
 
 		
 		$stmt -> execute();
@@ -137,6 +137,56 @@ class ModeloReportDevolucionDetalles{
 
 	}
 
+
+	static public function mdlFinalizarReport($idReport){
+	
+	$estado = 9; //FINALIZADO
+
+	$stmt = Conexion::conectar()->prepare("UPDATE report_devolucion SET estado = $estado WHERE id = $idReport");
+		
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	//REALIZA MATCH ENTRE EL EQUIPO QUE SALE Y EL EQUIPO QUE ENTRA
+
+	static public function mdlHaceMatchCambioEquipo($idRegistroTermino,$idRegistroCambio,$contrato){
+	
+
+	//idRegistroTermino = EQUIPO QUE SALE
+	//idRegistroCambio = EQUIPO QUE ENTRA
+	//contrato = CONTRATO EQUIPO QUE SALE, PARA MANTENER EL ORDEN DEL ARRIENDO EN CASO DE CAMBIO	
+	
+	$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET match_cambio = $idRegistroTermino, contrato = $contrato WHERE id = $idRegistroCambio");
+		
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
 	
 
 	static public function mdlValidaEquipoReportEliminar($idRegistro){
@@ -157,7 +207,7 @@ class ModeloReportDevolucionDetalles{
 
 		
 			
-			$stmt = Conexion::conectar()->prepare("SELECT rd.id as numReport, c.id as idConstructora, c.nombre as constructora, o.id as idObra, o.nombre as obra, rd.fecha_report as fecha FROM report_devolucion rd JOIN constructoras c ON rd.id_constructoras = c.id JOIN obras o ON rd.id_obras = o.id where rd.id = $idReport");
+			$stmt = Conexion::conectar()->prepare("SELECT rd.id as numReport, c.id as idConstructora, c.nombre as constructora, o.id as idObra, o.nombre as obra, rd.fecha_report as fecha, rd.estado as estado FROM report_devolucion rd JOIN constructoras c ON rd.id_constructoras = c.id JOIN obras o ON rd.id_obras = o.id where rd.id = $idReport");
 
 			$stmt -> execute();
 
@@ -166,6 +216,21 @@ class ModeloReportDevolucionDetalles{
 		    $stmt -> close();
 
 		    $stmt = null;
+
+	}
+
+	static public function mdlEquiposParaCambio($constructora, $obra){
+
+		$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro, ne.descripcion as equipo, ne.modelo as modelo, e.codigo as codigo, m.descripcion as marca, gd.numero_guia as gd FROM guia_despacho gd JOIN guia_despacho_detalle gdd ON gd.id = gdd.id_guia join equipos e ON gdd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id WHERE gd.id_constructoras = $constructora and id_obras = $obra and gdd.id_tipo_movimiento = 11 and gdd.devuelto = 0 and gdd.match_cambio is null ORDER BY ne.descripcion");
+
+		
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
 
 	}
 

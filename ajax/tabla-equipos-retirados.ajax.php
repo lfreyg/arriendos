@@ -1,6 +1,7 @@
 <?php
 
 require_once "../modelos/ReportDevolucionDetalles.modelo.php";
+require_once "../modelos/ReportDevolucion.modelo.php";
 
 $idReport = $_POST['id'];
 
@@ -22,7 +23,7 @@ $idReport = $_POST['id'];
                  <tr>   
                   <th>Código</th>              
                   <th>Equipo</th>                  
-                  <th>Retiro</th>
+                  <th>Termino</th>
                   <th>Movimiento</th>                                    
                   <th>Acciones</th>
                 </tr>
@@ -50,11 +51,20 @@ $idReport = $_POST['id'];
 
            $validar = ModeloReportDevolucionDetalles::mdlValidaEquipoReportEliminar($value["idRegistro"]);
 
+           $conMatch = ModeloReportDevolucion::mdlValidaEquipoReportCambiadoDetalle($value["idRegistro"]);
+
+          if($conMatch){
+            $disabled = 'disabled';
+          }
+
+          
            if($validar){
               $disabled = "disabled";
            }
 
            $arriendo = $equipo." ".$modelo." ".$marca;
+
+           $estadoEquipo = $value["idEstado"];
 
            
             
@@ -66,8 +76,13 @@ $idReport = $_POST['id'];
     <td ><div align="left"><?php echo $movimiento?></div></td>  
 
        
-    <td align="center" nowrap=""><span class="btn btn-warning btn-xm" title="Editar" onclick="editar('<?php echo $value["idRegistro"]?>')">E</span>
-      <button class="btn btn-danger btn-xm" title="Eliminar" <?php echo $disabled?> onclick="eliminarConsulta('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">X</button></td>
+    <td align="left" nowrap="">
+      <span class="btn btn-warning btn-xm" title="Editar" onclick="editar('<?php echo $value["idRegistro"]?>')">E</span>
+      <button class="btn btn-danger btn-xm" title="Eliminar" <?php echo $disabled?> onclick="eliminarConsulta('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">X</button>
+     <?php if($estadoEquipo == 11){?>
+      <button class="btn btn-info btn-xm" title="Cambio" onclick="matchCambio('<?php echo $value["idRegistro"]?>','<?php echo $value["contrato"]?>')">C</button>
+     <?php } ?> 
+    </td>
     
   </tr>
   <?php

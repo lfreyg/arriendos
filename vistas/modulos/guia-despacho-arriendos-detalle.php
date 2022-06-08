@@ -211,7 +211,7 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
                     <input type="date" class="form-control" id="fechaArriendo" value="<?php echo $hoy?>">                  
               </div>           
 
-              <div class="col-lg-2 col-xs-11">                                   
+              <div class="col-lg-3 col-xs-11">                                   
                      <label for="guiaTipoMovimiento">Movimiento</label> 
                     <select class="form-control" id="guiaTipoMovimiento" style="width: 100%;" name="guiaTipoMovimiento" required>
                            <option value="<?php echo ARRIENDO?>">ARRIENDO</option>   
@@ -219,7 +219,7 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
                      </select>                    
               </div>
 
-              <div class="col-lg-6 col-xs-11">                                   
+              <div class="col-lg-5 col-xs-11">                                   
                      <label for="detalleEquipo">Detalle</label> 
                     <input type="text" class="form-control" id="detalleEquipo" value="">                  
               </div>

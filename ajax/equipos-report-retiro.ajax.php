@@ -35,44 +35,35 @@ class AjaxEquiposReportRetiro{
 		echo json_encode($respuesta);
 	}
 
-	public $finalizaGuia;
-	public $idEmpresa;
-
-	public function ajaxFinalizaGuiaArriendo(){
-
-		$idGuia = $this->finalizaGuia;
-		$idEmpresa = $this->idEmpresa;
-
-		$respuesta = ModeloGuiaDespachoDetalles::mdlFinalizaGuia($idGuia,$idEmpresa);
-
-		echo json_encode($respuesta);
-	}
 
 
-	public $idEquipoParaArriendo;
+	public $idReport;	
 
-	public function ajaxSeleccionaEquipo(){
+	public function ajaxFinalizaReportRetiro(){
 
-		$valor = $this->idEquipoParaArriendo;
+		$idReport = $this->idReport;
+		
 
-		$respuesta = ModeloEquipos::mdlSeleccionarEquiposGuiaDespacho($valor);
+		$respuesta = ModeloReportDevolucionDetalles::mdlFinalizarReport($idReport);
 
 		echo json_encode($respuesta);
 	}
 
+	public $idRegistroTermino;
+	public $idRegistroCambio;
+	public $contrato;	
 
-	public $idTipoEquipo;
-	public $idObra;
+	public function ajaxRealizaCambioEquipo(){
 
-	public function ajaxBuscaPrecioConvenio(){
+		$idRegistroTermino = $this->idRegistroTermino;
+		$idRegistroCambio = $this->idRegistroCambio;
+		$contrato = $this->contrato;
 
-		$idTipoEquipo = $this->idTipoEquipo;
-		$idObra = $this->idObra;
-
-		$respuesta = ModeloEquipos::mdlBuscaPrecioConvenio($idTipoEquipo,$idObra);
+		$respuesta = ModeloReportDevolucionDetalles::mdlHaceMatchCambioEquipo($idRegistroTermino,$idRegistroCambio,$contrato);
 
 		echo json_encode($respuesta);
 	}
+
 
 	
 }	
@@ -100,31 +91,25 @@ if(isset($_POST["idRegistroDetalle"]) && isset($_POST["idEquipoDetalle"])){
 
 }
 
-if(isset($_POST["finalizaGuia"]) && isset($_POST["idEmpresa"])){
+if(isset($_POST["idReport"])){
 
 	$finalizar = new AjaxEquiposReportRetiro();
-	$finalizar -> finalizaGuia = $_POST["finalizaGuia"];
-	$finalizar -> idEmpresa = $_POST["idEmpresa"];
-	$finalizar -> ajaxFinalizaGuiaArriendo();
+	$finalizar -> idReport = $_POST["idReport"];	
+	$finalizar -> ajaxFinalizaReportRetiro();
 
 }
 
-if(isset($_POST["idEquipoParaArriendo"])){
+if(isset($_POST["idRegistroTermino"]) && isset($_POST["idRegistroCambio"]) && isset($_POST["contrato"])){
 
-	$arrendar = new AjaxEquiposReportRetiro();
-	$arrendar -> idEquipoParaArriendo = $_POST["idEquipoParaArriendo"];
-	$arrendar -> ajaxSeleccionaEquipo();
-
-}
-
-if(isset($_POST["idTipoEquipo"]) && isset($_POST['idObra'])){
-
-	$precio = new AjaxEquiposReportRetiro();
-	$precio -> idTipoEquipo = $_POST["idTipoEquipo"];
-	$precio -> idObra = $_POST["idObra"];
-	$precio -> ajaxBuscaPrecioConvenio();
+	$cambia = new AjaxEquiposReportRetiro();
+	$cambia -> idRegistroTermino = $_POST["idRegistroTermino"];
+	$cambia -> idRegistroCambio = $_POST["idRegistroCambio"];
+	$cambia -> contrato = $_POST["contrato"];
+	$cambia -> ajaxRealizaCambioEquipo();
 
 }
+
+
 
    
 

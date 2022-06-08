@@ -52,7 +52,7 @@ date_default_timezone_set('America/Santiago');
   <!-- Morris chart -->
   <link rel="stylesheet" href="vistas/bower_components/morris.js/morris.css">
 
-  <link rel="stylesheet" href="vistas/bower_components/select2/dist/css/select2.min.css">
+  <link rel="stylesheet" href="vistas/bower_components/select2/dist/css/select2.css">
 
   <link rel="stylesheet" href="vistas/bower_components/alertify/alertify.css">
 
@@ -105,7 +105,7 @@ date_default_timezone_set('America/Santiago');
   <!-- ChartJS http://www.chartjs.org/-->
   <script src="vistas/bower_components/Chart.js/Chart.js"></script>
 
-  <script src="vistas/bower_components/select2/dist/js/select2.full.min.js"></script>
+  <script src="vistas/bower_components/select2/dist/js/select2.full.js"></script>
 
   <script src="vistas/bower_components/alertify/alertify.js"></script>
 

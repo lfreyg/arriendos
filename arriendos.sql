@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-05-2022 a las 15:32:53
+-- Tiempo de generación: 08-06-2022 a las 07:54:36
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -128,7 +128,7 @@ CREATE TABLE `dte` (
 --
 
 INSERT INTO `dte` (`id`, `id_empresa_operativa`, `numero_guia`, `numero_factura`, `numero_nc`, `numero_nd`) VALUES
-(1, 1, 5211, 3652, 1, 1);
+(1, 1, 5212, 3652, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -188,20 +188,20 @@ INSERT INTO `equipos` (`id`, `id_nombre_equipos`, `id_factura`, `codigo`, `numer
 (11, 7, 7, '362541', '362541', 96000, 1, 1, '2022-03-14 18:24:18', '2022-03-14 18:24:18', 1),
 (12, 11, 8, '8544', '8544', 200000, 1, 2, '2022-03-14 19:46:51', '2022-03-14 19:46:51', 1),
 (13, 15, 7, '854741', '854741', 365000, 1, 1, '2022-03-14 20:22:19', '2022-03-14 20:22:19', 1),
-(14, 6, 9, '98544', '98544', 652000, 1, 2, '2022-03-14 20:39:02', '2022-03-14 20:39:02', 1),
+(14, 6, 9, '98544', '98544', 652000, 1, 1, '2022-03-14 20:39:02', '2022-03-14 20:39:02', 1),
 (15, 15, 9, '985474', '985474', 562000, 1, 1, '2022-03-14 20:39:18', '2022-03-14 20:39:18', 1),
 (16, 15, 1, '36521', '36521', 65000, 1, 2, '2022-03-14 20:55:40', '2022-03-14 20:55:40', 1),
 (17, 8, 10, '652144', '652144', 320000, 1, 1, '2022-03-14 21:08:35', '2022-03-14 21:08:35', 1),
 (18, 8, 10, '658455', '658455', 320000, 1, 1, '2022-03-14 21:08:49', '2022-03-14 21:08:49', 1),
-(19, 8, 10, 'PCG524', '854545', 320000, 1, 1, '2022-03-14 21:09:40', '2022-03-14 21:09:40', 1),
+(19, 8, 10, 'PCG524', '854545', 320000, 1, 2, '2022-03-14 21:09:40', '2022-03-14 21:09:40', 1),
 (25, 6, 14, '6521', '6521', 36500, 1, 2, '2022-03-15 21:45:46', '2022-03-15 21:45:46', 1),
 (26, 6, 14, '6522', '6521', 36500, 1, 2, '2022-03-15 21:46:09', '2022-03-15 21:46:09', 1),
 (27, 6, 14, '6522365', '6522', 36500, 1, 2, '2022-03-15 21:46:12', '2022-03-15 21:46:12', 1),
 (28, 8, 14, '6521', '6521', 36800, 1, 1, '2022-03-15 21:52:10', '2022-03-15 21:52:10', 1),
 (29, 8, 14, '698542541', '69854', 36800, 0, 1, '2022-03-15 21:52:30', '2022-03-15 21:52:30', 1),
 (30, 8, 3, '3621', '3652', 36800, 1, 1, '2022-03-15 21:59:21', '2022-03-15 21:59:21', 1),
-(31, 8, 3, '3622', '3621', 36800, 1, 2, '2022-03-15 21:59:41', '2022-03-15 21:59:41', 1),
-(32, 7, 15, '36545', '36521', 38500, 1, 1, '2022-03-15 22:01:33', '2022-03-15 22:01:33', 1),
+(31, 8, 3, '3622', '3621', 36800, 1, 1, '2022-03-15 21:59:41', '2022-03-15 21:59:41', 1),
+(32, 7, 15, '36545', '36521', 38500, 1, 2, '2022-03-15 22:01:33', '2022-03-15 22:01:33', 1),
 (36, 8, 15, '36545', '36545', 69800, 1, 2, '2022-03-15 22:19:04', '2022-03-15 22:19:04', 1),
 (44, 8, 12, '6521', '6521', 98544, 1, 1, '2022-03-15 22:46:36', '2022-03-15 22:46:36', 1),
 (45, 8, 12, '6521', '6521', 65200, 1, 1, '2022-03-15 22:46:58', '2022-03-15 22:46:58', 1),
@@ -209,7 +209,7 @@ INSERT INTO `equipos` (`id`, `id_nombre_equipos`, `id_factura`, `codigo`, `numer
 (47, 11, 12, '6521', '6521', 6522, 1, 1, '2022-03-15 22:48:12', '2022-03-15 22:48:12', 1),
 (48, 11, 12, '6521', '6521', 85445, 1, 1, '2022-03-15 22:48:49', '2022-03-15 22:48:49', 1),
 (49, 11, 12, '6521', '6521', 96500, 1, 2, '2022-03-15 22:49:52', '2022-03-15 22:49:52', 1),
-(51, 7, 11, '65212', '65212', 985445, 1, 1, '2022-03-15 22:53:55', '2022-03-15 22:53:55', 1),
+(51, 7, 11, '65212', '65212', 985445, 1, 2, '2022-03-15 22:53:55', '2022-03-15 22:53:55', 1),
 (52, 7, 11, '6521', '6521', 985445, 1, 2, '2022-03-15 22:54:02', '2022-03-15 22:54:02', 1),
 (58, 8, 13, '65844', '65844', 98500, 1, 1, '2022-03-15 23:05:12', '2022-03-15 23:05:12', 1),
 (59, 15, 11, '65211', '65214', 69800, 1, 2, '2022-03-16 22:28:03', '2022-03-16 22:28:03', 1),
@@ -247,7 +247,7 @@ INSERT INTO `estados` (`id`, `descripcion`) VALUES
 (11, 'CAMBIO'),
 (12, 'NO ENVIADA SII'),
 (13, 'ENVIADA SII'),
-(14, 'GUIA NULA'),
+(14, 'ANULADO'),
 (15, 'TERMINO ARRIENDO');
 
 -- --------------------------------------------------------
@@ -350,7 +350,8 @@ INSERT INTO `guia_despacho` (`id`, `id_empresa`, `numero_guia`, `fecha_guia`, `i
 (21, 1, 5204, '2022-05-03', 5, 10, 1, '', '', '0000-00-00', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', 'LEONARDO FREY', '2022-05-04 01:52:35'),
 (22, 1, 5208, '2022-05-10', 5, 10, 1, NULL, '', '0000-00-00', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 14, 'A', 'LEONARDO FREY', '2022-05-10 04:25:02'),
 (23, 1, 5209, '2022-05-10', 5, 10, 1, NULL, '', '0000-00-00', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 14, 'A', 'LEONARDO FREY', '2022-05-10 04:35:19'),
-(25, 1, 5210, '2022-05-10', 5, 10, 1, NULL, '', '0000-00-00', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 14, 'A', 'LEONARDO FREY', '2022-05-10 05:09:19');
+(25, 1, 5210, '2022-05-10', 5, 10, 1, NULL, '', '0000-00-00', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 14, 'A', 'LEONARDO FREY', '2022-05-10 05:09:19'),
+(26, 1, 5211, '2022-06-07', 3, 6, 1, NULL, '', '0000-00-00', 1, '77854789-7', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', 'LEONARDO FREY', '2022-06-08 03:09:01');
 
 -- --------------------------------------------------------
 
@@ -368,7 +369,7 @@ CREATE TABLE `guia_despacho_detalle` (
   `fecha_devolucion` date DEFAULT NULL,
   `fecha_devolucion_real` date DEFAULT NULL,
   `id_tipo_movimiento` int(11) NOT NULL COMMENT 'arriendo=10, cambio=11',
-  `match_cambio` int(11) DEFAULT NULL COMMENT 'id equipo por el que sale, cambio',
+  `match_cambio` int(11) DEFAULT NULL COMMENT 'id registro por el que sale, cambio',
   `contrato` int(11) DEFAULT NULL COMMENT 'id guia despacho cuando es cambio',
   `devuelto` int(1) DEFAULT 0,
   `id_report_devolucion` int(11) DEFAULT NULL,
@@ -383,13 +384,13 @@ CREATE TABLE `guia_despacho_detalle` (
 
 INSERT INTO `guia_despacho_detalle` (`id`, `id_guia`, `id_equipo`, `precio_arriendo`, `fecha_arriendo`, `detalle`, `fecha_devolucion`, `fecha_devolucion_real`, `id_tipo_movimiento`, `match_cambio`, `contrato`, `devuelto`, `id_report_devolucion`, `devolucion_tipo`, `detalle_devolucion`, `fecha_retiro_obra`) VALUES
 (33, 1, 52, 1200, '2022-05-12', '', '0000-00-00', NULL, 10, NULL, 1, 0, NULL, NULL, NULL, NULL),
-(34, 20, 31, 7500, '2022-05-03', '', '2022-05-23', NULL, 15, NULL, 20, 0, NULL, NULL, NULL, NULL),
+(34, 20, 31, 7500, '2022-05-03', '', '2022-05-23', '2022-06-07', 15, NULL, 20, 1, 2, 11, '', '2022-06-07 17:30:11'),
 (35, 19, 16, 5000, '2022-05-03', '', '0000-00-00', NULL, 10, NULL, 19, 0, NULL, NULL, NULL, NULL),
 (36, 20, 36, 7500, '2022-05-03', '', '0000-00-00', NULL, 11, NULL, 20, 0, NULL, NULL, NULL, NULL),
-(39, 21, 11, 1200, '2022-05-09', '', '0000-00-00', '2022-05-24', 11, NULL, 21, 1, 3, 15, '', '2022-05-24 23:38:59'),
-(40, 21, 48, 3400, '2022-05-09', 'sin detalles', '0000-00-00', '2022-05-23', 11, NULL, 21, 1, 3, 15, '', '2022-05-24 04:01:19'),
+(39, 21, 11, 1200, '2022-05-09', '', '0000-00-00', '2022-06-02', 11, NULL, 21, 1, 3, 11, '', '2022-05-24 23:38:59'),
+(40, 21, 48, 3400, '2022-05-09', 'sin detalles', '0000-00-00', '2022-05-23', 11, NULL, 21, 1, 3, 15, 'sin detalles', '2022-05-24 04:01:19'),
 (45, 21, 10, 7500, '2022-05-09', '', '0000-00-00', '2022-05-23', 11, NULL, 21, 1, 3, 15, '', '2022-05-23 23:30:34'),
-(46, 21, 32, 1200, '2022-05-09', '', '0000-00-00', NULL, 10, NULL, 21, 0, NULL, NULL, NULL, NULL),
+(46, 21, 32, 1200, '2022-05-09', '', '0000-00-00', '2022-06-07', 10, NULL, 21, 1, 3, 15, '', '2022-06-07 22:50:50'),
 (54, 21, 2, 1000, '2022-05-12', '', '0000-00-00', NULL, 10, NULL, 21, 0, NULL, NULL, NULL, NULL),
 (55, 20, 51, 1200, '2022-05-22', '', '2022-05-23', '2022-05-24', 10, NULL, 20, 1, 2, 15, '', '2022-05-24 23:20:18'),
 (56, 20, 63, 1200, '2022-05-22', '', '0000-00-00', NULL, 11, NULL, 20, 0, NULL, NULL, NULL, NULL),
@@ -399,7 +400,7 @@ INSERT INTO `guia_despacho_detalle` (`id`, `id_guia`, `id_equipo`, `precio_arrie
 (60, 0, 51, 0, '2022-05-22', '', '0000-00-00', NULL, 0, NULL, 0, 0, NULL, NULL, NULL, NULL),
 (61, 21, 19, 9000, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 21, 0, NULL, NULL, NULL, NULL),
 (62, 21, 15, 5000, '2022-05-23', '', '0000-00-00', '2022-05-23', 10, NULL, 21, 1, 3, 15, '', '2022-05-23 22:02:14'),
-(63, 21, 14, 8500, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 21, 0, NULL, NULL, NULL, NULL),
+(63, 21, 14, 8500, '2022-05-23', '', '0000-00-00', '2022-05-31', 10, NULL, 21, 1, 3, 15, '', '2022-05-31 12:18:15'),
 (64, 21, 13, 5000, '2022-05-23', '', '0000-00-00', '2022-05-23', 10, NULL, 21, 1, 3, 15, '', '2022-05-23 23:09:15'),
 (65, 20, 26, 5600, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL),
 (66, 20, 60, 5600, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL),
@@ -407,7 +408,9 @@ INSERT INTO `guia_despacho_detalle` (`id`, `id_guia`, `id_equipo`, `precio_arrie
 (68, 20, 47, 3400, '2022-05-23', 'detalle', '2022-05-23', '2022-05-24', 11, NULL, 20, 1, 2, 11, '', '2022-05-24 23:20:11'),
 (69, 20, 49, 3400, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL),
 (70, 20, 12, 3400, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL),
-(71, 20, 59, 5500, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL);
+(71, 20, 59, 5500, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL),
+(72, 19, 51, 1000, '2022-05-31', '', '0000-00-00', NULL, 11, 39, 21, 0, NULL, NULL, NULL, NULL),
+(76, 26, 32, 1200, '2022-06-07', '', '0000-00-00', NULL, 11, NULL, 26, 0, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -555,7 +558,8 @@ INSERT INTO `pedido_equipo_detalle` (`id`, `id_pedido_equipo`, `id_nombre_equipo
 (36, 6, 6, 0, '', 10, NULL, NULL, NULL),
 (37, 7, 7, 0, '', 10, NULL, NULL, NULL),
 (38, 3, 6, 0, '', 11, NULL, NULL, NULL),
-(39, 3, 15, 0, '', 10, NULL, NULL, NULL);
+(39, 3, 15, 0, '', 10, NULL, NULL, NULL),
+(40, 4, 7, 0, '', 11, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -634,7 +638,11 @@ CREATE TABLE `report_devolucion` (
 
 INSERT INTO `report_devolucion` (`id`, `id_constructoras`, `id_obras`, `fecha_report`, `id_usuario`, `documento`, `estado`) VALUES
 (2, 4, 8, '2022-05-13 02:33:00', 1, '', 1),
-(3, 5, 10, '2022-05-13 02:33:10', 1, NULL, 1);
+(3, 5, 10, '2022-05-13 02:33:10', 1, NULL, 9),
+(9, 5, 10, '2022-06-01 02:44:02', 1, NULL, 14),
+(12, 5, 10, '2022-06-01 03:03:53', 1, NULL, 14),
+(13, 5, 10, '2022-06-01 03:04:59', 1, NULL, 14),
+(14, 3, 6, '2022-06-08 03:08:37', 1, NULL, 14);
 
 -- --------------------------------------------------------
 
@@ -746,7 +754,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `id_sucursal`, `creacion`) VALUES
-(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, '', 1, '2022-05-24 23:24:54', '2022-05-25 03:24:54', 1, '2022-05-13 04:24:55'),
+(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, '', 1, '2022-06-07 22:48:24', '2022-06-08 02:48:24', 1, '2022-05-13 04:24:55'),
 (2, 'CRISTIAN VALLEJOS', 'cvallejos', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 2, 'vistas/img/usuarios/cvallejos/678.jpg', 1, '2022-02-23 18:16:46', '2022-03-03 13:35:00', 1, '2022-03-11 21:40:11'),
 (3, 'BASTIAN FREY', 'bfrey', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 1, '', 1, '2022-04-01 19:28:06', '2022-04-01 22:28:06', 1, '2022-04-01 22:21:17'),
 (4, 'ADMINISTRADOR', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, '', 1, '2022-04-28 22:01:38', '2022-04-29 02:01:38', 1, '2022-04-27 06:00:09');
@@ -961,13 +969,13 @@ ALTER TABLE `forma_pago`
 -- AUTO_INCREMENT de la tabla `guia_despacho`
 --
 ALTER TABLE `guia_despacho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `guia_despacho_detalle`
 --
 ALTER TABLE `guia_despacho_detalle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -997,7 +1005,7 @@ ALTER TABLE `pedido_equipo`
 -- AUTO_INCREMENT de la tabla `pedido_equipo_detalle`
 --
 ALTER TABLE `pedido_equipo_detalle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `precios_clientes`
@@ -1015,7 +1023,7 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT de la tabla `report_devolucion`
 --
 ALTER TABLE `report_devolucion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`

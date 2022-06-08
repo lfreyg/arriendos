@@ -146,7 +146,7 @@ class ControladorReportDevolucion{
 
 				swal({
 					  type: "success",
-					  title: "Report ha sido borrado correctamente",
+					  title: "Report ha sido Anulado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){

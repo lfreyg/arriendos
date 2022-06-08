@@ -154,14 +154,14 @@ $(".tablaReportDevolucion tbody").on("click", "button.btnEliminarReport", functi
  
 	swal({
 
-		title: '¿Está seguro de ELIMINAR el Report de Devolución?',
+		title: '¿Está seguro de ANULAR el Report de Devolución?',
 		text: "¡Si no lo está puede cancelar la accíón!",
 		type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, ELIMINAR Report!'
+        confirmButtonText: 'Si, ANULAR Report!'
         }).then(function(result) {
         if (result.value) {
 
@@ -181,6 +181,14 @@ $(".tablaReportDevolucion tbody").on("click", "button.btnDetalleReport", functio
 	var idReport = $(this).attr("idReport");
 
 	window.location = "index.php?ruta=devolucion-equipos-arriendos-detalle&idReport="+idReport;
+
+})
+
+$(".tablaReportDevolucion tbody").on("click", "button.btnImprimeReport", function(){
+
+	var idReport = $(this).attr("idReport");
+
+	window.open("extensiones/pdf/TCPDF/report-retiro.php?id="+idReport, "_blank");
 
 })
 

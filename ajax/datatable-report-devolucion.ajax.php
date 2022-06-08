@@ -42,14 +42,26 @@ class TablaReportDevolucion{
 		  	$dateReg = date_create($report[$i]["creado"]);
 		  	$fechaReg = date_format($dateReg,"d-m-Y H:i:s");
 
-		  	$valida = ModeloReportDevolucion::mdlValidaEquipoReportEliminar($report[$i]["idReport"]);
-		  	$validaEditar = ModeloReportDevolucion::mdlValidaEquipoReportEditar($report[$i]["idReport"]);
-
 		  	$disable_editar = "";
             $disable_anular = "";
             $disable_detalle = "";
+            $disable_print = "";
             $estado = 'ACTIVO';
             $editable = 1;
+
+		  	$valida = ModeloReportDevolucion::mdlValidaEquipoReportEliminar($report[$i]["idReport"]);
+		  	$validaEditar = ModeloReportDevolucion::mdlValidaEquipoReportEditar($report[$i]["idReport"]);
+		  	$cambiados = ModeloReportDevolucion::mdlValidaEquipoReportCambiado($report[$i]["idReport"]);
+
+		  	 foreach ($cambiados as $key => $value){
+		  	 	$conMatch = ModeloReportDevolucion::mdlValidaEquipoReportCambiadoDetalle($value["idRegistro"]);
+
+		  	 	if($conMatch == true){
+		  	 		$disable_anular = 'disabled';
+		  	 	}
+		  	 }
+
+		  	
 
 		  	if($valida == true){
 		  		$disable_anular = 'disabled';
@@ -61,11 +73,16 @@ class TablaReportDevolucion{
 		  	} 
 
 		     //ESTADO 1 = ACTIVO , 0 = ANULADO
-		    if($report[$i]["estado"] != 1){
+		    if($report[$i]["estado"] == 14){
                    $estado = 'ANULADO';
                    $disable_editar = 'disabled';
                    $disable_anular = 'disabled';
                    $disable_detalle = 'disabled';
+                   $disable_print = 'disabled';
+		  	 }
+
+		  	 if($report[$i]["estado"] == 9){
+                 $estado = 'FINALIZADO';
 		  	 }
 
 		  	            	  	
@@ -76,7 +93,7 @@ class TablaReportDevolucion{
 
   			
 
-  				 $botones =  "<div class='btn-group'><button ".$disable_editar." class='btn btn-warning btnEditarReport' editable='".$editable."', idReport='".$report[$i]["idReport"]."'><i class='fa fa-pencil'></i></button><button ".$disable_anular." class='btn btn-danger btnEliminarReport' idReport='".$report[$i]["idReport"]."'><i class='fa fa-times'></i></button><button ".$disable_detalle." class='btn btn-info btnDetalleReport' title='Detalle' idReport='".$report[$i]["idReport"]."'><i class='fa fa-th'></i></button><button class='btn btn-primary btnImprimeReport' title='Imprimir' idReport='".$report[$i]["idReport"]."'><i class='fa fa-print'></i></button></div>";
+  				 $botones =  "<div class='btn-group'><button ".$disable_editar." class='btn btn-warning btnEditarReport' editable='".$editable."', idReport='".$report[$i]["idReport"]."'><i class='fa fa-pencil'></i></button><button ".$disable_anular." class='btn btn-danger btnEliminarReport' idReport='".$report[$i]["idReport"]."'><i class='fa fa-times'></i></button><button ".$disable_detalle." class='btn btn-info btnDetalleReport' title='Detalle' idReport='".$report[$i]["idReport"]."'><i class='fa fa-th'></i></button><button ".$disable_print." class='btn btn-primary btnImprimeReport' title='Imprimir' idReport='".$report[$i]["idReport"]."'><i class='fa fa-print'></i></button></div>";
 
   				  	       
 		 

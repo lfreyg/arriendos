@@ -56,7 +56,7 @@ $(".tablaEquiposGuia tbody").on("click", "button.agregarEquipo", function() {
 					  $('#modeloEquipo').val(respuesta["modelo"]);	
 					  $('#detalleEquipo').val('');
 					  $('#detalleEquipo').focus();	
-			               // $('#reportTipoMovimiento').val(15);
+			              
 
 
                        
@@ -76,6 +76,11 @@ $('#btnRetirarEquipo').click(function() {
 		
 	if ($('#idEquipoDetalle').val() == '') {
 		alertify.error("Seleccione un equipo de la lista disponible para retiro");
+		return false;
+	}
+
+	if ($('#fechaRetiro').val() == '') {
+		alertify.error("Ingrese fecha de termino");
 		return false;
 	}
 
@@ -357,6 +362,107 @@ function elimina_equipo(idRegistro,idEquipo) {
 	});
 }
 
+function matchCambio(idRegistro,contrato){
+	var idRegistro = idRegistro;
+	var contrato = contrato;
+	var idConstructora = $('#idConstructora').val(); 
+       var idObra = $('#idObra').val();
+
+	datos = "idConstructora=" + idConstructora + 
+	        "&idObra=" + idObra;
+
+	$.ajax({
+
+
+		url: "ajax/tabla-equipos-para-cambio.ajax.php",
+		method: "POST",
+		data: datos,
+
+		success: function(html) {
+
+			$('#mostrar_tabla_equipos_cambio').html(html);
+
+		}
+	});
+
+      $('#idRegistroCambio').val(idRegistro);
+      $('#txtcontrato').val(contrato);
+
+	$("#modalEquipoCambio").modal("show");
+}
+
+$('#btnTerminarReport').click(function() {	
+
+	idReport = $('#idReport').val();
+
+	      alertify.confirm('FINALIZAR REPORT', 'Esta seguro de Finalizar el retiro de equipos?', function() {
+		finaliza_retiro_equipo(idReport)
+	}, function() {});	 
+
+});
+
+function finaliza_retiro_equipo(idReport) {
+	
+	var idReport = idReport
+	
+
+
+	var datos = new FormData();
+	datos.append("idReport", idReport);
+	
+
+	$.ajax({
+		url: "ajax/equipos-report-retiro.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(r) {
+
+			 window.location = "index.php?ruta=devolucion-equipos-arriendos";
+
+
+
+		}
+	});
+}
+
+
+function hacerCambio(idRegistroEntra){
+
+    var idRegistroCambio = idRegistroEntra;
+    var idRegistroTermino =	$('#idRegistroCambio').val();
+    var contrato = $('#txtcontrato').val();
+
+
+	var datos = new FormData();
+	datos.append("idRegistroTermino", idRegistroTermino);
+	datos.append("idRegistroCambio", idRegistroCambio);
+	datos.append("contrato", contrato);
+	
+
+	$.ajax({
+		url: "ajax/equipos-report-retiro.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(r) {
+
+                 alertify.success("Se ha realizado el match entre ambos equipos");
+		   genera_tabla_retiro();
+
+		}
+	});
+
+	
+	          $("#modalEquipoCambio").modal("hide");
+
+}
 
 
 const formatterPeso = new Intl.NumberFormat('es-CO', {

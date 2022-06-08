@@ -149,6 +149,7 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
                     <input type="text" class="form-control" id="constructora" value="<?php echo $report["constructora"]?>" readonly> 
                     <input type="hidden" id="idConstructora" name="idConstructora" value="<?php echo $report["idConstructora"]?>">  
                     <input type="hidden" id="idReport" name="idReport" value="<?php echo $report["numReport"]?>"> 
+                    <input type="hidden" id="idEstadoReport" name="idEstadoReport" value="<?php echo $report["estado"]?>"> 
                                    
             </div>    
 
@@ -204,7 +205,7 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
             <div class="row">  
 
               <div class="col-lg-2 col-xs-11">                                   
-                     <label for="fechaRetiro">Fecha Retiro</label> 
+                     <label for="fechaRetiro">Fecha Termino</label> 
                     <input type="date" class="form-control" id="fechaRetiro" value="<?php echo $hoy?>">                  
               </div>           
 
@@ -248,11 +249,15 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
 
           <div class="box-footer">
              <div class="pull-right-container">
+             <button class="btn btn-lg btn-primary btn-block text-uppercase" id="btnTerminarReport">FINALIZAR REPORT</button> 
+             </div> 
+             <br>  
+             <div class="pull-right-container">
              <button class="btn btn-lg btn-warning btn-block text-uppercase" id="btnVolver">Volver a Lista</button> 
              </div> 
              <br>   
               <div class="pull-right-container">       
-             <button class="btn btn-lg btn-success btn-block text-uppercase" id="btnFinalizarReport">GENERAR REPORT</button>  
+             <button class="btn btn-lg btn-success btn-block text-uppercase" id="btnFinalizarReport">VER  REPORT</button>  
             </div>
           </div>
 
@@ -269,10 +274,6 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
   </section>
 
 </div>
-
-
-
-
 
 
 
@@ -387,6 +388,69 @@ MODAL EDITAR
 </div>
 
 
+<!--=====================================
+MODAL EQUIPOS PARA CAMBIO 
+======================================-->
+
+<div id="modalEquipoCambio" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+     
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Equipos para cambio</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+             <input type="hidden" id="idRegistroCambio" name="idRegistroCambio">
+             <input type="hidden" id="txtcontrato" name="txtcontrato">
+
+            <div class="form-group row">
+                      <div class="col-xs-11" style="padding-right:0px">
+                       <div id="mostrar_tabla_equipos_cambio" align="left"></div>
+                      </div>
+               </div> 
+
+              
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>          
+
+        </div>     
+
+    </div>
+
+  </div>
+
+</div>
+
+
 <script src="vistas/js/reportDevolucionDetalle.js?v=<?php echo(rand());?>"></script>
 
 <script type="text/javascript">
@@ -394,6 +458,13 @@ MODAL EDITAR
   
   
   $(document).ready(function(){
+
+    var estado = $('#idEstadoReport').val();
+
+    if(estado == 9){
+      $('#btnTerminarReport').attr('disabled', 'disabled');
+      $('#btnRetirarEquipo').attr('disabled', 'disabled');  
+    }
 
     
      genera_tabla_retiro();

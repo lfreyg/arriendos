@@ -12,7 +12,7 @@ class ModeloReportDevolucion{
 
 		
 			
-			$stmt = Conexion::conectar()->prepare("SELECT rd.id as idReport, rd.id_constructoras as idConstructora, c.nombre as constructora, rd.id_obras as idObra, o.nombre as obra, rd.id_usuario as idUsuario, u.nombre, rd.documento as documento, rd.estado as estado, rd.fecha_report as creado FROM report_devolucion rd JOIN constructoras c ON rd.id_constructoras = c.id JOIN obras o ON rd.id_obras = o.id JOIN usuarios u ON rd.id_usuario = u.id where rd.id_usuario =  $idUsuario ORDER BY rd.id desc");
+			$stmt = Conexion::conectar()->prepare("SELECT rd.id as idReport, rd.id_constructoras as idConstructora, c.nombre as constructora, rd.id_obras as idObra, o.nombre as obra, rd.id_usuario as idUsuario, u.nombre, rd.documento as documento, rd.estado as estado, rd.fecha_report as creado FROM report_devolucion rd JOIN constructoras c ON rd.id_constructoras = c.id JOIN obras o ON rd.id_obras = o.id JOIN usuarios u ON rd.id_usuario = u.id WHERE rd.id_usuario =  $idUsuario AND rd.estado != 14 ORDER BY rd.id desc");
 
 			$stmt -> execute();
 
@@ -128,7 +128,7 @@ class ModeloReportDevolucion{
        $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado, e.tiene_movimiento = 1, gdd.devuelto = 0, gdd.fecha_devolucion_real = NULL, gdd.contrato = gdd.id_guia, gdd.match_cambio = NULL, gdd.id_report_devolucion = NULL, gdd.devolucion_tipo = NULL, gdd.detalle_devolucion = NULL, gdd.fecha_retiro_obra = NULL WHERE gdd.id_report_devolucion = $idReport"); 
                $sqlGuia->execute();
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM report_devolucion WHERE id = $idReport");
+		$stmt = Conexion::conectar()->prepare("UPDATE report_devolucion SET estado = 14 WHERE id = $idReport");
 
 	
 		if($stmt -> execute()){
@@ -170,6 +170,34 @@ class ModeloReportDevolucion{
 			
 			$stmt -> execute();
    		    return $stmt -> fetchAll();
+		    $stmt -> close();
+		    $stmt = null;
+
+	}
+
+	static public function mdlValidaEquipoReportCambiado($idDevolucion){
+
+		
+
+			$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro FROM guia_despacho_detalle gdd where gdd.id_report_devolucion  = $idDevolucion");
+
+			
+		    $stmt -> execute();
+   		    return $stmt -> fetchAll();
+		    $stmt -> close();
+		    $stmt = null;
+
+	}
+
+	static public function mdlValidaEquipoReportCambiadoDetalle($idRegistro){
+
+		
+
+		$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro FROM guia_despacho_detalle gdd where gdd.match_cambio = $idRegistro");
+
+			
+		    $stmt -> execute();
+   		    return $stmt -> fetch();
 		    $stmt -> close();
 		    $stmt = null;
 
