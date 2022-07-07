@@ -24,6 +24,16 @@ if($_SESSION["perfil"] != "Administrador"){
      Carga Masiva Precios Clientes
     
     </h1>
+    <br>
+    <h4><strong>Para actualizar precios en convenio.</strong></h4>
+    <ul>
+      <li>Descargue la plantilla, en el botón DESCARGAR PLANTILLA.</li>
+      <li>Ingrese los precios en convenio para el cliente y guarde los cambios. 
+      <li>Seleccione el cliente y la o las obras a las cuales realizará el convenio de precios.</li>
+      <li>Haga clic en el botón SELECCIONAR ARCHIVO.</li>
+      <li>Seleccione el archivo en el cual actualizó los precios en convenio.</li>
+      <li>Haga clic en el botón REALIZAR CARGA</li>
+    </ul>
 
     <ol class="breadcrumb">
       
