@@ -64,6 +64,15 @@ class AjaxEquiposReportRetiro{
 		echo json_encode($respuesta);
 	}
 
+	public function ajaxQuitarCambioEquipo(){
+
+		$idRegistroTermino2 = $this->idRegistroTermino2;		
+		
+
+		$respuesta = ModeloReportDevolucionDetalles::mdlQuitarCambioEquipo($idRegistroTermino2);
+
+		echo json_encode($respuesta);
+	}
 
 	
 }	
@@ -106,6 +115,14 @@ if(isset($_POST["idRegistroTermino"]) && isset($_POST["idRegistroCambio"]) && is
 	$cambia -> idRegistroCambio = $_POST["idRegistroCambio"];
 	$cambia -> contrato = $_POST["contrato"];
 	$cambia -> ajaxRealizaCambioEquipo();
+
+}
+
+if(isset($_POST["idRegistroTermino2"])){
+
+	$quitar = new AjaxEquiposReportRetiro();
+	$quitar -> idRegistroTermino2 = $_POST["idRegistroTermino2"];		
+	$quitar -> ajaxQuitarCambioEquipo();
 
 }
 

@@ -3,9 +3,9 @@ recargaTabla();
 
 function genera_tabla_retiro() {
 
-	id = $('#idReport').val();    
+	idReport = $('#idReport').val();    
 
-	datos = "id=" + id;
+	datos = "id=" + idReport;
 
 	$.ajax({
 
@@ -369,7 +369,8 @@ function matchCambio(idRegistro,contrato){
        var idObra = $('#idObra').val();
 
 	datos = "idConstructora=" + idConstructora + 
-	        "&idObra=" + idObra;
+	        "&idObra=" + idObra +
+	        "&idRegistro=" + idRegistro;
 
 	$.ajax({
 
@@ -454,6 +455,37 @@ function hacerCambio(idRegistroEntra){
 		success: function(r) {
 
                  alertify.success("Se ha realizado el match entre ambos equipos");
+		   genera_tabla_retiro();
+
+		}
+	});
+
+	
+	          $("#modalEquipoCambio").modal("hide");
+
+}
+
+function quitarCambio(idRegistroEntra){
+   
+    var idRegistroTermino =	$('#idRegistroCambio').val();
+    
+
+	var datos = new FormData();
+	datos.append("idRegistroTermino2", idRegistroTermino);
+		
+	
+
+	$.ajax({
+		url: "ajax/equipos-report-retiro.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(r) {
+
+                 alertify.success("Se ha quitado el match entre ambos equipos");
 		   genera_tabla_retiro();
 
 		}

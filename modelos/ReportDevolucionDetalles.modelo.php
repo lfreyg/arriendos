@@ -187,6 +187,32 @@ class ModeloReportDevolucionDetalles{
 
 	}
 
+
+	static public function mdlQuitarCambioEquipo($idRegistroTermino){
+	
+
+	//idRegistroTermino = EQUIPO QUE SALE
+	//idRegistroCambio = EQUIPO QUE ENTRA
+	//contrato = CONTRATO EQUIPO QUE SALE, PARA MANTENER EL ORDEN DEL ARRIENDO EN CASO DE CAMBIO	
+	
+	$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET match_cambio = null, contrato = id_guia WHERE match_cambio = $idRegistroTermino");
+		
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
 	
 
 	static public function mdlValidaEquipoReportEliminar($idRegistro){
@@ -222,6 +248,22 @@ class ModeloReportDevolucionDetalles{
 	static public function mdlEquiposParaCambio($constructora, $obra){
 
 		$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro, ne.descripcion as equipo, ne.modelo as modelo, e.codigo as codigo, m.descripcion as marca, gd.numero_guia as gd FROM guia_despacho gd JOIN guia_despacho_detalle gdd ON gd.id = gdd.id_guia join equipos e ON gdd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id WHERE gd.id_constructoras = $constructora and id_obras = $obra and gdd.id_tipo_movimiento = 11 and gdd.devuelto = 0 and gdd.match_cambio is null ORDER BY ne.descripcion");
+
+		
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+
+	static public function mdlEquiposCambiados($constructora, $obra, $match){
+
+		$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro, ne.descripcion as equipo, ne.modelo as modelo, e.codigo as codigo, m.descripcion as marca, gd.numero_guia as gd FROM guia_despacho gd JOIN guia_despacho_detalle gdd ON gd.id = gdd.id_guia join equipos e ON gdd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id WHERE gd.id_constructoras = $constructora and id_obras = $obra and gdd.id_tipo_movimiento = 11 and gdd.devuelto = 0 and gdd.match_cambio = $match");
 
 		
 		$stmt -> execute();
