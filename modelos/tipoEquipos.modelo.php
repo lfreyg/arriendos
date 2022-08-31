@@ -147,13 +147,13 @@ class ModeloTipoEquipos{
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_marca = :marca, descripcion = :descripcion, modelo = :modelo, precio = :precio, foto = :foto, meses_garantia = :meses_garantia, vida_util = :vida WHERE id = :id");
 
 		$stmt -> bindParam(":marca", $datos["marca"], PDO::PARAM_INT);
-		$stmt -> bindParam(":descripcion", strtoupper($datos["descripcion"]), PDO::PARAM_STR);
-		$stmt -> bindParam(":modelo", strtoupper($datos["modelo"]), PDO::PARAM_STR);
+		$stmt -> bindParam(":descripcion", strtoupper(str_replace('"',"''",$datos["descripcion"])), PDO::PARAM_STR);
+		$stmt -> bindParam(":modelo", strtoupper(str_replace('"',"''",$datos["modelo"])), PDO::PARAM_STR);
 		$stmt -> bindParam(":precio", $datos["precio"], PDO::PARAM_STR);		
 		$stmt -> bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
 		$stmt -> bindParam(":meses_garantia", $datos["garantia"], PDO::PARAM_INT);	
 		$stmt -> bindParam(":vida", $datos["vida"], PDO::PARAM_INT);	
-		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
 		if($stmt -> execute()){
 

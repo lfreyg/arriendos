@@ -27,8 +27,8 @@ $id = $_POST['id'];
                  <tr>                 
                   <th>Equipo</th>
                   <th>Modelo</th>
-                  <th>Codigo</th>
                   <th>Serie</th>
+                  <th>Codigo</th>                  
                   <th>Precio</th>
                   <th>Acciones</th>
                 </tr>
@@ -62,8 +62,8 @@ $id = $_POST['id'];
   <tr>
     <td ><div align="left"><?php echo $tipoEquipos["descripcion"]?></div></td>
     <td ><div align="left"><?php echo $tipoEquipos["modelo"]?></div></td>  
-    <td ><div align="left"><?php echo $productos[$i]["codigo"]?></div></td>  
     <td ><div align="left"><?php echo $productos[$i]["numero_serie"]?></div></td> 
+    <td ><div align="left"><?php echo $productos[$i]["codigo"]?></div></td> 
     <td ><div align="right"><?php echo "$ ".$precio?></div></td>  
     <td align="center"><span class="btn btn-warning btn-xm" title="Editar" onclick="editar('<?php echo $productos[$i]["id"]?>')">E</span>
       <button class="btn btn-danger btn-xm" title="Eliminar" <?php echo $disabled?> onclick="eliminarConsulta('<?php echo $productos[$i]["id"]?>')">X</button></td>

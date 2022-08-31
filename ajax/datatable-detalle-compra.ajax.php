@@ -54,8 +54,7 @@ class TablaEquiposFactura{
 
 		  	$botones =  "<div class='btn-group'><button class='btn btn-primary agregarEquipoArriendo' idTipoEquipo='".$productos[$i]["id"]."'>Agregar</button></div>"; 
 
-		  	$datosJson .='[
-			      "'.($i+1).'",
+		  	$datosJson .='[			     
 			      "'.$imagen.'",
 			      "'.$marca["descripcion"].'",
 			      "'.$productos[$i]["descripcion"].'",

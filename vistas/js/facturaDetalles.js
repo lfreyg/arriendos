@@ -68,7 +68,7 @@ $(".tablaEquiposFactura tbody").on("click", "button.agregarEquipoArriendo", func
 					$("#compraDetalleDescripcion").val(respuesta["descripcion"]);
 					$("#compraDetalleModelo").val(respuesta["modelo"]);
 					$("#idEquipoDetalle").val(respuesta["id"]);
-					$('#compraDetallePrecio').focus();
+					$('#compraDetalleSerie').focus();
 
 				}
 

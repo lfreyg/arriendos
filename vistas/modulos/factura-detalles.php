@@ -133,19 +133,7 @@ $proveedor = ModeloProveedores::mdlMostrarProveedores("proveedores","id",$idProv
                    </div> 
                 </div>
 
-                <div class="form-group row">
-                  <div class="col-xs-3" style="padding-right:0px">
-                   <div class="form-group">
-                    <div class="form-group"> 
-                     <label>Precio Compra</label>               
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="ion ion-social-usd"></i></span> 
-                         <input type="number" class="form-control" autocomplete="off" id="compraDetallePrecio" value="">                 
-                     </div>
-                   </div> 
-                </div>
-                  </div>
-
+                <div class="form-group row"> 
                   <div class="col-xs-4" style="padding-right:0px">
                      <div class="form-group">
                     <div class="form-group">   
@@ -165,6 +153,18 @@ $proveedor = ModeloProveedores::mdlMostrarProveedores("proveedores","id",$idProv
                       <div class="input-group">                    
                         <span class="input-group-addon"><i class="fa fa-th"></i></span> 
                          <input type="text" class="form-control" autocomplete="off" id="compraDetalleCodigo" value="">                 
+                     </div>
+                   </div> 
+                </div>
+                  </div>
+
+                  <div class="col-xs-3" style="padding-right:0px">
+                   <div class="form-group">
+                    <div class="form-group"> 
+                     <label>Precio Compra</label>               
+                      <div class="input-group">                    
+                        <span class="input-group-addon"><i class="ion ion-social-usd"></i></span> 
+                         <input type="number" class="form-control" autocomplete="off" id="compraDetallePrecio" value="">                 
                      </div>
                    </div> 
                 </div>
@@ -250,8 +250,7 @@ $proveedor = ModeloProveedores::mdlMostrarProveedores("proveedores","id",$idProv
               
              <thead style="background-color: #ccc;color: black; font-weight: bold;">
 
-                 <tr>
-                  <th style="width: 10px">#</th>
+                 <tr>                 
                   <th>Imagen</th>
                   <th>Marca</th>
                   <th>Descripcion</th>
