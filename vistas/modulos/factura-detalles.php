@@ -134,47 +134,88 @@ $proveedor = ModeloProveedores::mdlMostrarProveedores("proveedores","id",$idProv
                 </div>
 
                 <div class="form-group row"> 
-                  <div class="col-xs-4" style="padding-right:0px">
-                     <div class="form-group">
-                    <div class="form-group">   
-                    <label>Serie Equipo</label>              
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" autocomplete="off" id="compraDetalleSerie" value="">                 
-                     </div>
-                   </div> 
-                </div>
-                  </div>
+                        <div class="col-xs-4" style="padding-right:0px">
+                          <div class="form-group">
+                            <div class="form-group">   
+                              <label>Serie Equipo</label>              
+                                <div class="input-group">                    
+                                  <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                                   <input type="text" class="form-control" autocomplete="off" id="compraDetalleSerie" value="">                 
+                               </div>
+                             </div> 
+                          </div>
+                        </div>
 
-                  <div class="col-xs-4" style="padding-right:0px">
-                     <div class="form-group">
-                    <div class="form-group">   
-                    <label>Código Equipo</label>              
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" autocomplete="off" id="compraDetalleCodigo" value="">                 
-                     </div>
-                   </div> 
-                </div>
-                  </div>
+                        <div class="col-xs-4" style="padding-right:0px">
+                           <div class="form-group">
+                              <div class="form-group">   
+                                 <label>Código Equipo</label>              
+                                   <div class="input-group">                    
+                                     <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                                      <input type="text" class="form-control" autocomplete="off" id="compraDetalleCodigo" value="">                 
+                                   </div>
+                              </div> 
+                            </div>
+                        </div>
 
-                  <div class="col-xs-3" style="padding-right:0px">
-                   <div class="form-group">
-                    <div class="form-group"> 
-                     <label>Precio Compra</label>               
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="ion ion-social-usd"></i></span> 
-                         <input type="number" class="form-control" autocomplete="off" id="compraDetallePrecio" value="">                 
-                     </div>
-                   </div> 
+                        <div class="col-xs-3" style="padding-right:0px">
+                           <div class="form-group">
+                                  <div class="form-group"> 
+                                     <label>Precio Neto Compra</label>               
+                                      <div class="input-group">                    
+                                          <span class="input-group-addon"><i class="ion ion-social-usd"></i></span> 
+                                           <input type="number" class="form-control" autocomplete="off" id="compraDetallePrecio" value="">                 
+                                     </div>
+                                 </div> 
+                           </div>
+                        </div>
                 </div>
-                  </div>
-                </div>
+
+                 <div class="form-group row">
+                      <div class="col-xs-4" style="padding-right:0px">
+                        <div class="form-group">              
+                           <div class="form-group">               
+                                <label>Sucursal</label>  
+                                    <select class="form-control" id="sucursalCompra" name="sucursalCompra" required>
+                                      
+                                          <option value="">Seleccionar sucursal</option>
+
+                                    <?php
+
+                                    $item = null;
+                                    $valor = null;
+
+                                    $sucursales = ControladorSucursales::ctrMostrarSucursales($item, $valor);
+
+                                    foreach ($sucursales as $key => $value) {
+                                      
+                                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                                    }
+
+                                    ?>
+  
+                                        </select>
+                              </div>
+                          </div> 
+                        </div>
+
+
+                        <div class="col-xs-5" style="padding-right:0px">
+                           <div class="form-group">
+                                  <div class="form-group"> 
+                                     <label>Total Neto Compra</label>               
+                                      <div class="input-group">                    
+                                          <span class="input-group-addon"><i class="ion ion-social-usd"></i></span> 
+                                           <input type="text" class="form-control bg-warning text-right" id="totalCompra" disabled>                 
+                                     </div>
+                                 </div> 
+                           </div>
+                        </div>
+
+                 </div>
 
                   <div class="pull-right">
-
                         <button class="btn btn-primary" id="btnAgregarDetalle">Agregar Equipo</button>
-            
                    </div>       
                 
                 <br/>
@@ -250,12 +291,11 @@ $proveedor = ModeloProveedores::mdlMostrarProveedores("proveedores","id",$idProv
               
              <thead style="background-color: #ccc;color: black; font-weight: bold;">
 
-                 <tr>                 
-                  <th>Imagen</th>
+                 <tr>
+                  <th>Acciones</th>
                   <th>Marca</th>
                   <th>Descripcion</th>
                   <th>Modelo</th>
-                  <th>Acciones</th>
                 </tr>
 
               </thead>
@@ -333,42 +373,72 @@ MODAL EDITAR
                </div> 
 
                 <div class="form-group row">
-                  <div class="col-xs-3" style="padding-right:0px">
-                   <div class="form-group">
-                    <div class="form-group"> 
-                     <label>Precio Compra</label>               
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="ion ion-social-usd"></i></span> 
-                         <input type="number" class="form-control" autocomplete="off" id="editaDetallePrecio" required>                 
-                     </div>
-                   </div> 
-                </div>
-                  </div>
+                          <div class="col-xs-3" style="padding-right:0px">
+                           <div class="form-group">
+                            <div class="form-group"> 
+                             <label>Precio Neto Compra</label>               
+                              <div class="input-group">                    
+                                <span class="input-group-addon"><i class="ion ion-social-usd"></i></span> 
+                                 <input type="number" class="form-control" autocomplete="off" id="editaDetallePrecio" required>                 
+                             </div>
+                           </div> 
+                        </div>
+                          </div>
 
-                  <div class="col-xs-4" style="padding-right:0px">
-                     <div class="form-group">
-                    <div class="form-group">   
-                    <label>Serie Equipo</label>              
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" autocomplete="off" id="editaDetalleSerie" required>                 
-                     </div>
-                   </div> 
-                </div>
-                  </div>
+                          <div class="col-xs-4" style="padding-right:0px">
+                             <div class="form-group">
+                            <div class="form-group">   
+                            <label>Serie Equipo</label>              
+                              <div class="input-group">                    
+                                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                                 <input type="text" class="form-control" autocomplete="off" id="editaDetalleSerie" required>                 
+                             </div>
+                           </div> 
+                        </div>
+                          </div>
 
-                  <div class="col-xs-4" style="padding-right:0px">
-                     <div class="form-group">
-                    <div class="form-group">   
-                    <label>Código Equipo</label>              
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" autocomplete="off" required id="editaDetalleCodigo">                 
-                     </div>
-                   </div> 
+                          <div class="col-xs-4" style="padding-right:0px">
+                             <div class="form-group">
+                            <div class="form-group">   
+                            <label>Código Equipo</label>              
+                              <div class="input-group">                    
+                                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                                 <input type="text" class="form-control" autocomplete="off" required id="editaDetalleCodigo">                 
+                             </div>
+                           </div> 
+                        </div>
+                      </div>
                 </div>
-                  </div>
-                </div>
+
+                <div class="form-group row">
+                      <div class="col-xs-6" style="padding-right:0px">
+                        <div class="form-group">              
+                           <div class="form-group">               
+                                <label>Sucursal</label>  
+                                    <select class="form-control" id="editaSucursalCompra" name="editaSucursalCompra" required>
+                                    <?php
+
+                                    $item = null;
+                                    $valor = null;
+
+                                    $sucursales = ControladorSucursales::ctrMostrarSucursales($item, $valor);
+
+                                    foreach ($sucursales as $key => $value) {
+                                      
+                                      echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                                    }
+
+                                    ?>
+  
+                                        </select>
+                              </div>
+                          </div> 
+                        </div>
+
+
+                 </div>
+
+
             
 
   

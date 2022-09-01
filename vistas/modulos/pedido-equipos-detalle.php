@@ -62,6 +62,67 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
     <div class="row">
 
       <!--=====================================
+      LA TABLA DE PRODUCTOS
+      ======================================-->
+
+      <div class="col-lg-5 col-xs-11">
+        
+        <div class="box box-warning">
+
+          <div class="box-header with-border"></div>
+
+          <div class="box-body">
+
+                     <div class="form-group">
+                      
+                      <div class="input-group">
+                      
+                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                        <select class="form-control input-lg select2" id="seleccionaMarcaEquipo" name="seleccionaMarcaEquipo"> 
+                         <option value="">Seleccionar Marca</option>              
+                          
+                          <?php                 
+
+                          $marca = ControladorMarcas::ctrMostrarMarcas(null,null);
+
+                          foreach ($marca as $key => $value) {
+                                      
+                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"].'</option>';
+                                    }
+                                          
+
+                          ?>
+
+                        </select>
+
+                      </div>
+
+                    </div>
+            
+            <table class="table table-bordered table-striped table-hover dt-responsive tablaEquiposFactura">
+              
+             <thead style="background-color: #ccc;color: black; font-weight: bold;">
+
+                 <tr> 
+                  <th>Acciones</th>  
+                  <th>Marca</th>
+                  <th>Descripcion</th>
+                  <th>Modelo</th>                  
+                </tr>
+
+              </thead>
+
+            </table>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <!--=====================================
       EL FORMULARIO
       ======================================-->
       
@@ -190,68 +251,7 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
             
       </div>
 
-      <!--=====================================
-      LA TABLA DE PRODUCTOS
-      ======================================-->
-
-      <div class="col-lg-5 col-xs-11">
-        
-        <div class="box box-warning">
-
-          <div class="box-header with-border"></div>
-
-          <div class="box-body">
-
-                     <div class="form-group">
-                      
-                      <div class="input-group">
-                      
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-
-                        <select class="form-control input-lg select2" id="seleccionaMarcaEquipo" name="seleccionaMarcaEquipo"> 
-                         <option value="">Seleccionar Marca</option>              
-                          
-                          <?php                 
-
-                          $marca = ControladorMarcas::ctrMostrarMarcas(null,null);
-
-                          foreach ($marca as $key => $value) {
-                                      
-                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"].'</option>';
-                                    }
-                                          
-
-                          ?>
-
-                        </select>
-
-                      </div>
-
-                    </div>
-            
-            <table class="table table-bordered table-striped table-hover dt-responsive tablaEquiposFactura">
-              
-             <thead style="background-color: #ccc;color: black; font-weight: bold;">
-
-                 <tr>
-                  <th style="width: 10px">#</th>
-                  <th>Imagen</th>
-                  <th>Marca</th>
-                  <th>Descripcion</th>
-                  <th>Modelo</th>
-                  <th>Acciones</th>
-                </tr>
-
-              </thead>
-
-            </table>
-
-          </div>
-
-        </div>
-
-
-      </div>
+  
 
     </div>
    

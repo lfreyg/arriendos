@@ -81,12 +81,13 @@ class ModeloEquipos{
 
 	static public function mdlEditarEquipos($tabla, $datos){
 	
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  precio_compra = :precio_compra, numero_serie = :numero_serie, codigo = :codigo WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  precio_compra = :precio_compra, numero_serie = :numero_serie, codigo = :codigo, id_sucursal = :id_sucursal WHERE id = :id");
 
 		$stmt -> bindParam(":codigo", strtoupper($datos["codigo"]), PDO::PARAM_STR);
 		$stmt -> bindParam(":numero_serie", $datos["numero_serie"], PDO::PARAM_STR);		
 		$stmt -> bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);		
 		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_sucursal", $datos["id_sucursal"], PDO::PARAM_INT);
 
 		if($stmt -> execute()){
 
@@ -138,7 +139,7 @@ class ModeloEquipos{
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM equipos WHERE codigo = :valor1 LIMIT 1");
 
-			$stmt -> bindParam(":valor1", $valor1, PDO::PARAM_INT);
+			$stmt -> bindParam(":valor1", $valor1, PDO::PARAM_STR);
 			
 
 			$stmt -> execute();

@@ -88,6 +88,7 @@ if($_SESSION["perfil"] != "Administrador"){
 
            $dateReg = date_create($value["ultimo_login"]);
            $fechaReg = date_format($dateReg,"d-m-Y H:i:s");
+           
                    
           echo ' <tr>                 
                   <td>'.$value["nombre"].'</td>

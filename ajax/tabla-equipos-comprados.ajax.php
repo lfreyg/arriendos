@@ -6,6 +6,7 @@ require_once "../controladores/marcas.controlador.php";
 require_once "../modelos/marcas.modelo.php";
 
 require_once "../modelos/facturasDetalles.modelo.php";
+require_once "../modelos/sucursales.modelo.php";
 
 $id = $_POST['id'];
 
@@ -25,6 +26,7 @@ $id = $_POST['id'];
    <thead style="background-color: #ccc;color: black; font-weight: bold;">
 
                  <tr>                 
+                  <th>Sucursal</th>
                   <th>Equipo</th>
                   <th>Modelo</th>
                   <th>Serie</th>
@@ -43,8 +45,13 @@ $id = $_POST['id'];
             for($i = 0; $i < count($productos); $i++){   
 
 
+            
             $idTipoEquipo = $productos[$i]["id_nombre_equipos"];
             $tipoEquipos = ModeloTipoEquipos::mdlMostrarTipoEquipos("nombre_equipos","id",$idTipoEquipo);
+
+            $idSucursal = $productos[$i]["id_sucursal"];            
+            $sucursal = ModeloSucursales::mdlMostrarSucursales("sucursales", "id", $idSucursal);
+            $nombreSucursal = $sucursal["nombre"];
 
             $idMarca = $tipoEquipos["id_marca"];
             $marca = ModeloMarcas::mdlMostrarMarcas("marcas","id",$idMarca);  
@@ -60,6 +67,7 @@ $id = $_POST['id'];
             }
   ?>
   <tr>
+    <td ><div align="left"><?php echo $nombreSucursal?></div></td>
     <td ><div align="left"><?php echo $tipoEquipos["descripcion"]?></div></td>
     <td ><div align="left"><?php echo $tipoEquipos["modelo"]?></div></td>  
     <td ><div align="left"><?php echo $productos[$i]["numero_serie"]?></div></td> 

@@ -2,6 +2,7 @@
 
 require_once "../controladores/equipos.controlador.php";
 require_once "../modelos/equipos.modelo.php";
+require_once "../modelos/facturasCompra.modelo.php";
 
 class AjaxEquipos{
 
@@ -43,6 +44,17 @@ class AjaxEquipos{
 		echo json_encode($respuesta);
 	}
 
+	public $idFacturaCompra;
+
+	public function ajaxCalculaTotalFactura(){
+
+		$valor = $this->idFacturaCompra;
+
+		$respuesta = ModeloEquipos::mdlSumaTotalFactura($valor);
+
+		echo json_encode($respuesta);
+	}
+
 	
 }	
 
@@ -72,6 +84,14 @@ if(isset($_POST["eliminarEquipo"])){
 	$eliminar = new AjaxEquipos();
 	$eliminar -> eliminarEquipo = $_POST["eliminarEquipo"];
 	$eliminar -> ajaxEliminarEquipos();
+
+}
+
+if(isset($_POST["idFacturaCompra"])){
+
+	$total = new AjaxEquipos();
+	$total -> idFacturaCompra = $_POST["idFacturaCompra"];
+	$total -> ajaxCalculaTotalFactura();
 
 }
 

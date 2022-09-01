@@ -19,9 +19,12 @@ function genera_tabla_compras() {
 		success: function(html) {
 
 			$('#mostrar_tabla_detalles').html(html);
+			totalFactura();
 
 		}
 	});
+
+	
 }
 
 
@@ -88,16 +91,8 @@ $(".tablaEquiposFactura tbody").on("click", "button.agregarEquipoArriendo", func
 
 $('#btnAgregarDetalle').click(function() {
 
-if ($('#compraDetalleCodigo').val() != '') {
-	
 	if ($('#compraDetalleDescripcion').val() == '') {
 		alertify.error("Seleccione un equipo de la lista");
-		return false;
-	}
-
-	if ($('#compraDetallePrecio').val() == '') {
-		alertify.error("Debe ingresar precio de compra");
-		$('#compraDetallePrecio').focus();
 		return false;
 	}
 
@@ -113,18 +108,36 @@ if ($('#compraDetalleCodigo').val() != '') {
 		return false;
 	}
 
+	if ($('#compraDetallePrecio').val() == '') {
+		alertify.error("Debe ingresar precio de compra");
+		$('#compraDetallePrecio').focus();
+		return false;
+	}
+
+	if ($('#sucursalCompra').val() == "") {
+		alertify.error("Debe seleccionar sucursal");
+		$('#sucursalCompra').focus();
+		return false;
+	}
+
+	
+
+if ($('#compraDetalleCodigo').val() != '') {
+	
 	
 	id_nombre_equipos = $('#idEquipoDetalle').val();
 	id_factura = $('#idFacturaCompra').val();
 	codigo = $('#compraDetalleCodigo').val();
 	numero_serie = $('#compraDetalleSerie').val();
 	precio_compra = $('#compraDetallePrecio').val();
+	sucursal = $('#sucursalCompra').val();
 
 	datos = "id_nombre_equipos=" + id_nombre_equipos +
 		"&id_factura=" + id_factura +
 		"&codigo=" + codigo +
 		"&numero_serie=" + numero_serie +
-		"&precio_compra=" + precio_compra;
+		"&precio_compra=" + precio_compra +
+		"&id_sucursal=" + sucursal;
 
 
 	$.ajax({
@@ -288,6 +301,7 @@ function editar(id) {
 			var serie = equipo["numero_serie"];
 			var codigo = equipo["codigo"];
 			var id = equipo["id"];
+			var sucursal = equipo["id_sucursal"];
 
 
 
@@ -333,6 +347,7 @@ function editar(id) {
 							$('#editaDetallePrecio').val(precio);
 							$('#editaDetalleSerie').val(serie);
 							$('#editaDetalleCodigo').val(codigo);
+							$('#editaSucursalCompra').val(sucursal);
 							$('#editaDetallePrecio').focus();
 
 						}
@@ -376,11 +391,13 @@ $('#btnGuardarEdita').click(function() {
 	codigo = $('#editaDetalleCodigo').val();
 	numero_serie = $('#editaDetalleSerie').val();
 	precio_compra = $('#editaDetallePrecio').val();
+	sucursal = $('#editaSucursalCompra').val();
 
 	datos = "idEquipo=" + idEquipo +
 		"&codigo=" + codigo +
 		"&numero_serie=" + numero_serie +
-		"&precio_compra=" + precio_compra;
+		"&precio_compra=" + precio_compra +
+		"&id_sucursal=" + sucursal;
 
 
 	$.ajax({
@@ -435,4 +452,57 @@ function elimina_equipo(id) {
 
 		}
 	});
+}
+
+function totalFactura(){
+   id = $('#idFacturaCompra').val();
+
+   var datos = new FormData();
+	datos.append("idFacturaCompra", id);
+
+
+	$.ajax({
+		url: "ajax/equipos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(r) {
+           
+           if(r["total"] == null){
+           	total = "$ 0";
+           }else{         
+            total = formatNumber.new(r["total"], "$ ");
+           }
+			$("#totalCompra").val(total);
+
+
+
+
+
+		}
+	});
+
+}
+
+ var formatNumber = {
+ separador: ".", // separador para los miles
+ sepDecimal: ',', // separador para los decimales
+ formatear:function (num){
+ num +='';
+ var splitStr = num.split('.');
+ var splitLeft = splitStr[0];
+ var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+ var regx = /(\d+)(\d{3})/;
+ while (regx.test(splitLeft)) {
+ splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+ }
+ return this.simbol + splitLeft +splitRight;
+ },
+ new:function(num, simbol){
+ this.simbol = simbol ||'';
+ return this.formatear(num);
+ }
 }

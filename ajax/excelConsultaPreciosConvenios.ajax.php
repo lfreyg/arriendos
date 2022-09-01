@@ -71,7 +71,8 @@ $blanco = "";
                 $marca = strtoupper($item["marca"]);
                 $equipo = strtoupper($item["tipoEquipo"]);
                 $modelo = strtoupper($item["modelo"]);
-                $precio = number_format($item["precio"],0,"",".");               
+                $precio = number_format($item["precio"],0,"",".");  
+                setlocale(LC_TIME,"es_CL");             
                 $dateCreado = date_create($item["fecha_creado"]);
                 $creado = date_format($dateCreado,"d-M-Y H:i:s");
 
