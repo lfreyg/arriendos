@@ -77,8 +77,9 @@ $idReport = $_POST['id'];
 
        
     <td align="left" nowrap="">
-      <span class="btn btn-warning btn-xm" title="Editar" onclick="editar('<?php echo $value["idRegistro"]?>')">E</span>
+      <span class="btn btn-warning btn-xm" title="Editar" onclick="editar('<?php echo $value["idRegistro"]?>')">E</span>      
       <button class="btn btn-danger btn-xm" title="Eliminar" <?php echo $disabled?> onclick="eliminarConsulta('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">X</button>
+      <span class="btn btn-success btn-xm" title="Foto" onclick="editar('<?php echo $value["idRegistro"]?>')">F</span>
      <?php if($estadoEquipo == 11){?>
       <button class="btn btn-info btn-xm" title="Cambio" onclick="matchCambio('<?php echo $value["idRegistro"]?>','<?php echo $value["contrato"]?>')">C</button>
      <?php } ?> 

@@ -81,6 +81,13 @@
 								</a>
 							</li>
 
+							<li>
+								<a href="transportista">
+									<i class="fa fa-circle-o"></i>
+									<span>Choferes</span>
+								</a>
+							</li>
+
 				</ul>
 
 			</li>

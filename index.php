@@ -25,6 +25,7 @@ require_once "controladores/cargaMasivaPrecios.controlador.php";
 require_once "controladores/pedidoEquipo.controlador.php";
 require_once "controladores/guiaDespacho.controlador.php";
 require_once "controladores/reportDevolucion.controlador.php";
+require_once "controladores/transportista.controlador.php";
 
 require_once "modelos/categorias.modelo.php";
 require_once "modelos/clientes.modelo.php";
@@ -47,6 +48,7 @@ require_once "modelos/transporteGuia.modelo.php";
 require_once "modelos/guiaDespacho.modelo.php";
 require_once "modelos/reportDevolucion.modelo.php";
 require_once "modelos/reportDevolucionDetalles.modelo.php";
+require_once "modelos/transportista.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 
