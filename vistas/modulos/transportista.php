@@ -315,7 +315,7 @@ MODAL EDITAR CHOFER
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <input type="text" class="form-control input-lg" maxlength="6" name="editarPatente" id="editarPatente" autocomplete="off" placeholder="Patente">
+                <input type="text" class="form-control input-lg" maxlength="6" name="editarPatente" id="editarPatente" autocomplete="off" required placeholder="Patente">
 
               </div>
 
@@ -329,7 +329,7 @@ MODAL EDITAR CHOFER
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarEmpresa" id="editarEmpresa" autocomplete="off" maxlength="12" onkeyup="formatProveedor(this)" placeholder="Rut Empresa Transportes">
+                <input type="text" class="form-control input-lg" name="editarEmpresa" id="editarEmpresa" autocomplete="off" maxlength="12" required onkeyup="formatProveedor(this)" placeholder="Rut Empresa Transportes">
 
               </div>
 
