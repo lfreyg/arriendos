@@ -41,7 +41,7 @@ class ModeloTransportista{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item and eliminado = false");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -51,7 +51,7 @@ class ModeloTransportista{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla where eliminado = false");
 
 			$stmt -> execute();
 
@@ -119,6 +119,28 @@ class ModeloTransportista{
 
 	}
 
+	static public function mdlEstadoEliminaTransportista($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET eliminado = true WHERE id = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
 	static public function mdlValidarEliminar($idTransporte){
 		
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho WHERE id_transporte_guia = $idTransporte limit 1");
@@ -131,6 +153,22 @@ class ModeloTransportista{
 
 		$stmt = null;
 
+	}
+
+	static public function mdlEmpresaTransporte($rut){
+		if($rut != null){
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM empresa_transporte WHERE rut = $rut");
+			$stmt -> execute();
+			return $stmt -> fetch();
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM empresa_transporte");
+			$stmt -> execute();
+			return $stmt -> fetchAll();
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
 	}
 
 }

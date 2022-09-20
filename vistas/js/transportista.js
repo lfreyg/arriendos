@@ -1,5 +1,5 @@
 /*=============================================
-EDITAR SUCURSAL
+EDITAR 
 =============================================*/
 $(".tablas").on("click", ".btnEditarChofer", function(){
 
@@ -32,7 +32,7 @@ $(".tablas").on("click", ".btnEditarChofer", function(){
 })
 
 /*=============================================
-ELIMINAR SUCURSAL
+ELIMINAR 
 =============================================*/
 $(".tablas").on("click", ".btnEliminarChofer", function(){
 
@@ -104,64 +104,4 @@ $("#nuevaRutChofer").change(function(){
 })
 
 
-$("#nuevaEmpresa").change(function(){
 
-	$(".alert").remove();
-
-	var validarEmpresa = $(this).val();
-
-	var datos = new FormData();
-	datos.append("validarEmpresa", validarEmpresa);
-
-	 $.ajax({
-	    url:"ajax/transportista.ajax.php",
-	    method:"POST",
-	    data: datos,
-	    cache: false,
-	    contentType: false,
-	    processData: false,
-	    dataType: "json",
-	    success:function(respuesta){
-
-	    	if(respuesta == "error"){
-	    		$("#nuevaEmpresa").parent().after('<div class="alert alert-warning">Este Rut no es valido</div>');
-	    		$("#nuevaEmpresa").val("");
-	    		$("nuevaEmpresa").focus();
-	    		return;
-	    	}
-
-	    }
-
-	})
-})
-
-$("#editarEmpresa").change(function(){
-
-	$(".alert").remove();
-
-	var validarEmpresa = $(this).val();
-
-	var datos = new FormData();
-	datos.append("validarEmpresa", validarEmpresa);
-
-	 $.ajax({
-	    url:"ajax/transportista.ajax.php",
-	    method:"POST",
-	    data: datos,
-	    cache: false,
-	    contentType: false,
-	    processData: false,
-	    dataType: "json",
-	    success:function(respuesta){
-
-	    	if(respuesta == "error"){
-	    		$("#editarEmpresa").parent().after('<div class="alert alert-warning">Este Rut no es valido</div>');
-	    		$("#editarEmpresa").val("");
-	    		$("editarEmpresa").focus();
-	    		return;
-	    	}
-
-	    }
-
-	})
-})

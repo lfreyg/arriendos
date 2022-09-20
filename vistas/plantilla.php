@@ -188,6 +188,8 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "devolucion-equipos-arriendos" ||
          $_GET["ruta"] == "devolucion-equipos-arriendos-detalle" ||
          $_GET["ruta"] == "transportista" ||
+         $_GET["ruta"] == "mantenedor-equipos" ||
+         $_GET["ruta"] == "carga-masiva-precios-lista" ||
 
          
          $_GET["ruta"] == "salir"){

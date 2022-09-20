@@ -18,6 +18,7 @@ $(".tablas").on("click", ".btnEditarConstructora", function(){
 	    dataType: "json",
 	    success:function(respuesta){
 
+	    	
      		$("#rutEditarConstructora").val(respuesta["rut"]);
      		$("#nombreEditarConstructora").val(respuesta["nombre"]);
      		$("#idConstructoras").val(respuesta["id"]);  

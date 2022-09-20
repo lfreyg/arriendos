@@ -68,6 +68,20 @@
 							</li>
 
 							<li>
+								<a href="carga-masiva-precios-lista">
+									<i class="fa fa-circle-o"></i>
+									<span>Carga precios de lista</span>
+								</a>
+							</li>
+
+							<li>
+								<a href="mantenedor-equipos">
+									<i class="fa fa-circle-o"></i>
+									<span>Mantenedor Equipos</span>
+								</a>
+							</li>
+
+							<li>
 								<a href="constructoras">
 									<i class="fa fa-circle-o"></i>
 									<span>Clientes</span>

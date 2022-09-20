@@ -45,6 +45,7 @@ class TablaEquiposReport{
   			$equipo = $productos[$i]["descripcion"]." ".$productos[$i]["modelo"]." ".$productos[$i]["marca"];
 
 		  			  	
+		  			  	
 		  	$botones =  "<div class='btn-group'><button class='btn btn-primary agregarEquipo' idGuiaDetalle='".$productos[$i]["idGuiaDetalle"]."' idEquipoParaRetiro='".$productos[$i]["idEquipo"]."'>Retirar</button></div>"; 
 
 		  	$datosJson .='[      

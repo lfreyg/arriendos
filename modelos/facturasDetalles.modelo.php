@@ -10,7 +10,7 @@ class ModeloFacturasDetalles{
 	=============================================*/
 	static public function mdlIngresarFacturasDetalle($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_nombre_equipos, id_factura, codigo, numero_serie, precio_compra, id_sucursal) VALUES (:id_nombre_equipos, :id_factura, :codigo, :numero_serie, :precio_compra, :id_sucursal)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_nombre_equipos, id_factura, codigo, numero_serie, precio_compra, id_sucursal, codigo_anterior, serie_anterior) VALUES (:id_nombre_equipos, :id_factura, :codigo, :numero_serie, :precio_compra, :id_sucursal, :codigo, :numero_serie)");
 
 		$stmt->bindParam(":id_nombre_equipos", $datos["id_nombre_equipos"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_factura", $datos["id_factura"], PDO::PARAM_INT);

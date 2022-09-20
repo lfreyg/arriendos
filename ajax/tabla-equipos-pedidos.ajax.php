@@ -20,6 +20,7 @@ $id = $_POST['id'];
    <thead style="background-color: #ccc;color: black; font-weight: bold;">
 
                  <tr>   
+                  <th>#</th>
                   <th>Marca</th>              
                   <th>Equipo</th>
                   <th>Modelo</th>
@@ -34,6 +35,7 @@ $id = $_POST['id'];
   <?php
             
             $productos = ModeloPedidoDetalles::mdlPedidoPorId($id);
+            $i = 0;
 
 
          foreach ($productos as $key => $value){
@@ -44,7 +46,7 @@ $id = $_POST['id'];
            $tipo = $value["tipo"];
            $detalle = $value["detalle"];
            $movimiento = $value["entrega"];
-            
+           $i++; 
             
             
             if($movimiento != null){
@@ -54,6 +56,7 @@ $id = $_POST['id'];
             }
   ?>
   <tr>
+    <td><div align="center"><?php echo $i?></div></td>
     <td ><div align="left"><?php echo $marca?></div></td>
     <td ><div align="left"><?php echo $equipo?></div></td>
     <td ><div align="left"><?php echo $modelo?></div></td>  

@@ -13,7 +13,7 @@ class ModeloTransporteGuia{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM transporte_guia WHERE id = $item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM transporte_guia WHERE id = $item and eliminado = false");
 			
 			$stmt -> execute();
 
@@ -21,7 +21,7 @@ class ModeloTransporteGuia{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM transporte_guia order by nombre");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM transporte_guia where eliminado = false order by nombre");
 
 			$stmt -> execute();
 

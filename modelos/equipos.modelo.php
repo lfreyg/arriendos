@@ -81,11 +81,11 @@ class ModeloEquipos{
 
 	static public function mdlEditarEquipos($tabla, $datos){
 	
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  precio_compra = :precio_compra, numero_serie = :numero_serie, codigo = :codigo, id_sucursal = :id_sucursal WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  precio_compra = :precio_compra, numero_serie = :numero_serie, codigo = :codigo, id_sucursal = :id_sucursal, codigo_anterior = :codigo, serie_anterior = :numero_serie WHERE id = :id");
 
 		$stmt -> bindParam(":codigo", strtoupper($datos["codigo"]), PDO::PARAM_STR);
 		$stmt -> bindParam(":numero_serie", $datos["numero_serie"], PDO::PARAM_STR);		
-		$stmt -> bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);		
+		$stmt -> bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_INT);		
 		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
 		$stmt -> bindParam(":id_sucursal", $datos["id_sucursal"], PDO::PARAM_INT);
 
@@ -253,6 +253,127 @@ class ModeloEquipos{
 			$stmt -> execute();
 
 			return $stmt -> fetch();		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+//************************MANTENEDOR DE EQUIPOS************************//
+
+	 static public function mdlMostrarEquiposMantenedor($filtro){
+
+		
+		if($filtro == null){
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, e.numero_serie as serie, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca, e.precio_compra as precio, su.nombre as sucursal FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN sucursales su ON e.id_sucursal = su.id where id_estado = 1 order by ne.descripcion");
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, e.numero_serie as serie, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca, e.precio_compra as precio, su.nombre as sucursal FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN sucursales su ON e.id_sucursal = su.id where id_estado = 1 and e.id_nombre_equipos = $filtro order by ne.descripcion");
+		}	
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+
+	static public function mdlMostrarEquiposMantenedorUno($id){
+
+		
+		
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, e.numero_serie as serie, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca, ne.precio as precio, su.nombre as sucursal, ne.id as idNombreEquipo, e.id_sucursal as idSucursal, e.creacion as fecha FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN sucursales su ON e.id_sucursal = su.id where e.id = $id");
+			
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+
+	static public function mdlEditarEquiposMantenedor($datos){
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE equipos SET codigo = :codigoEquipo, numero_serie = :serieEquipo, tiene_movimiento = 1, precio_compra = :precioCompra, id_sucursal = :sucursal WHERE id = :idEquipo");
+
+		$stmt -> bindParam(":codigoEquipo", strtoupper($datos["codigoEquipo"]), PDO::PARAM_STR);
+		$stmt -> bindParam(":serieEquipo", $datos["serieEquipo"], PDO::PARAM_STR);		
+		$stmt -> bindParam(":precioCompra", $datos["precioCompra"], PDO::PARAM_INT);		
+		$stmt -> bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
+		$stmt -> bindParam(":sucursal", $datos["sucursal"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+            
+            $stmt2 = Conexion::conectar()->prepare("INSERT INTO log_mantenedor_equipos(id_equipo,codigo_equipo,serie_equipo,precio_equipo,id_sucursal_equipo,id_usuario) VALUES (:idEquipo, :codigoEquipo, :serieEquipo, :precioCompra, :sucursal, :idUsuario)");
+            
+            
+
+            $stmt2 -> bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
+            $stmt2 -> bindParam(":codigoEquipo", strtoupper($datos["codigoEquipo"]), PDO::PARAM_STR);
+            $stmt2 -> bindParam(":serieEquipo", $datos["serieEquipo"], PDO::PARAM_STR);
+            $stmt2 -> bindParam(":precioCompra", $datos["precioCompra"], PDO::PARAM_INT);
+            $stmt2 -> bindParam(":sucursal", $datos["sucursal"], PDO::PARAM_INT);
+            $stmt2 -> bindParam(":idUsuario", $datos["idUsuario"], PDO::PARAM_INT);
+         
+         if($stmt2 -> execute()){
+			   return "ok";
+			}
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+		$stmt2 -> close();
+
+		$stmt = null;
+		$stmt2 = null;
+
+	}
+
+
+	static public function mdlMostrarEquiposOrigen($id){
+
+		
+		
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo_anterior as codigo, e.serie_anterior as serie, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca, ne.precio as precio, su.nombre as sucursal, ne.id as idNombreEquipo, e.id_sucursal as idSucursal, e.creacion as fecha FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN sucursales su ON e.id_sucursal = su.id where e.id = $id");
+			
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+
+	static public function mdlMostrarEquiposHistoria($id){
+
+		
+		
+			$stmt = Conexion::conectar()->prepare("SELECT l.codigo_equipo as codigo, l.serie_equipo as serie, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca, ne.precio as precio, su.nombre as sucursal, l.fecha_actualizacion as fecha, u.nombre as usuario FROM log_mantenedor_equipos l JOIN equipos e ON l.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN sucursales su ON l.id_sucursal_equipo = su.id JOIN usuarios u ON l.id_usuario = u.id where l.id_equipo = $id ORDER BY l.fecha_actualizacion DESC");
+			
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
 		
 
 		$stmt -> close();

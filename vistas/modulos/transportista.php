@@ -201,7 +201,21 @@ MODAL AGREGAR CATEGORÍA
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <input type="text" class="form-control input-lg" onkeyup="formatProveedor(this)" id="nuevaEmpresa" name="nuevaEmpresa" maxlength="12" autocomplete="off" placeholder="Rut Empresa Transporte" required>
+                 <select class="form-control input-lg" name="nuevaEmpresa" id="nuevaEmpresa">  
+                  <?php
+                      $item = null;
+                      $valor = null;
+
+                      $perfiles = ModeloTransportista::mdlEmpresaTransporte(null);
+
+                     foreach ($perfiles as $key => $value) {
+                    
+                         echo '<option value="'.$value["rut"].'">'.$value["rut"].'</option>';
+                      }
+
+                  ?>
+
+                </select>
 
               </div>
 
@@ -329,7 +343,21 @@ MODAL EDITAR CHOFER
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarEmpresa" id="editarEmpresa" autocomplete="off" maxlength="12" required onkeyup="formatProveedor(this)" placeholder="Rut Empresa Transportes">
+                <select class="form-control input-lg" name="editarEmpresa" id="editarEmpresa">  
+                  <?php
+                      $item = null;
+                      $valor = null;
+
+                      $perfiles = ModeloTransportista::mdlEmpresaTransporte(null);
+
+                     foreach ($perfiles as $key => $value) {
+                    
+                         echo '<option value="'.$value["rut"].'">'.$value["rut"].'</option>';
+                      }
+
+                  ?>
+
+                </select>               
 
               </div>
 

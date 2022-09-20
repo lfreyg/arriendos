@@ -143,22 +143,30 @@ class ControladorTransportistas{
 
 			}else{
 
-				echo'<script>
+				$tabla ="transporte_guia";
+				$datos = $_GET["idTransportista"];
 
-					swal({
-						  type: "error",
-						  title: "Transportista no se puede eliminar porque tiene procesos asociados",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-									if (result.value) {
+				$respuesta = ModeloTransportista::mdlEstadoEliminaTransportista($tabla, $datos);
 
-									window.location = "transportista";
+				if($respuesta == "ok"){
 
-									}
-								})
+					echo'<script>
 
-					</script>';	
+						swal({
+							  type: "success",
+							  title: "Transportista ha sido borrado correctamente",
+							  showConfirmButton: true,
+							  confirmButtonText: "Cerrar"
+							  }).then(function(result){
+										if (result.value) {
+
+										window.location = "transportista";
+
+										}
+									})
+
+						</script>';
+				}
 
 			}
 		}

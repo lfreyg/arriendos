@@ -62,6 +62,7 @@ class TablaEquiposFactura{
 			    ],';
 
 		  }
+		  
 
 		  $datosJson = substr($datosJson, 0, -1);
 
