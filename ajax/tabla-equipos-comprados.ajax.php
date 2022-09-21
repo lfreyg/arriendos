@@ -31,7 +31,7 @@ $id = $_POST['id'];
                   <th>Modelo</th>
                   <th>Serie</th>
                   <th>Codigo</th>                  
-                  <th>Precio Unitario</th>
+                  <th>Precio Neto Compra</th>
                   <th>Acciones</th>
                 </tr>
 

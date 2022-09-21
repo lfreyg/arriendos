@@ -161,7 +161,7 @@ $proveedor = ModeloProveedores::mdlMostrarProveedores("proveedores","id",$idProv
                         <div class="col-xs-3" style="padding-right:0px">
                            <div class="form-group">
                                   <div class="form-group"> 
-                                     <label>Precio Neto Unitario</label>               
+                                     <label>Precio Neto Compra</label>               
                                       <div class="input-group">                    
                                           <span class="input-group-addon"><i class="ion ion-social-usd"></i></span> 
                                            <input type="number" class="form-control" autocomplete="off" id="compraDetallePrecio" value="">                 
