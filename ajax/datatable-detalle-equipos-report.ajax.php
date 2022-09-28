@@ -51,7 +51,8 @@ class TablaEquiposReport{
 		  	$datosJson .='[      
 			       "'.$botones.'",
 			      "'.$productos[$i]["codigo"].'",			      
-			      "'.$equipo.'"
+			      "'.$equipo.'",		
+			      "'.$productos[$i]["guia"].'"     
 			    ],';
 
 		  }

@@ -38,6 +38,8 @@ $idGuia = $_POST['id'];
 
          foreach ($productos as $key => $value){
 
+
+
            $codigo = $value["codigo"];
            $equipo = $value["equipo"];
            $modelo = $value["modelo"];
@@ -49,10 +51,24 @@ $idGuia = $_POST['id'];
            $fecha = date_format($dateReg,"d-m-Y");
            
            $disabled = '';
+           $disabled_valida = "";
 
-           if($value["devuelto"] > 0){
+
+           if($value["devuelto"] == 1){
+              $disabled = "disabled";
+              $disabled_valida = "disabled";
+             
+           }
+
+           if($value["validado"] == 0){
               $disabled = "disabled";
            }
+
+            if($value["match_cambio"] != null){
+              $disabled = "disabled";
+              $disabled_valida = "disabled";
+           }
+
 
            $arriendo = $equipo." ".$modelo." ".$marca;
 
@@ -68,8 +84,21 @@ $idGuia = $_POST['id'];
 
        
     <td align="center" nowrap=""><span class="btn btn-warning btn-xm" title="Editar" onclick="editar('<?php echo $value["idRegistro"]?>')">E</span>
-      <button class="btn btn-danger btn-xm" title="Eliminar" <?php echo $disabled?> onclick="eliminarConsulta('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">X</button></td>
-    
+      <button class="btn btn-danger btn-xm" title="Eliminar" <?php echo $disabled?> onclick="eliminarConsulta('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">X</button>
+      <?php
+      if($value["validado"] == 1) {
+      ?>  
+           <button class="btn btn-success btn-xm" title="Validar Entrega" onclick="validarEquipoRecepcionado('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">V</button>
+      <?php
+      }else{
+      ?>
+          <button class="btn btn-info btn-xm" title="Quitar Validación entrega" <?php echo $disabled_valida?> onclick="quitarvalidarEquipoRecepcionado('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">OK</button>
+       <?php
+      }     
+      ?>
+
+    </td>
+      
   </tr>
   <?php
             

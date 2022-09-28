@@ -410,6 +410,60 @@ function elimina_equipo(idRegistro,idEquipo) {
 	});
 }
 
+function validarEquipoRecepcionado(idRegistro, idEquipo){
+
+	
+
+	var idRegistro = idRegistro;
+	var idEquipo = idEquipo;		
+
+	datos = "idRegistro=" + idRegistro +
+	        "&idEquipo=" + idEquipo;
+
+
+	$.ajax({
+
+		type: "POST",
+		url: "ajax/guarda-validacion-equipo-guia-arriendo.ajax.php",
+		data: datos,
+
+		success: function(res) {
+
+			alertify.success("Entrega VALIDADA por bodega");
+			genera_tabla_arriendos();
+
+
+		}
+	});
+}
+
+function quitarvalidarEquipoRecepcionado(idRegistro, idEquipo){
+
+	
+
+	var idRegistro = idRegistro;
+	var idEquipo = idEquipo;		
+
+	datos = "idRegistro=" + idRegistro +
+	        "&idEquipo=" + idEquipo;
+
+
+	$.ajax({
+
+		type: "POST",
+		url: "ajax/quitar-validacion-equipo-guia-arriendo.ajax.php",
+		data: datos,
+
+		success: function(res) {
+
+			alertify.success("Validación de entrega ANULADA");
+			genera_tabla_arriendos();
+
+
+		}
+	});
+}
+
 
 
 const formatterPeso = new Intl.NumberFormat('es-CO', {

@@ -140,16 +140,16 @@ $('#seleccionaMarcaEquipo').change(function() {
 
 function recargaTabla(id) {
 
-	var idMarca = id;
+	var idCategoria = id;
 
 	$('.tablaEquiposFactura').DataTable({
 		"ajax": {
-			"url": "ajax/datatable-detalle-compra.ajax.php",
+			"url": "ajax/datatable-detalle-pedido.ajax.php",
 			"method": 'POST',
 			"datatype": 'json',
 			"destroy": "true",
 			"data": {
-				idMarca: idMarca
+				idCategoria: idCategoria
 			}
 		},
 		"deferRender": true,

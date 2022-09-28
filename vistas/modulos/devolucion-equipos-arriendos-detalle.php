@@ -107,7 +107,8 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
                  <tr>                  
                   <th>Selección</th>
                   <th>Código</th>                  
-                  <th>Descripcion</th>                  
+                  <th>Descripcion</th> 
+                  <th>GD</th>                 
                 </tr>
 
               </thead>
@@ -204,7 +205,7 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
 
             <div class="row">  
 
-              <div class="col-lg-2 col-xs-11">                                   
+              <div class="col-lg-3 col-xs-11">                                   
                      <label for="fechaRetiro">Fecha Termino</label> 
                     <input type="date" class="form-control" id="fechaRetiro" value="<?php echo $hoy?>">                  
               </div>           
@@ -217,7 +218,7 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
                      </select>                    
               </div>
 
-              <div class="col-lg-6 col-xs-11">                                   
+              <div class="col-lg-5 col-xs-11">                                   
                      <label for="detalleEquipo">Detalle</label> 
                     <input type="text" class="form-control" id="detalleEquipo" value="">                  
               </div>

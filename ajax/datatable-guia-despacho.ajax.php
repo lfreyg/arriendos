@@ -59,6 +59,13 @@ class TablaGuiaDespacho{
                    $disable_anular = 'disabled';
 		  		}
 
+		  		$validaEquipoMatch = ModeloGuiaDespacho::mdlValidaEquipoConMatch($guiaDespacho[$i]["id"]);
+
+		  		
+		  		if($validaEquipoMatch){		  		  
+                   $disable_anular = 'disabled';
+		  		}
+
 		  	            	  	
 
 		  	/*=============================================

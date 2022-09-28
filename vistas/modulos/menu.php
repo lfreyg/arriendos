@@ -143,6 +143,14 @@
 
 							</li>
 
+							<li>
+								<a href="validacion-equipos-retiro">
+									<i class="fa fa-circle-o"></i>
+									<span>Validar Retiro Equipos</span>
+								</a>
+
+							</li>
+
 
 
 				         </ul>

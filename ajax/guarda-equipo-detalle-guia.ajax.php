@@ -16,9 +16,8 @@ require_once "../modelos/guiaDespachoDetalles.modelo.php";
                   "idEmpresa"=>$_POST["idEmpresa"]                                   
 				 );
 
-          $tabla = "guia_despacho_detalle";
-
-          $respuesta = ModeloGuiaDespachoDetalles::mdlIngresarGuiaDespachoDetalle($tabla, $datos);
+         
+          $respuesta = ModeloGuiaDespachoDetalles::mdlIngresarGuiaDespachoDetalle($datos);
 
           return $respuesta
 

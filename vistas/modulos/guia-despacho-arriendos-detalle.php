@@ -12,6 +12,7 @@ if($_SESSION["perfil"] != "Administrador"){
 
 }
 
+
 if(empty($_SESSION["idGuiaDespachoArriendo"])){
   $_SESSION["idGuiaDespachoArriendo"] = $_GET["idGuia"];
   $idGuia = $_GET["idGuia"];

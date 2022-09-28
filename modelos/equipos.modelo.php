@@ -207,9 +207,9 @@ class ModeloEquipos{
 
 		
 		if($filtro == null){
-			$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idGuiaDetalle, e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id WHERE gd.id_obras = $idObra and gdd.devuelto = 0 order by ne.descripcion");
+			$stmt = Conexion::conectar()->prepare("SELECT gd.numero_guia as guia, gdd.id as idGuiaDetalle, e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id WHERE gd.id_obras = $idObra and gdd.devuelto = 0 and gdd.validado = 0 order by ne.descripcion");
 		}else{
-			$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idGuiaDetalle,  e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id WHERE gd.id_obras = $idObra and gdd.devuelto = 0 and e.id_nombre_equipos = $filtro order by ne.descripcion");
+			$stmt = Conexion::conectar()->prepare("SELECT gd.numero_guia as guia, gdd.id as idGuiaDetalle,  e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id WHERE gd.id_obras = $idObra and gdd.devuelto = 0 and gdd.validado = 0 and e.id_nombre_equipos = $filtro order by ne.descripcion");
 		}	
 
 			$stmt -> execute();
@@ -381,6 +381,28 @@ class ModeloEquipos{
 		$stmt = null;
 
 	}	
+
+
+	//*****************************PEDIDO DE EQUIPOS*******************
+      static public function mdlMostrarEquiposPedidos($categoria){
+           if($categoria == null){
+			$stmt = Conexion::conectar()->prepare("SELECT ne.id as id, c.categoria as categoria, m.descripcion as marca, ne.descripcion as equipo, ne.modelo as modelo FROM nombre_equipos ne left join marcas m on ne.id_marca = m.id join categorias c on ne.id_categoria = c.id order by ne.descripcion");
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT ne.id as id, c.categoria as categoria, m.descripcion as marca, ne.descripcion as equipo, ne.modelo as modelo FROM nombre_equipos ne left join marcas m on ne.id_marca = m.id join categorias c on ne.id_categoria = c.id where ne.id_categoria = $categoria order by ne.descripcion");
+		}	
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+      }
+
+	//****************************FIN PEDIDO DE EQUIPOS***************
 
 
 

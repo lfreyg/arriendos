@@ -8,9 +8,9 @@ class ModeloGuiaDespachoDetalles{
 	/*=============================================
 	REGISTRO 
 	=============================================*/
-	static public function mdlIngresarGuiaDespachoDetalle($tabla, $datos){
+	static public function mdlIngresarGuiaDespachoDetalle($datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_guia, id_equipo, precio_arriendo, fecha_arriendo,detalle,fecha_devolucion,id_tipo_movimiento,contrato) VALUES (:idGuia, :idEquipo, :precio, :fechaArriendo, :detalle, :fechaDevolucion, :movimiento, :contrato)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO guia_despacho_detalle(id_guia, id_equipo, precio_arriendo, fecha_arriendo,detalle,fecha_devolucion,id_tipo_movimiento,contrato, devuelto) VALUES (:idGuia, :idEquipo, :precio, :fechaArriendo, :detalle, :fechaDevolucion, :movimiento, :contrato, 0)");
 
 		$stmt->bindParam(":idGuia", $datos["idGuia"], PDO::PARAM_INT);
 		$stmt->bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
@@ -25,7 +25,8 @@ class ModeloGuiaDespachoDetalles{
 		if($stmt->execute()){
 			
 				$id = $datos["idEquipo"];
-	          $stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET tiene_movimiento = 1, id_estado = 2 WHERE id = $id");
+				$estado = 17; //POR VALIDAR ENTREGA OBRA
+	          $stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET tiene_movimiento = 1, id_estado = $estado WHERE id = $id");
 
 	          $stmt2->execute();
 			    
@@ -105,7 +106,7 @@ class ModeloGuiaDespachoDetalles{
 
 	static public function mdlGuiaDespachoPorId($idGuia){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, es.descripcion as movimiento,  gd.devuelto as devuelto FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.id_tipo_movimiento = es.id WHERE gd.id_guia = $idGuia order by gd.id desc");
+		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, es.descripcion as movimiento,  gd.devuelto as devuelto, gd.validado as validado, gd.match_cambio FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.id_tipo_movimiento = es.id WHERE gd.id_guia = $idGuia order by gd.id desc");
 
 		
 		$stmt -> execute();
@@ -168,7 +169,7 @@ class ModeloGuiaDespachoDetalles{
 
 		
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho_detalle WHERE devuelto > 0 and id = $idRegistroDetalle");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho_detalle WHERE devuelto = 1 and id = $idRegistroDetalle");
 
 			
 			$stmt -> execute();
@@ -178,4 +179,68 @@ class ModeloGuiaDespachoDetalles{
 
 	}
 
+
+
+static public function mdlValidarEquipoRecepcionado($datos){
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET validado = 0 WHERE id = :idRegistro");
+
+		$stmt -> bindParam(":idRegistro", $datos["idRegistro"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			$estado = 2; //VALIDA A ESTADO ARRENDADO
+			$stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET id_estado = $estado WHERE id = :idEquipo");
+
+		    $stmt2 -> bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
+		    $stmt2 -> execute();
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+		$stmt2 -> close();
+
+		$stmt = null;
+		$stmt2 = null;
+
+	}
+
+static public function mdlQuitarValidarEquipoRecepcionado($datos){
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET validado = 1 WHERE id = :idRegistro");
+
+		$stmt -> bindParam(":idRegistro", $datos["idRegistro"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			$estado = 17; //POR VALIDAR ENTREGA OBRA
+			$stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET id_estado = $estado WHERE id = :idEquipo");
+
+		    $stmt2 -> bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
+		    $stmt2 -> execute();
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+		$stmt2 -> close();
+
+		$stmt = null;
+		$stmt2 = null;
+
+	}	
+
+
 }
+

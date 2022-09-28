@@ -47,7 +47,8 @@ class ControladorReportDevolucion{
 				$datos = array("id_constructora" => $_POST["nuevaConstructoraReport"],
 							   "id_obra" => $_POST["comboObras"],							   
 							   "documento" => $ruta,							   
-							   "id_usuario"=>$_SESSION["id"]);
+							   "id_usuario"=>$_SESSION["id"],
+							   "id_sucursal"=>$_SESSION['idSucursalParaUsuario']);
 
                
                 
@@ -162,6 +163,16 @@ class ControladorReportDevolucion{
 			}		
 		}
 
+
+	}
+
+
+	//*******************************VALIDACION DEVOLUCION EQUIPOS******************//
+	static public function ctrMostrarReportValidacionDevolucion($idSucursal){	
+
+		$respuesta = ModeloReportDevolucion::mdlMostrarReportValidacionDevolucion($idSucursal);
+
+		return $respuesta;
 
 	}
 

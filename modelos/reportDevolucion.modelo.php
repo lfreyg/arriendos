@@ -63,12 +63,14 @@ class ModeloReportDevolucion{
 	static public function mdlIngresarReportDevolucion($tabla, $datos){
 
 		
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_constructoras, id_obras, id_usuario, documento) VALUES (:id_constructora, :id_obra, :id_usuario, :documento)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_constructoras, id_obras, id_usuario, documento, id_sucursal) VALUES (:id_constructora, :id_obra, :id_usuario, :documento, :id_sucursal)");
 
 		$stmt->bindParam(":id_constructora", $datos["id_constructora"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_obra", $datos["id_obra"], PDO::PARAM_INT);		
 		$stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);		
 		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+
+		$stmt->bindParam(":id_sucursal", $datos["id_sucursal"], PDO::PARAM_INT);
 		
 		
 		if($stmt->execute()){
@@ -151,7 +153,7 @@ class ModeloReportDevolucion{
 
 		
 
-			$stmt = Conexion::conectar()->prepare("SELECT gdd.* FROM guia_despacho_detalle gdd join equipos e ON gdd.id_equipo = e.id where gdd.devuelto = 1 and e.id_estado != 1 and gdd.id_report_devolucion  = $idDevolucion");
+			$stmt = Conexion::conectar()->prepare("SELECT gdd.* FROM guia_despacho_detalle gdd join equipos e ON gdd.id_equipo = e.id where gdd.validado_retiro = 0 and gdd.id_report_devolucion  = $idDevolucion");
 
 			
 		    $stmt -> execute();
@@ -216,6 +218,29 @@ class ModeloReportDevolucion{
 		  $stmt -> close();
 
 		  $stmt = null;
+
+	}
+
+
+	//************************VALIDACION REPORTE DEVOLUCION EQUIPOS*************
+
+	/*=============================================
+	MOSTRAR LISTA PARA TABLA DE REPORT
+	=============================================*/
+
+	static public function mdlMostrarReportValidacionDevolucion($idSucursal){
+
+		         $estado = 9; //ESTADO 9 REPORT FINALIZADO
+			
+			$stmt = Conexion::conectar()->prepare("SELECT rd.id as idReport, rd.id_constructoras as idConstructora, c.nombre as constructora, rd.id_obras as idObra, o.nombre as obra, rd.id_usuario as idUsuario, u.nombre, rd.documento as documento, rd.estado as estado, rd.fecha_report as creado, u.nombre as usuario FROM report_devolucion rd JOIN constructoras c ON rd.id_constructoras = c.id JOIN obras o ON rd.id_obras = o.id JOIN usuarios u ON rd.id_usuario = u.id JOIN guia_despacho_detalle gdd ON gdd.id_report_devolucion = rd.id WHERE rd.id_sucursal =  $idSucursal AND rd.estado = $estado and gdd.validado_retiro = 1 GROUP BY rd.id, rd.id_constructoras, c.nombre, rd.id_obras, o.nombre, rd.id_usuario,  u.nombre, rd.documento, rd.estado, rd.fecha_report, u.nombre ORDER BY rd.id ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
+
+		    $stmt -> close();
+
+		    $stmt = null;
 
 	}
 

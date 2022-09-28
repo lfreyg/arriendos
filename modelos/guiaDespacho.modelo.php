@@ -209,10 +209,24 @@ class ModeloGuiaDespacho{
 
 		
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho_detalle WHERE devuelto > 0 and id_guia = $idGuia");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho_detalle WHERE validado = 0 and id_guia = $idGuia");
 
 			
-			$stmt -> execute();
+		    $stmt -> execute();
+   		    return $stmt -> fetchAll();
+		    $stmt -> close();
+		    $stmt = null;
+
+	}
+
+	static public function mdlValidaEquipoConMatch($idGuia){
+
+		
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho_detalle WHERE match_cambio is not null and id_guia = $idGuia");
+
+			
+		   $stmt -> execute();
    		    return $stmt -> fetchAll();
 		    $stmt -> close();
 		    $stmt = null;

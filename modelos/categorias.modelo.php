@@ -12,7 +12,7 @@ class ModeloCategorias{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(categoria) VALUES (:categoria)");
 
-		$stmt->bindParam(":categoria", $datos, PDO::PARAM_STR);
+		$stmt->bindParam(":categoria", strtoupper($datos), PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -69,7 +69,7 @@ class ModeloCategorias{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET categoria = :categoria WHERE id = :id");
 
-		$stmt -> bindParam(":categoria", $datos["categoria"], PDO::PARAM_STR);
+		$stmt -> bindParam(":categoria", strtoupper($datos["categoria"]), PDO::PARAM_STR);
 		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
 		if($stmt->execute()){

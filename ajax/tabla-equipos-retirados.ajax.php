@@ -44,6 +44,7 @@ $idReport = $_POST['id'];
            $marca = $value["marca"];                
            $movimiento = $value["movimiento"];
 
+
            $dateReg = date_create($value["fecha"]);
            $fecha = date_format($dateReg,"d-m-Y");
            
@@ -53,8 +54,11 @@ $idReport = $_POST['id'];
 
            $conMatch = ModeloReportDevolucion::mdlValidaEquipoReportCambiadoDetalle($value["idRegistro"]);
 
+          $cambiado = 'C';
+
           if($conMatch){
             $disabled = 'disabled';
+            $cambiado = 'OK';
           }
 
           
@@ -65,6 +69,14 @@ $idReport = $_POST['id'];
            $arriendo = $equipo." ".$modelo." ".$marca;
 
            $estadoEquipo = $value["idEstado"];
+
+          $validado = $value["validado"];
+
+         
+           if($validado == 0){
+              $disabled = 'disabled';
+              $disabled_valida = 'disabled';
+           }
 
            
             
@@ -80,8 +92,13 @@ $idReport = $_POST['id'];
       <span class="btn btn-warning btn-xm" title="Editar" onclick="editar('<?php echo $value["idRegistro"]?>')">E</span>      
       <button class="btn btn-danger btn-xm" title="Eliminar" <?php echo $disabled?> onclick="eliminarConsulta('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">X</button>
       <span class="btn btn-success btn-xm" title="Foto" onclick="editar('<?php echo $value["idRegistro"]?>')">F</span>
-     <?php if($estadoEquipo == 11){?>
-      <button class="btn btn-info btn-xm" title="Cambio" onclick="matchCambio('<?php echo $value["idRegistro"]?>','<?php echo $value["contrato"]?>')">C</button>
+     <?php if($estadoEquipo == 11){
+        if($cambiado == 'C') {?>
+      <button class="btn btn-info btn-xm" title="Cambio" onclick="matchCambio('<?php echo $value["idRegistro"]?>','<?php echo $value["contrato"]?>')"><?php echo $cambiado?></button>
+    <?php }
+     if($cambiado == 'OK') {?>
+      <button class="btn btn-info btn-xm" title="Cambio" <?php echo $disabled_valida?> onclick="matchCambio('<?php echo $value["idRegistro"]?>','<?php echo $value["contrato"]?>')"><?php echo $cambiado?></button>
+    <?php }?>
      <?php } ?> 
     </td>
     

@@ -65,14 +65,14 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
       LA TABLA DE PRODUCTOS
       ======================================-->
 
-      <div class="col-lg-5 col-xs-11">
+      <div class="col-lg-6 col-xs-11">
         
         <div class="box box-warning">
 
           <div class="box-header with-border"></div>
 
           <div class="box-body">
-
+                
                      <div class="form-group">
                       
                       <div class="input-group">
@@ -80,25 +80,27 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
                         <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
                         <select class="form-control input-lg select2" id="seleccionaMarcaEquipo" name="seleccionaMarcaEquipo"> 
-                         <option value="">Seleccionar Marca</option>              
+                         <option value="">Seleccionar Categoria</option>              
                           
                           <?php                 
 
-                          $marca = ControladorMarcas::ctrMostrarMarcas(null,null);
+                          $marca = ControladorCategorias::ctrMostrarCategorias(null,null);
 
                           foreach ($marca as $key => $value) {
                                       
-                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"].'</option>';
+                                      echo '<option value="'.$value["id"].'">'.strtoupper($value["categoria"]).'</option>';
                                     }
                                           
 
                           ?>
+
 
                         </select>
 
                       </div>
 
                     </div>
+                  
             
             <table class="table table-bordered table-striped table-hover dt-responsive tablaEquiposFactura">
               
@@ -106,8 +108,9 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
 
                  <tr> 
                   <th>Acciones</th>  
+                  <th>Categoria</th>
                   <th>Marca</th>
-                  <th>Descripcion</th>
+                  <th>Equipo</th>
                   <th>Modelo</th>                  
                 </tr>
 
@@ -126,7 +129,7 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
       EL FORMULARIO
       ======================================-->
       
-      <div class="col-lg-7 col-xs-11">
+      <div class="col-lg-6 col-xs-11">
         
         <div class="box box-success">
           
@@ -188,7 +191,7 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
 
                 <div class="form-group row">
 
-                   <div class="col-xs-8" style="padding-right:0px">
+                   <div class="col-xs-7" style="padding-right:0px">
                      <div class="form-group">
                     <div class="form-group">   
                     <label>Detalles</label>              
@@ -200,7 +203,7 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
                 </div>
                   </div>
 
-                  <div class="col-xs-3" style="padding-right:0px">
+                  <div class="col-xs-4" style="padding-right:0px">
                    <div class="form-group">
                     <div class="form-group"> 
                      <label>Tipo</label>               

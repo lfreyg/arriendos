@@ -11,8 +11,9 @@ class ModeloReportDevolucionDetalles{
 	static public function mdlRegistrarRetiro($datos){
 
 		$idEquipo = $datos["idEquipo"];
+		$estado = 16; //POR VALIDAR RETIRO
 		
-		$stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET tiene_movimiento = 1, id_estado = 1 WHERE id = $idEquipo");
+		$stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET tiene_movimiento = 1, id_estado = 16 WHERE id = $idEquipo");
 
 	          $stmt2->execute();
 
@@ -80,7 +81,7 @@ class ModeloReportDevolucionDetalles{
 
 	static public function mdlRetiroPorId($id_report_devolucion){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.fecha_devolucion_real as fecha, es.descripcion as movimiento, gd.fecha_retiro_obra as fechaRetiroObra, es.id as idEstado, gd.id_guia as contrato FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.devolucion_tipo = es.id WHERE gd.id_report_devolucion = $id_report_devolucion order by gd.id desc");
+		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.fecha_devolucion_real as fecha, es.descripcion as movimiento, gd.fecha_retiro_obra as fechaRetiroObra, es.id as idEstado, gd.id_guia as contrato, gd.validado_retiro as validado, e.id_estado as idEstadoEquipo, e.id_sucursal as idSucursalEquipo FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.devolucion_tipo = es.id WHERE gd.id_report_devolucion = $id_report_devolucion order by gd.id desc");
 
 		
 		$stmt -> execute();
@@ -219,7 +220,7 @@ class ModeloReportDevolucionDetalles{
 
 		
 
-			$stmt = Conexion::conectar()->prepare("SELECT gdd.* FROM guia_despacho_detalle gdd join equipos e ON gdd.id_equipo = e.id where gdd.devuelto = 1 and e.id_estado != 1 and gdd.id = $idRegistro");
+			$stmt = Conexion::conectar()->prepare("SELECT gdd.* FROM guia_despacho_detalle gdd join equipos e ON gdd.id_equipo = e.id where gdd.devuelto = 1 and gdd.validado_retiro = 0 and e.id_estado != 1 and gdd.id = $idRegistro");
 
 			
 			$stmt -> execute();
@@ -247,7 +248,7 @@ class ModeloReportDevolucionDetalles{
 
 	static public function mdlEquiposParaCambio($constructora, $obra){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro, ne.descripcion as equipo, ne.modelo as modelo, e.codigo as codigo, m.descripcion as marca, gd.numero_guia as gd FROM guia_despacho gd JOIN guia_despacho_detalle gdd ON gd.id = gdd.id_guia join equipos e ON gdd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id WHERE gd.id_constructoras = $constructora and id_obras = $obra and gdd.id_tipo_movimiento = 11 and gdd.devuelto = 0 and gdd.match_cambio is null ORDER BY ne.descripcion");
+		$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro, ne.descripcion as equipo, ne.modelo as modelo, e.codigo as codigo, m.descripcion as marca, gd.numero_guia as gd FROM guia_despacho gd JOIN guia_despacho_detalle gdd ON gd.id = gdd.id_guia join equipos e ON gdd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id WHERE gd.id_constructoras = $constructora and id_obras = $obra and gdd.id_tipo_movimiento = 11 and gdd.validado = 1 and gdd.match_cambio is null ORDER BY ne.descripcion");
 
 		
 		$stmt -> execute();
@@ -263,7 +264,7 @@ class ModeloReportDevolucionDetalles{
 
 	static public function mdlEquiposCambiados($constructora, $obra, $match){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro, ne.descripcion as equipo, ne.modelo as modelo, e.codigo as codigo, m.descripcion as marca, gd.numero_guia as gd FROM guia_despacho gd JOIN guia_despacho_detalle gdd ON gd.id = gdd.id_guia join equipos e ON gdd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id WHERE gd.id_constructoras = $constructora and id_obras = $obra and gdd.id_tipo_movimiento = 11 and gdd.devuelto = 0 and gdd.match_cambio = $match");
+		$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro, ne.descripcion as equipo, ne.modelo as modelo, e.codigo as codigo, m.descripcion as marca, gd.numero_guia as gd FROM guia_despacho gd JOIN guia_despacho_detalle gdd ON gd.id = gdd.id_guia join equipos e ON gdd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id WHERE gd.id_constructoras = $constructora and id_obras = $obra and gdd.id_tipo_movimiento = 11 and gdd.match_cambio = $match");
 
 		
 		$stmt -> execute();
@@ -275,5 +276,43 @@ class ModeloReportDevolucionDetalles{
 		$stmt = null;
 
 	}
+
+	//************************VALIDACION EQUIPOS RETIRADOS PROCESO POR EQUIPO**********
+
+	static public function mdlValidaEquipoRetiro($datos){
+
+		
+		$idRegistro = $datos["idRegistro"];
+		$tipo = $datos["tipo"];
+
+		if($tipo == 'V'){
+			$estado = 1; //VUELVE LOS EQUIPOS A DISPONIBLE
+			$estado_valido = 0;
+		}
+
+		if($tipo == 'Q'){
+			$estado = 16; //VUELVE LOS EQUIPOS A POR VALIDAR RETIRO OBRA
+			$estado_valido = 1;
+		}
+		
+       $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado, e.tiene_movimiento = 1, gdd.validado_retiro = $estado_valido WHERE gdd.id = $idRegistro"); 
+            	
+         
+	
+		if($sqlGuia -> execute()){
+			
+			   return "ok";	
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$sqlGuia -> close();
+
+		$sqlGuia = null;
+
+	}	
 
 }
