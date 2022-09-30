@@ -179,9 +179,10 @@ class ControladorGuiaDespacho{
 			
 			$id = $_GET["idGuia"];
 			$idEstado = $_GET["idEstado"];
+			$idUsuario = $_SESSION["id"];
 
 	if($idEstado == 13)	{	
-			$respuesta = ModeloGuiaDespacho::mdlAnularGuiaDespacho($id);
+			$respuesta = ModeloGuiaDespacho::mdlAnularGuiaDespacho($id, $idUsuario);
 
 			if($respuesta == "ok"){
 

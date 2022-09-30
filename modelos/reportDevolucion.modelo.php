@@ -232,7 +232,7 @@ class ModeloReportDevolucion{
 
 		         $estado = 9; //ESTADO 9 REPORT FINALIZADO
 			
-			$stmt = Conexion::conectar()->prepare("SELECT rd.id as idReport, rd.id_constructoras as idConstructora, c.nombre as constructora, rd.id_obras as idObra, o.nombre as obra, rd.id_usuario as idUsuario, u.nombre, rd.documento as documento, rd.estado as estado, rd.fecha_report as creado, u.nombre as usuario FROM report_devolucion rd JOIN constructoras c ON rd.id_constructoras = c.id JOIN obras o ON rd.id_obras = o.id JOIN usuarios u ON rd.id_usuario = u.id JOIN guia_despacho_detalle gdd ON gdd.id_report_devolucion = rd.id WHERE rd.id_sucursal =  $idSucursal AND rd.estado = $estado and gdd.validado_retiro = 1 GROUP BY rd.id, rd.id_constructoras, c.nombre, rd.id_obras, o.nombre, rd.id_usuario,  u.nombre, rd.documento, rd.estado, rd.fecha_report, u.nombre ORDER BY rd.id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT rd.id as idReport, rd.id_constructoras as idConstructora, c.nombre as constructora, rd.id_obras as idObra, o.nombre as obra, rd.id_usuario as idUsuario, u.nombre, rd.documento as documento, rd.estado as estado, rd.fecha_report as creado, u.nombre as usuario FROM report_devolucion rd JOIN constructoras c ON rd.id_constructoras = c.id JOIN obras o ON rd.id_obras = o.id JOIN usuarios u ON rd.id_usuario = u.id JOIN guia_despacho_detalle gdd ON gdd.id_report_devolucion = rd.id WHERE rd.id_sucursal =  $idSucursal AND rd.estado = $estado and gdd.validado_retiro = 1 and gdd.registro_eliminado = false GROUP BY rd.id, rd.id_constructoras, c.nombre, rd.id_obras, o.nombre, rd.id_usuario,  u.nombre, rd.documento, rd.estado, rd.fecha_report, u.nombre ORDER BY rd.id ASC");
 
 			$stmt -> execute();
 

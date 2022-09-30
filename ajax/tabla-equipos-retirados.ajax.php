@@ -49,6 +49,7 @@ $idReport = $_POST['id'];
            $fecha = date_format($dateReg,"d-m-Y");
            
            $disabled = '';
+           $disabled_valida = '';
 
            $validar = ModeloReportDevolucionDetalles::mdlValidaEquipoReportEliminar($value["idRegistro"]);
 

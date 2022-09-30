@@ -227,7 +227,7 @@ class ModeloObras{
     static public function mdlMostrarObrasSoloConEquiposActivos($idConstructora){
 
 		    
-			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT o.id as id, o.nombre as nombre FROM guia_despacho_detalle gdd join guia_despacho gd on gdd.id_guia = gd.id join obras o on gd.id_obras = o.id where gdd.devuelto = 0 and o.id_constructoras = $idConstructora");
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT o.id as id, o.nombre as nombre FROM guia_despacho_detalle gdd join guia_despacho gd on gdd.id_guia = gd.id join obras o on gd.id_obras = o.id where gdd.devuelto = 0 and o.id_constructoras = $idConstructora and gdd.registro_eliminado = false and validado = 0");
 
 			$stmt -> execute();
 

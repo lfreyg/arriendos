@@ -24,13 +24,16 @@ class AjaxEquiposGuiaArriendos{
 	
 	public $idRegistroDetalle;
 	public $idEquipoDetalle;
+	public $numeroGuiaDespacho;
 
 	public function ajaxEliminarEquiposGuiaArriendo(){
 
 		$idRegistroDetalle = $this->idRegistroDetalle;
 		$idEquipoDetalle = $this->idEquipoDetalle;
+		$numeroGuiaDespacho = $this->numeroGuiaDespacho;
+		$idUsuario = $_SESSION["id"];
 
-		$respuesta = ModeloGuiaDespachoDetalles::mdlEliminarEquipoGuiaDespacho($idRegistroDetalle,$idEquipoDetalle);
+		$respuesta = ModeloGuiaDespachoDetalles::mdlEliminarEquipoGuiaDespacho($idRegistroDetalle,$idEquipoDetalle, $idUsuario, $numeroGuiaDespacho);
 
 		echo json_encode($respuesta);
 	}
@@ -96,6 +99,7 @@ if(isset($_POST["idRegistroDetalle"]) && isset($_POST["idEquipoDetalle"])){
 	$eliminar = new AjaxEquiposGuiaArriendos();
 	$eliminar -> idRegistroDetalle = $_POST["idRegistroDetalle"];
 	$eliminar -> idEquipoDetalle = $_POST["idEquipoDetalle"];
+	$eliminar -> numeroGuiaDespacho = $_POST["numeroGuiaDespacho"];
 	$eliminar -> ajaxEliminarEquiposGuiaArriendo();
 
 }

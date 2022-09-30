@@ -175,7 +175,7 @@ class ModeloGuiaDespacho{
 	ANULAR 
 	=============================================*/
 
-	static public function mdlAnularGuiaDespacho($id){
+	static public function mdlAnularGuiaDespacho($id, $idUsuario){
 
 		$estado = 1; //VUELVE LOS EQUIPOS A DISPONIBLE
 
@@ -185,9 +185,14 @@ class ModeloGuiaDespacho{
 		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho SET estado_guia = 14 WHERE id = $id");
 		
 		if($stmt -> execute()){
+
+			date_default_timezone_set('America/Santiago');
+        		$hoy = date('Y-m-d H:i:s');
            
-           $stmt2 = Conexion::conectar()->prepare("DELETE FROM guia_despacho_detalle WHERE id_guia = $id");		
+           $stmt2 = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET registro_eliminado = true, usuario_elimina = $idUsuario, fecha_elimina = :hoy WHERE id_guia = $id");		
 		   $stmt2 -> execute();
+
+		   $stmt2->bindParam(":hoy", $hoy, PDO::PARAM_STR);
 			
 
 			   return "ok";

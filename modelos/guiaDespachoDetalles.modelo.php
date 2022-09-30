@@ -1,6 +1,7 @@
 <?php
 
 require_once "conexion.php";
+session_start();
 
 class ModeloGuiaDespachoDetalles{
 
@@ -50,10 +51,19 @@ class ModeloGuiaDespachoDetalles{
 	BORRAR 
 	=============================================*/
 
-	static public function mdlEliminarEquipoGuiaDespacho($id,$idEquipo){
+	static public function mdlEliminarEquipoGuiaDespacho($id,$idEquipo,$idUsuario,$numeroGuia){
 
+		
+      if($numeroGuia == 0){
 		$stmt = Conexion::conectar()->prepare("DELETE FROM guia_despacho_detalle WHERE id = $id");
+      }else{
+		date_default_timezone_set('America/Santiago');
+        $hoy = date('Y-m-d H:i:s');
 
+        $stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET registro_eliminado = true, usuario_elimina = $idUsuario, fecha_elimina = :hoy WHERE id = $id");
+
+        $stmt->bindParam(":hoy", $hoy, PDO::PARAM_STR);
+       }
 		
 		if($stmt -> execute()){			
 	                
@@ -106,7 +116,7 @@ class ModeloGuiaDespachoDetalles{
 
 	static public function mdlGuiaDespachoPorId($idGuia){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, es.descripcion as movimiento,  gd.devuelto as devuelto, gd.validado as validado, gd.match_cambio FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.id_tipo_movimiento = es.id WHERE gd.id_guia = $idGuia order by gd.id desc");
+		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, es.descripcion as movimiento,  gd.devuelto as devuelto, gd.validado as validado, gd.match_cambio FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.id_tipo_movimiento = es.id WHERE gd.id_guia = $idGuia and gd.registro_eliminado = false order by gd.id desc");
 
 		
 		$stmt -> execute();

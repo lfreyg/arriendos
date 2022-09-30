@@ -87,7 +87,8 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
                     <input type="text" class="form-control" id="empresaOperativa" value="<?php echo $guiaDespacho["empresa"]?>" readonly> 
                     <input type="hidden" id="idGuiaGenerado" name="idGuiaGenerado" value="<?php echo $idGuia?>">
                     <input type="hidden" id="estadoGuia" name="estadoGuia" value="<?php echo $guiaDespacho["estadoGuia"]?>"> 
-                    <input type="hidden" id="idEmpresaOperativa" name="idEmpresaOperativa" value="<?php echo $guiaDespacho["idEmpresa"]?>">                 
+                    <input type="hidden" id="idEmpresaOperativa" name="idEmpresaOperativa" value="<?php echo $guiaDespacho["idEmpresa"]?>"> 
+                    <input type="text" id="numeroGuia" name="numeroGuia" value="<?php echo $guiaDespacho["guia"]?>">                 
                 
               </div>
 
@@ -395,12 +396,12 @@ MODAL EDITAR
             <div class="row">   
 
 
-              <div class="col-lg-2 col-xs-11">                                   
+              <div class="col-lg-3 col-xs-11">                                   
                      <label for="efechaArriendo">Fecha Arriendo</label> 
                     <input type="date" class="form-control" id="efechaArriendo">                  
               </div>           
 
-              <div class="col-lg-2 col-xs-11">                                   
+              <div class="col-lg-3 col-xs-11">                                   
                      <label for="eguiaTipoMovimiento">Movimiento</label> 
                     <select class="form-control" id="eguiaTipoMovimiento" style="width: 100%;" name="eguiaTipoMovimiento" required>
                            <option value="<?php echo ARRIENDO?>">ARRIENDO</option>   
@@ -408,7 +409,7 @@ MODAL EDITAR
                      </select>                    
               </div>
 
-              <div class="col-lg-7 col-xs-11">                                   
+              <div class="col-lg-5 col-xs-11">                                   
                      <label for="edetalleEquipo">Detalle</label> 
                     <input type="text" class="form-control" autocomplete="off" id="edetalleEquipo" value="">                  
               </div>

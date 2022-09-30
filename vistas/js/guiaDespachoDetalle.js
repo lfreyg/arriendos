@@ -378,11 +378,19 @@ function elimina_equipo(idRegistro,idEquipo) {
 	
 	var idRegistroDetalle = idRegistro
 	var idEquipo = idEquipo;
+	var numeroGuiaDespacho;
 
+	if($('#numeroGuia').val() == ''){
+		numeroGuiaDespacho = 0;
+	}else{
+		numeroGuiaDespacho = 1;
+	}
 
+	
 	var datos = new FormData();
 	datos.append("idRegistroDetalle", idRegistroDetalle);
 	datos.append("idEquipoDetalle", idEquipo);
+	datos.append("numeroGuiaDespacho", numeroGuiaDespacho);
 
 
 	$.ajax({
