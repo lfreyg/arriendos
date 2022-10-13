@@ -192,6 +192,16 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "carga-masiva-precios-lista" ||
          $_GET["ruta"] == "validacion-equipos-retiro" ||
          $_GET["ruta"] == "validacion-equipos-retiro-detalles" ||
+         $_GET["ruta"] == "pedido-interno" ||
+         $_GET["ruta"] == "pedido-interno-detalle" ||
+         $_GET["ruta"] == "pedido-interno-despacho" ||
+         $_GET["ruta"] == "pedido-interno-despacho-detalle" ||
+         $_GET["ruta"] == "pedido-interno-despacho-detalle-vista" ||
+         $_GET["ruta"] == "pedido-interno-validar" ||
+         $_GET["ruta"] == "pedido-interno-despacho-detalle-vista-validar" ||
+         $_GET["ruta"] == "pedido-interno-despacho-detalle-validar" ||
+
+         
 
          
          $_GET["ruta"] == "salir"){

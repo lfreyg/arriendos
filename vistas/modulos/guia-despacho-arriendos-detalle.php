@@ -88,7 +88,7 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
                     <input type="hidden" id="idGuiaGenerado" name="idGuiaGenerado" value="<?php echo $idGuia?>">
                     <input type="hidden" id="estadoGuia" name="estadoGuia" value="<?php echo $guiaDespacho["estadoGuia"]?>"> 
                     <input type="hidden" id="idEmpresaOperativa" name="idEmpresaOperativa" value="<?php echo $guiaDespacho["idEmpresa"]?>"> 
-                    <input type="text" id="numeroGuia" name="numeroGuia" value="<?php echo $guiaDespacho["guia"]?>">                 
+                    <input type="hidden" id="numeroGuia" name="numeroGuia" value="<?php echo $guiaDespacho["guia"]?>">                 
                 
               </div>
 
@@ -290,11 +290,11 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
                           
                           <?php                 
 
-                          $marca = ControladorTipoEquipos::ctrMostrarTipoEquipo(null,null);
+                          $marca = ControladorTipoEquipos::ctrMostrarTipoEquipoConMarca();
 
                           foreach ($marca as $key => $value) {
                                       
-                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"]." ".$value["modelo"].'</option>';
+                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"]." ".$value["modelo"]." ".$value["marca"].'</option>';
                                     }
                                           
 

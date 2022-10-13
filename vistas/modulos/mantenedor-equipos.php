@@ -57,11 +57,11 @@ if($_SESSION["perfil"] != "Administrador"){
                           
                           <?php                 
 
-                          $marca = ControladorTipoEquipos::ctrMostrarTipoEquipo(null,null);
+                          $marca = ControladorTipoEquipos::ctrMostrarTipoEquipoConMarca();
 
                           foreach ($marca as $key => $value) {
                                       
-                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"]." ".$value["modelo"].'</option>';
+                                      echo '<option value="'.$value["id"].'">'.$value["descripcion"]." ".$value["modelo"]." ".$value["marca"].'</option>';
                                     }
                                           
 

@@ -28,7 +28,23 @@ class ModeloGuiaDespacho{
 
 		
 			
-			$stmt = Conexion::conectar()->prepare("SELECT gd.estado_guia as estadoGuia, eo.id as idEmpresa, eo.razon_social as empresa, gd.numero_guia as guia, gd.fecha_guia as fecha, c.rut as rutConstructora, c.nombre as constructora, o.nombre as obra, gd.oc as oc, gd.fecha_termino as fechaTermino, gd.rut_empresa_transporte as rutTransporte, gd.patente_transportista as patente, gd.rut_transportista as rutChofer, gd.nombre_transportista as chofer, gd.id_constructoras as idConstructora, gd.id_obras as idObra FROM guia_despacho gd JOIN empresas_operativas eo ON gd.id_empresa = eo.id JOIN constructoras c ON gd.id_constructoras = c.id JOIN obras o ON gd.id_obras = o.id where gd.id = $id");
+			$stmt = Conexion::conectar()->prepare("SELECT gd.estado_guia as estadoGuia, eo.id as idEmpresa, eo.razon_social as empresa, gd.numero_guia as guia, gd.fecha_guia as fecha, c.rut as rutConstructora, c.nombre as constructora, o.nombre as obra, gd.oc as oc, gd.fecha_termino as fechaTermino, gd.rut_empresa_transporte as rutTransporte, gd.patente_transportista as patente, gd.rut_transportista as rutChofer, gd.nombre_transportista as chofer, gd.id_constructoras as idConstructora, gd.id_obras as idObra FROM guia_despacho gd JOIN empresas_operativas eo ON gd.id_empresa = eo.id JOIN constructoras c ON gd.id_constructoras = c.id JOIN obras o ON gd.id_obras = o.id where gd.id = $id and gd.tipo_guia = 'A'");
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();		
+
+		    $stmt -> close();
+
+		    $stmt = null;
+
+	}
+
+	static public function mdlMostrarGuiaDespachoDetalleTraslado($id){
+
+		
+			
+			$stmt = Conexion::conectar()->prepare("SELECT gd.estado_guia as estadoGuia, eo.id as idEmpresa, eo.razon_social as empresa, gd.numero_guia as guia, gd.fecha_guia as fecha, gd.rut_empresa_transporte as rutTransporte, gd.patente_transportista as patente, gd.rut_transportista as rutChofer, gd.nombre_transportista as chofer FROM guia_despacho gd JOIN empresas_operativas eo ON gd.id_empresa = eo.id where gd.id = $id and gd.tipo_guia = 'T'");
 
 			$stmt -> execute();
 
@@ -81,6 +97,48 @@ class ModeloGuiaDespacho{
 		$stmt->bindParam(":patente_transportista", $datos["patente_transportista"], PDO::PARAM_STR);
 		$stmt->bindParam(":creado_por", $datos["creado_por"], PDO::PARAM_STR);
 		$stmt->bindParam(":tipoGuia", $datos["tipoGuia"], PDO::PARAM_STR);
+		
+		
+		if($stmt->execute()){
+
+			$sql = Conexion::conectar()->prepare("SELECT MAX(id) as id from guia_despacho");
+ 
+               $sql->execute();
+               return $sql -> fetch();                 
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlIngresarGuiaDespachoTraslado($tabla, $datos){
+
+		
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_empresa, fecha_guia, id_constructoras, id_obras, id_sucursal, adjunto, oc, fecha_termino, id_transporte_guia, rut_empresa_transporte, rut_transportista, nombre_transportista, patente_transportista, creado_por, tipo_guia, id_sucursal_destino, id_pedido_interno) VALUES (:id_empresa,:fecha_guia,:id_constructora, :id_obra, :id_sucursal, :adjunto, :oc, :fecha_termino, :id_transporte_guia, :rut_empresa_transporte, :rut_transportista, :nombre_transportista, :patente_transportista, :creado_por, :tipoGuia, :sucursalDestino, :idPedidoGenerado)");
+
+		$stmt->bindParam(":id_empresa", $datos["id_empresa"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha_guia", $datos["fecha_guia"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_constructora", $datos["id_constructora"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_obra", $datos["id_obra"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_sucursal", $datos["id_sucursal"], PDO::PARAM_INT);
+		$stmt->bindParam(":adjunto", $datos["adjunto"], PDO::PARAM_STR);
+		$stmt->bindParam(":oc", $datos["oc"], PDO::PARAM_STR);	
+		$stmt->bindParam(":fecha_termino", $datos["fecha_termino"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_transporte_guia", $datos["id_transporte_guia"], PDO::PARAM_INT);	
+		$stmt->bindParam(":rut_empresa_transporte", $datos["rut_empresa_transporte"], PDO::PARAM_STR);
+		$stmt->bindParam(":rut_transportista", $datos["rut_transportista"], PDO::PARAM_STR);
+		$stmt->bindParam(":nombre_transportista", $datos["nombre_transportista"], PDO::PARAM_STR);
+		$stmt->bindParam(":patente_transportista", $datos["patente_transportista"], PDO::PARAM_STR);
+		$stmt->bindParam(":creado_por", $datos["creado_por"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipoGuia", $datos["tipoGuia"], PDO::PARAM_STR);
+		$stmt->bindParam(":sucursalDestino", $datos["sucursalDestino"], PDO::PARAM_INT);
+		$stmt->bindParam(":idPedidoGenerado", $datos["idPedidoGenerado"], PDO::PARAM_INT);
 		
 		
 		if($stmt->execute()){
@@ -235,6 +293,38 @@ class ModeloGuiaDespacho{
    		    return $stmt -> fetchAll();
 		    $stmt -> close();
 		    $stmt = null;
+
+	}
+
+        //FUNCION VALIDA SI EXISTE ALGUNA GUIA SIN ENVIAR A SII, NO PUEDE CREAR NUEVA GUIA SI EXISTEN SIN FIRMAR, APLICA SOLO PARA TRASLADO DE PEDIDO
+	static public function mdlValidarGuiaDespachoTrasladoPedido($idPedido){
+
+		      $estado = 12; //GUIA SIN ENVIAR A SII
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho WHERE estado_guia = $estado and tipo_guia = 'T' and id_pedido_interno = $idPedido");
+
+		   $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		  $stmt -> close();
+
+		  $stmt = null;
+
+	}
+
+	static public function mdlGuiaDespachoTrasladoPedido($idPedido){
+
+		   
+			$stmt = Conexion::conectar()->prepare("SELECT gd.id as idGuia, gd.numero_guia as numeroGuia, s.nombre as sucursalDestino, su.nombre as sucursalOrigen, gd.nombre_transportista as chofer, e.descripcion as estadoGuia, gd.fecha_guia as fecha, gd.creado_por as usuarioCrea FROM guia_despacho gd join sucursales s on gd.id_sucursal_destino = s.id join sucursales su on gd.id_sucursal = su.id JOIN estados e on gd.estado_guia = e.id where id_pedido_interno = $idPedido and estado_guia != 14 order by gd.id desc");
+
+		   $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		  $stmt -> close();
+
+		  $stmt = null;
 
 	}
 

@@ -110,6 +110,14 @@ class ControladorTipoEquipos{
 		return $respuesta;
 	}
 
+	static public function ctrMostrarTipoEquipoConMarca(){
+
+		
+		$respuesta = ModeloTipoEquipos::mdlMostrarTipoEquiposConMarca();
+
+		return $respuesta;
+	}
+
 	
 
 	/*=============================================

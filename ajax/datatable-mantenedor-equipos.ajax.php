@@ -44,7 +44,7 @@ class TablaMantenedorEquipos{
         
          $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarEquipo' idEquipo='".$productos[$i]["idEquipo"]."'><i class='fa fa-pencil'></i></button></div>";
 
-         $botones2 =  "<div class='btn-group'><button class='btn btn-primary btnHistoria' idEquipo='".$productos[$i]["idEquipo"]."'><i class='fa fa-times'></i></button></div>";
+         $botones2 =  "<div class='btn-group'><button class='btn btn-primary btnHistoria' idEquipo='".$productos[$i]["idEquipo"]."'><i class='fa fa-map-marker'></i></button></div>";
 
 		  	
 		  	$datosJson .='[      

@@ -45,6 +45,44 @@ class ModeloGuiaDespachoDetalles{
 
 	}
 
+	static public function mdlIngresarGuiaDespachoDetalleTraslado($datos){
+
+		date_default_timezone_set('America/Santiago');
+        $hoy = date('Y-m-d');
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO guia_despacho_detalle(id_guia, id_equipo, precio_arriendo, fecha_arriendo, tipo_guia, id_pedido_interno_detalle ) VALUES (:idGuia, :idEquipo, :precio, :hoy, :tipoGuia, :id_pedido_interno)");
+
+		$stmt->bindParam(":idGuia", $datos["idGuia"], PDO::PARAM_INT);
+		$stmt->bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio", strtoupper($datos["precio"]), PDO::PARAM_INT);
+		$stmt->bindParam(":hoy", $hoy, PDO::PARAM_STR);
+		$stmt->bindParam(":tipoGuia", strtoupper($datos["tipoGuia"]), PDO::PARAM_STR);
+		$stmt->bindParam(":id_pedido_interno", strtoupper($datos["id_pedido_interno"]), PDO::PARAM_INT);
+        
+		
+		
+		if($stmt->execute()){
+			
+				$id = $datos["idEquipo"];
+				$estado = 5; //EN TRASLADO
+	          $stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET tiene_movimiento = 1, id_estado = $estado WHERE id = $id");
+
+	          $stmt2->execute();
+			    
+
+			  return 1;
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 	
 
 	/*=============================================
@@ -117,6 +155,21 @@ class ModeloGuiaDespachoDetalles{
 	static public function mdlGuiaDespachoPorId($idGuia){
 
 		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, es.descripcion as movimiento,  gd.devuelto as devuelto, gd.validado as validado, gd.match_cambio FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.id_tipo_movimiento = es.id WHERE gd.id_guia = $idGuia and gd.registro_eliminado = false order by gd.id desc");
+
+		
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	static public function mdlGuiaDespachoTrasladoPorId($idGuia){
+
+		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, gd.validado as validado, c.categoria  FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN categorias c on ne.id_categoria = c.id WHERE gd.id_guia = $idGuia and gd.registro_eliminado = false order by gd.id desc");
 
 		
 		$stmt -> execute();

@@ -2,6 +2,7 @@
 
 require_once "../controladores/categorias.controlador.php";
 require_once "../modelos/categorias.modelo.php";
+session_start();
 
 class AjaxCategorias{
 
@@ -40,6 +41,22 @@ class AjaxCategorias{
 		echo json_encode($respuesta);
 
 	}
+
+	public $categoriaStock;	
+	public $idSucursal;
+
+	public function ajaxCategoriaStock(){
+
+		
+		$idCategoria = $this->categoriaStock;		
+		$idSucursal = $this->idSucursal;
+
+		$respuesta = ControladorCategorias::ctrMostrarStockCategorias($idCategoria,$idSucursal);
+
+		
+		echo json_encode($respuesta);
+
+	}
 }
 
 /*=============================================
@@ -60,4 +77,15 @@ if(isset($_POST["validarCategoria"])){
 	$validar = new AjaxCategorias();
 	$validar -> validarCategoria = $_POST["validarCategoria"];	
 	$validar -> ajaxValidarCategoria();
+}
+
+/*=============================================
+OBTIENE STOCK 
+=============================================*/	
+if(isset($_POST["categoriaStock"])){
+
+	$validar = new AjaxCategorias();
+	$validar -> categoriaStock = $_POST["categoriaStock"];	
+	$validar -> idSucursal = $_POST["idSucursal"];
+	$validar -> ajaxCategoriaStock();
 }

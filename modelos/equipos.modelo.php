@@ -187,10 +187,28 @@ class ModeloEquipos{
 
 		
 		if($filtro == null){
-			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id where id_estado = 1 and id_sucursal = $id order by ne.descripcion");
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id where e.id_estado = 1 and e.id_sucursal = $id order by ne.descripcion");
 		}else{
-			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id where id_estado = 1 and id_sucursal = $id and e.id_nombre_equipos = $filtro order by ne.descripcion");
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id where e.id_estado = 1 and e.id_sucursal = $id and e.id_nombre_equipos = $filtro order by ne.descripcion");
 		}	
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+	 static public function mdlMostrarEquiposGuiaDespachoTrasladoPedido($id,$filtro){
+
+		
+		
+			$stmt = Conexion::conectar()->prepare("SELECT e.id as idEquipo, e.codigo as codigo, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id where e.id_estado = 1 and e.id_sucursal = $id and ne.id_categoria = $filtro order by ne.descripcion");
+			
 
 			$stmt -> execute();
 

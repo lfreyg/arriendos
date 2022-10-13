@@ -10,8 +10,7 @@ class ControladorCategorias{
 
 		if(isset($_POST["nuevaCategoriaEquipo"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaCategoriaEquipo"])){
-
+			
 				$tabla = "categorias";
 
 				$datos = strtoupper($_POST["nuevaCategoriaEquipo"]);
@@ -40,26 +39,7 @@ class ControladorCategorias{
 				}
 
 
-			}else{
-
-				echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "¡La categoría no puede ir vacía o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
-
-							window.location = "categorias";
-
-							}
-						})
-
-			  	</script>';
-
-			}
+			
 
 		}
 
@@ -80,6 +60,19 @@ class ControladorCategorias{
 	}
 
 	/*=============================================
+	STOCK CATEGORIAS
+	=============================================*/
+
+	static public function ctrMostrarStockCategorias($idCategoria, $idSucursal){
+
+		
+		$respuesta = ModeloCategorias::mdlMostrarStockCategorias($idCategoria, $idSucursal);
+
+		return $respuesta;
+	
+	}
+
+	/*=============================================
 	EDITAR CATEGORIA
 	=============================================*/
 
@@ -87,8 +80,7 @@ class ControladorCategorias{
 
 		if(isset($_POST["editarCategoria"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarCategoria"])){
-
+			
 				$tabla = "categorias";
 
 				$datos = array("categoria"=>$_POST["editarCategoria"],
@@ -118,26 +110,7 @@ class ControladorCategorias{
 				}
 
 
-			}else{
-
-				echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "¡La categoría no puede ir vacía o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
-
-							window.location = "categorias";
-
-							}
-						})
-
-			  	</script>';
-
-			}
+			
 
 		}
 

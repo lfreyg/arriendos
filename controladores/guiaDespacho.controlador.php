@@ -94,6 +94,75 @@ class ControladorGuiaDespacho{
 
 	}
 
+
+	static public function ctrCrearGuiaDespachoTraslado(){
+
+		
+
+		if(isset($_POST["nuevaTransporte"])){
+			   	
+		   		/*=============================================
+				VALIDAR IMAGEN
+				=============================================*/
+
+		   $ruta = null;		
+
+		          
+                  $item = $_POST["nuevaTransporte"];
+                 
+
+                  $transporte = ModeloTransporteGuia::mdlMostrarTrasporteGuia($item);
+
+                  
+                  $rut_transportista = $transporte["rut"];
+                  $nombre_transportista = $transporte["nombre"];
+                  $patente_transportista = $transporte["patente"];
+                  $empresa_transportista = $transporte["rut_empresa_transporte"];
+                  $tipoGuia = 'T';
+
+			
+				$tabla = "guia_despacho";
+
+				$datos = array("id_empresa" => $_POST["nuevaEmpresaOperativa"],
+					           "fecha_guia" => $_POST["nuevoFechaGuia"],
+					           "id_constructora" => null,
+							   "id_obra" => null,
+							   "id_sucursal" => $_SESSION['idSucursalParaUsuario'],
+							   "adjunto" => $ruta,
+							   "oc" => null,
+							   "fecha_termino" => null,
+							   "id_transporte_guia" => $_POST["nuevaTransporte"],
+							   "rut_empresa_transporte" => $empresa_transportista,
+							   "rut_transportista"  => $rut_transportista,
+							   "nombre_transportista"  => $nombre_transportista,
+							   "patente_transportista"  => $patente_transportista,
+							   "tipoGuia" => $tipoGuia,
+							   "creado_por"=>$_SESSION["nombre"],
+							   "sucursalDestino"=>$_POST["idSucursaltxt"],
+							   "idPedidoGenerado"=>$_POST["idPedidoGenerado"]);
+
+               
+                
+
+				$respuesta = ModeloGuiaDespacho::mdlIngresarGuiaDespachoTraslado($tabla, $datos);
+
+				if($respuesta != "error"){
+                      
+					$_SESSION['idGuiaDespachoTraslado'] = $respuesta["id"];
+
+					echo'<script>		
+                       window.location = "pedido-interno-despacho-detalle";
+										
+
+						</script>';
+
+				}
+
+				
+		}	
+
+	}
+
 	/*=============================================
 	EDITAR 
 	=============================================*/

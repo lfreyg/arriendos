@@ -22,13 +22,32 @@ class ModeloTipoEquipos{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla where estado = 1 order by descripcion");
 
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
 
 		}
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	static public function mdlMostrarTipoEquiposConMarca(){
+
+		
+
+			$stmt = Conexion::conectar()->prepare("SELECT ne.id as id, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca FROM nombre_equipos ne join marcas m on ne.id_marca = m.id where ne.estado = 1 order by descripcion");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		
 		
 
 		$stmt -> close();

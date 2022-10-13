@@ -1,17 +1,17 @@
 <?php
 
-   
+require "../extensiones/vendor/autoload.php";  
 use PHPMailer\PHPMailer\PHPMailer;
-require "../extensiones/vendor/autoload.php";
+
 $mail = new PHPMailer;
 $mail->isSMTP();
 $mail->SMTPDebug = 2;
-$mail->Host = 'const-alcantara.cl';
-$mail->Port = 25;
+$mail->Host = 'smtp.gmail.com';
+$mail->Port = 465;
 $mail->SMTPAuth = true;
-$mail->Username = "bahiamarina@const-alcantara.cl";
-$mail->Password = "muela08912242$;";
-$mail->setFrom('bahiamarina@const-alcantara.cl');
+$mail->Username = "reservasbahiamarina@gmail.com";
+$mail->Password = "ncwrfmntfvknbbtr";
+$mail->setFrom('reservasbahiamarina@gmail.com');
 $mail->addAddress('l.frey.g@gmail.com');
 $mail->Subject = 'Testing PHPMailer';
 $mail->Body = 'This is a plain text message body';

@@ -120,7 +120,31 @@
 							<li>
 								<a href="pedido-equipos">
 									<i class="fa fa-circle-o"></i>
-									<span>Pedido de equipos</span>
+									<span>Pedido de Obra</span>
+								</a>
+
+							</li>
+
+							<li>
+								<a href="pedido-interno">
+									<i class="fa fa-circle-o"></i>
+									<span>Pedido Interno</span>
+								</a>
+
+							</li>
+
+							<li>
+								<a href="pedido-interno-despacho">
+									<i class="fa fa-circle-o"></i>
+									<span>Despacho Ped.Interno</span>
+								</a>
+
+							</li>
+
+							<li>
+								<a href="pedido-interno-validar">
+									<i class="fa fa-circle-o"></i>
+									<span>Validar Pedido</span>
 								</a>
 
 							</li>
