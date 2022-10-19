@@ -119,17 +119,11 @@ $hacerNuevaGuia = ModeloPedidoInterno::mdlValidarHacerNuevaGuiaPedido($idPedido)
                 <div class="form-group">
                 
                   <div class="input-group">
-                  <div class="col-xs-6">  
+                  <div class="col-xs-11">  
                    <label for="solicitaPedido">Solicitado por</label> 
-                    <input type="text" class="form-control" id="solicitaPedido" value="<?php echo $pedido["usuario"];?>" readonly>   
-                  </div>
-                   <div class="col-xs-6">
-                    <label for="solicitaPedido">Sucursal Destino</label> 
-                    <input type="text" class="form-control" id="sucursalPedido" value="<?php echo $pedido["nombreSucursal"];?>" readonly>
+                    <input type="text" class="form-control" id="solicitaPedido" value="<?php echo $pedido["usuario"];?>" readonly>  
                      <input type="hidden" id="idPedido" name="idPedido" value="<?php echo $idPedido; ?>">
-                   </div>                  
-
-                    
+                   </div> 
 
                   </div>
 

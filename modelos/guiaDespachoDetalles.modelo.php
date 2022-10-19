@@ -154,7 +154,7 @@ class ModeloGuiaDespachoDetalles{
 
 	static public function mdlGuiaDespachoPorId($idGuia){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, es.descripcion as movimiento,  gd.devuelto as devuelto, gd.validado as validado, gd.match_cambio FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.id_tipo_movimiento = es.id WHERE gd.id_guia = $idGuia and gd.registro_eliminado = false order by gd.id desc");
+		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, es.descripcion as movimiento,  gd.devuelto as devuelto, gd.validado as validado, gd.match_cambio FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.id_tipo_movimiento = es.id WHERE gd.id_guia = $idGuia and gd.tipo_guia = 'A' and gd.registro_eliminado = false order by gd.id desc");
 
 		
 		$stmt -> execute();
@@ -169,7 +169,7 @@ class ModeloGuiaDespachoDetalles{
 
 	static public function mdlGuiaDespachoTrasladoPorId($idGuia){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, gd.validado as validado, c.categoria  FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN categorias c on ne.id_categoria = c.id WHERE gd.id_guia = $idGuia and gd.registro_eliminado = false order by gd.id desc");
+		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, gd.validado as validado, c.categoria  FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN categorias c on ne.id_categoria = c.id WHERE gd.id_guia = $idGuia and gd.registro_eliminado = false and gd.tipo_guia = 'T' order by gd.id desc");
 
 		
 		$stmt -> execute();
@@ -286,6 +286,69 @@ static public function mdlQuitarValidarEquipoRecepcionado($datos){
 			$stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET id_estado = $estado WHERE id = :idEquipo");
 
 		    $stmt2 -> bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
+		    $stmt2 -> execute();
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+		$stmt2 -> close();
+
+		$stmt = null;
+		$stmt2 = null;
+
+	}	
+
+
+	static public function mdlValidarEquipoRecepcionadoTraslado($datos){
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET validado = 0 WHERE id = :idRegistro");
+
+		$stmt -> bindParam(":idRegistro", $datos["idRegistro"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			$estado = 1; //DEJA EL EQUIPO DISPONIBLE EN LA BODEGA RECEPCIONADA
+			$stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET id_estado = $estado, id_sucursal = :sucursal WHERE id = :idEquipo");
+
+		    $stmt2 -> bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
+		    $stmt2 -> bindParam(":sucursal", $datos["idSucursal"], PDO::PARAM_INT);
+		    $stmt2 -> execute();
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+		$stmt2 -> close();
+
+		$stmt = null;
+		$stmt2 = null;
+
+	}
+
+	static public function mdlQuitarValidarEquipoTraslado($datos){
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET validado = 1 WHERE id = :idRegistro");
+
+		$stmt -> bindParam(":idRegistro", $datos["idRegistro"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			$estado = 5; //ESTADO EN TRANSITO TRASLADO
+			$stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET id_estado = $estado, id_sucursal = :idSucursalOrigen WHERE id = :idEquipo");
+
+		    $stmt2 -> bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
+		    $stmt2 -> bindParam(":idSucursalOrigen", $datos["idSucursalOrigen"], PDO::PARAM_INT);
 		    $stmt2 -> execute();
 
 			return "ok";

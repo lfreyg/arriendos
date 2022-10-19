@@ -68,6 +68,7 @@ $idGuia = $_POST['id'];
               $disabled = "disabled";
               $disabled_valida = "disabled";
            }
+           
 
 
            $arriendo = $equipo." ".$modelo." ".$marca;

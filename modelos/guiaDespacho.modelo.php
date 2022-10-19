@@ -44,7 +44,7 @@ class ModeloGuiaDespacho{
 
 		
 			
-			$stmt = Conexion::conectar()->prepare("SELECT gd.estado_guia as estadoGuia, eo.id as idEmpresa, eo.razon_social as empresa, gd.numero_guia as guia, gd.fecha_guia as fecha, gd.rut_empresa_transporte as rutTransporte, gd.patente_transportista as patente, gd.rut_transportista as rutChofer, gd.nombre_transportista as chofer FROM guia_despacho gd JOIN empresas_operativas eo ON gd.id_empresa = eo.id where gd.id = $id and gd.tipo_guia = 'T'");
+			$stmt = Conexion::conectar()->prepare("SELECT gd.estado_guia as estadoGuia, eo.id as idEmpresa, eo.razon_social as empresa, gd.numero_guia as guia, gd.fecha_guia as fecha, gd.rut_empresa_transporte as rutTransporte, gd.patente_transportista as patente, gd.rut_transportista as rutChofer, gd.nombre_transportista as chofer, gd.id_sucursal as sucursal_origen FROM guia_despacho gd JOIN empresas_operativas eo ON gd.id_empresa = eo.id where gd.id = $id and gd.tipo_guia = 'T'");
 
 			$stmt -> execute();
 
@@ -316,7 +316,7 @@ class ModeloGuiaDespacho{
 	static public function mdlGuiaDespachoTrasladoPedido($idPedido){
 
 		   
-			$stmt = Conexion::conectar()->prepare("SELECT gd.id as idGuia, gd.numero_guia as numeroGuia, s.nombre as sucursalDestino, su.nombre as sucursalOrigen, gd.nombre_transportista as chofer, e.descripcion as estadoGuia, gd.fecha_guia as fecha, gd.creado_por as usuarioCrea FROM guia_despacho gd join sucursales s on gd.id_sucursal_destino = s.id join sucursales su on gd.id_sucursal = su.id JOIN estados e on gd.estado_guia = e.id where id_pedido_interno = $idPedido and estado_guia != 14 order by gd.id desc");
+			$stmt = Conexion::conectar()->prepare("SELECT gd.id as idGuia, gd.numero_guia as numeroGuia, s.nombre as sucursalDestino, su.nombre as sucursalOrigen, gd.nombre_transportista as chofer, e.descripcion as estadoGuia, gd.fecha_guia as fecha, gd.creado_por as usuarioCrea FROM guia_despacho gd join sucursales s on gd.id_sucursal_destino = s.id join sucursales su on gd.id_sucursal = su.id JOIN estados e on gd.estado_guia = e.id where gd.id_pedido_interno = $idPedido and gd.estado_guia != 14 and gd.tipo_guia = 'T' order by gd.id desc");
 
 		   $stmt -> execute();
 

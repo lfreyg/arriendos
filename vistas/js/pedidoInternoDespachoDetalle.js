@@ -355,3 +355,61 @@ $('#btnVolverValidar').click(function() {
 	       window.location = "index.php?ruta=pedido-interno-despacho-detalle-vista-validar";	 
 
 });
+
+function validarEquipoTraslado(idRegistro, idEquipo){
+
+	debugger;
+
+	var idRegistro = idRegistro;
+	var idEquipo = idEquipo;		
+	var idSucursal = $('#idSucursaltxt').val();	
+
+	datos = "idRegistro=" + idRegistro +
+	        "&idEquipo=" + idEquipo +
+	        "&idSucursal=" + idSucursal;
+
+
+	$.ajax({
+
+		type: "POST",
+		url: "ajax/guarda-validacion-equipo-guia-traslado.ajax.php",
+		data: datos,
+
+		success: function(res) {
+
+			alertify.success("Recepción VALIDADA por bodega");
+			genera_tabla_pedidos_validar();
+
+
+		}
+	});
+}
+
+function quitarvalidarEquipoTraslado(idRegistro, idEquipo){
+
+	
+
+	var idRegistro = idRegistro;
+	var idEquipo = idEquipo;		
+	var idSucursalOrigen = $('#idSucursalOrigen').val();	//PARA REESTABLECER SUCURSAL ORIGEN TRASLADO
+
+	datos = "idRegistro=" + idRegistro +
+	        "&idEquipo=" + idEquipo +
+	        "&idSucursalOrigen=" + idSucursalOrigen;
+
+
+	$.ajax({
+
+		type: "POST",
+		url: "ajax/quitar-validacion-equipo-guia-traslado.ajax.php",
+		data: datos,
+
+		success: function(res) {
+
+			alertify.success("Validación de Recepción ANULADA");
+			genera_tabla_pedidos_validar();
+
+
+		}
+	});
+}

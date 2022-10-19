@@ -103,6 +103,7 @@ $pedido = ModeloPedidoInterno::mdlMostrarPedidoInternoDetalle($idPedido);
                     <input type="hidden" id="numeroGuia" name="numeroGuia" value="<?php echo $guiaDespacho["guia"]?>"> 
                     <input type="hidden" id="idCategoriaTxt" name="idCategoriaTxt" value="">
                      <input type="hidden" id="idPedidoDetalle" name="idPedidoDetalle" value="">
+                      <input type="hidden" id="idSucursalOrigen" name="idSucursalOrigen" value="<?php echo $guiaDespacho["sucursal_origen"]?>">
 
                   </div>
 

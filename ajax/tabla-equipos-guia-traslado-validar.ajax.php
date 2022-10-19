@@ -49,15 +49,7 @@ $idGuia = $_POST['id'];
            $dateReg = date_create($value["fecha"]);
            $fecha = date_format($dateReg,"d-m-Y");
            
-           $disabled = '';
-          
-
-
-          
-          
-
-          
-
+         
            $arriendo = $equipo." ".$modelo." ".$marca;
 
           
@@ -67,14 +59,27 @@ $idGuia = $_POST['id'];
     <td ><div align="left"><?php echo $categoria?></div></td>
     <td ><div align="left"><?php echo $codigo?></div></td>
     <td ><div align="left"><?php echo $arriendo?></div></td>    
-    <td ><div align="center"><?php echo $fecha?></div></td>   
-       
+    <td ><div align="center"><?php echo $fecha?></div></td>  
+
     <td align="center" nowrap="">
-      <button class="btn btn-success btn-xm" title="Validar" <?php echo $disabled?> onclick="validarEquipo('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">V</button>
-    </td>
-      
+      <?php
+      if($value["validado"] == 1) {
+      ?>  
+           <button class="btn btn-success btn-xm" title="Validar Recepción" onclick="validarEquipoTraslado('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">V</button>
+      <?php
+      }else{
+      ?>
+          <button class="btn btn-info btn-xm" title="Quitar Validación Recepción" onclick="quitarvalidarEquipoTraslado('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">OK</button>
+       <?php
+      }     
+      ?>
+
+    </td> 
+       
+         
   </tr>
   <?php
+
             
 
 
