@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-10-2022 a las 23:16:59
+-- Tiempo de generación: 27-10-2022 a las 07:43:58
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -78,7 +78,8 @@ INSERT INTO `categorias` (`id`, `categoria`, `fecha`, `creacion`) VALUES
 (10, 'DEMOLEDOR 10 KILOS', '2022-03-21 21:51:31', '2022-03-21 21:51:31'),
 (11, 'ESMERILES 9\'\'', '2022-10-08 00:41:49', '2022-10-08 00:41:49'),
 (12, 'ESMERILES 7\'\'', '2022-10-08 00:41:58', '2022-10-08 00:41:58'),
-(13, 'ESMERILES 4 1/2 \'\'', '2022-10-08 00:42:12', '2022-10-08 00:42:12');
+(13, 'ESMERILES 4 1/2 \'\'', '2022-10-08 00:42:12', '2022-10-08 00:42:12'),
+(15, 'GENERADOR 4KVA', '2022-10-19 21:10:12', '2022-10-19 21:10:12');
 
 -- --------------------------------------------------------
 
@@ -131,7 +132,22 @@ CREATE TABLE `dte` (
 --
 
 INSERT INTO `dte` (`id`, `id_empresa_operativa`, `numero_guia`, `numero_factura`, `numero_nc`, `numero_nd`) VALUES
-(1, 1, 5222, 3652, 1, 1);
+(1, 1, 5228, 3652, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `eepp`
+--
+
+CREATE TABLE `eepp` (
+  `id` int(11) NOT NULL,
+  `id_constructoras` int(11) NOT NULL,
+  `id_obras` int(11) NOT NULL,
+  `fecha_eepp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_corte` date NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -204,10 +220,10 @@ CREATE TABLE `equipos` (
 
 INSERT INTO `equipos` (`id`, `id_nombre_equipos`, `id_factura`, `codigo`, `numero_serie`, `precio_compra`, `tiene_movimiento`, `id_estado`, `fecha_creado`, `creacion`, `id_sucursal`, `codigo_anterior`, `serie_anterior`) VALUES
 (2, 7, 1, '654111', '654111', 165000, 1, 2, '2022-03-14 14:04:38', '2022-03-14 14:04:38', 1, '654111', '654111'),
-(7, 7, 1, '9658445', '9658445', 36500, 1, 16, '2022-03-14 14:51:53', '2022-03-14 14:51:53', 1, '9658445', '9658445'),
+(7, 7, 1, '9658445', '9658445', 36500, 1, 1, '2022-03-14 14:51:53', '2022-03-14 14:51:53', 1, '9658445', '9658445'),
 (8, 16, 1, '6541110', '6541110', 36222, 0, 1, '2022-03-14 17:06:50', '2022-03-14 17:06:50', 1, '6541110', '6541110'),
 (9, 16, 3, '3652', '3652', 650000, 1, 1, '2022-03-14 18:08:36', '2022-03-14 18:08:36', 1, '3652', '3652'),
-(10, 16, 6, '365211', '365211', 65222, 1, 2, '2022-03-14 18:13:02', '2022-03-14 18:13:02', 1, '365211', '365211'),
+(10, 16, 6, '365211', '365211', 65222, 1, 16, '2022-03-14 18:13:02', '2022-03-14 18:13:02', 1, '365211', '365211'),
 (11, 7, 7, '362541', '362541', 96000, 1, 2, '2022-03-14 18:24:18', '2022-03-14 18:24:18', 1, '362541', '362541'),
 (12, 11, 8, '8544', '8544', 200000, 1, 2, '2022-03-14 19:46:51', '2022-03-14 19:46:51', 1, '8544', '8544'),
 (13, 15, 7, '854741', '854741', 365000, 1, 2, '2022-03-14 20:22:19', '2022-03-14 20:22:19', 1, '854741', '854741'),
@@ -218,28 +234,28 @@ INSERT INTO `equipos` (`id`, `id_nombre_equipos`, `id_factura`, `codigo`, `numer
 (18, 8, 10, '658455', '658455', 320000, 1, 1, '2022-03-14 21:08:49', '2022-03-14 21:08:49', 1, '658455', '658455'),
 (19, 8, 10, 'PCG524', '854545', 320000, 1, 2, '2022-03-14 21:09:40', '2022-03-14 21:09:40', 1, 'PCG524', '854545'),
 (25, 6, 14, '6521P', '6521', 36500, 1, 1, '2022-03-15 21:45:46', '2022-03-15 21:45:46', 1, '6521', '6521'),
-(26, 6, 14, '6522', '6521', 36500, 1, 16, '2022-03-15 21:46:09', '2022-03-15 21:46:09', 1, '6522', '6521'),
+(26, 6, 14, '6522', '6522', 5600, 1, 1, '2022-03-15 21:46:09', '2022-03-15 21:46:09', 1, '6522', '6521'),
 (27, 6, 14, '6522365', '6522', 36500, 1, 2, '2022-03-15 21:46:12', '2022-03-15 21:46:12', 1, '6522365', '6522'),
 (28, 8, 14, '6521', '6521', 36800, 1, 2, '2022-03-15 21:52:10', '2022-03-15 21:52:10', 1, '6521', '6521'),
 (29, 8, 14, '698542541', '69854', 36800, 0, 1, '2022-03-15 21:52:30', '2022-03-15 21:52:30', 1, '698542541', '69854'),
-(30, 8, 3, '3621', '3652', 36800, 1, 1, '2022-03-15 21:59:21', '2022-03-15 21:59:21', 1, '3621', '3652'),
+(30, 8, 3, '3621', '3652', 36800, 1, 2, '2022-03-15 21:59:21', '2022-03-15 21:59:21', 1, '3621', '3652'),
 (31, 8, 3, '3622', '3621', 36800, 1, 2, '2022-03-15 21:59:41', '2022-03-15 21:59:41', 1, '3622', '3621'),
-(32, 7, 15, '36545', '36521', 1200, 1, 1, '2022-03-15 22:01:33', '2022-03-15 22:01:33', 2, '36545', '36521'),
+(32, 7, 15, '36545', '36521', 1200, 1, 5, '2022-03-15 22:01:33', '2022-03-15 22:01:33', 2, '36545', '36521'),
 (36, 8, 15, '36545', '36545', 69800, 1, 2, '2022-03-15 22:19:04', '2022-03-15 22:19:04', 1, '36545', '36545'),
-(44, 8, 12, '6521', '6521', 98544, 1, 1, '2022-03-15 22:46:36', '2022-03-15 22:46:36', 1, '6521', '6521'),
-(45, 8, 12, '6521', '6521', 65200, 1, 1, '2022-03-15 22:46:58', '2022-03-15 22:46:58', 1, '6521', '6521'),
-(46, 8, 12, '6521', '6521', 65200, 1, 1, '2022-03-15 22:47:54', '2022-03-15 22:47:54', 1, '6521', '6521'),
-(47, 11, 12, '6521', '6521', 6522, 1, 2, '2022-03-15 22:48:12', '2022-03-15 22:48:12', 1, '6521', '6521'),
+(44, 8, 12, '6521A', '6521', 7500, 1, 1, '2022-03-15 22:46:36', '2022-03-15 22:46:36', 1, '6521', '6521'),
+(45, 8, 12, '6521B', '6521B', 7500, 1, 1, '2022-03-15 22:46:58', '2022-03-15 22:46:58', 1, '6521', '6521'),
+(46, 8, 12, '6521', '6521', 65200, 1, 2, '2022-03-15 22:47:54', '2022-03-15 22:47:54', 1, '6521', '6521'),
+(47, 11, 12, '6521C', '6521C', 3400, 1, 1, '2022-03-15 22:48:12', '2022-03-15 22:48:12', 1, '6521', '6521'),
 (48, 11, 12, '6521', '6521', 85445, 1, 2, '2022-03-15 22:48:49', '2022-03-15 22:48:49', 1, '6521', '6521'),
 (49, 11, 12, '6521', '6521', 96500, 1, 2, '2022-03-15 22:49:52', '2022-03-15 22:49:52', 1, '6521', '6521'),
 (51, 7, 11, '65212', '65212', 985445, 1, 2, '2022-03-15 22:53:55', '2022-03-15 22:53:55', 1, '65212', '65212'),
-(52, 7, 11, '652198', '65219874561', 1200, 1, 1, '2022-03-15 22:54:02', '2022-03-15 22:54:02', 2, '652198', '652198'),
+(52, 7, 11, '652198', '65219874561', 1200, 1, 5, '2022-03-15 22:54:02', '2022-03-15 22:54:02', 2, '652198', '652198'),
 (58, 8, 13, '65844', '65844', 98500, 1, 1, '2022-03-15 23:05:12', '2022-03-15 23:05:12', 1, '65844', '65844'),
 (59, 15, 11, '65211', '65214', 69800, 1, 2, '2022-03-16 22:28:03', '2022-03-16 22:28:03', 1, '65211', '65214'),
 (60, 6, 16, '85474', '25412', 63254, 1, 2, '2022-03-16 22:53:15', '2022-03-16 22:53:15', 1, '85474', '25412'),
 (61, 6, 16, '32100', '32100', 65200, 1, 1, '2022-03-21 15:47:23', '2022-03-21 15:47:23', 1, '32100', '32100'),
 (62, 8, 15, '6528744L', '5212', 63200, 1, 1, '2022-04-08 01:33:45', '2022-04-08 01:33:45', 1, '6528744L', '5212'),
-(63, 7, 16, '78001452', '745844854', 68000, 1, 1, '2022-05-13 06:07:53', '2022-05-13 06:07:53', 1, '78001452', '745844854'),
+(63, 7, 16, '78001452', '745844854', 68000, 1, 5, '2022-05-13 06:07:53', '2022-05-13 06:07:53', 1, '78001452', '745844854'),
 (69, 11, 16, '85PP', '85PP', 3400, 1, 1, '2022-09-01 14:31:06', '2022-09-01 14:31:06', 2, '85PP', '85PP'),
 (70, 11, 16, '789PO', '789PO', 369000, 0, 1, '2022-09-01 14:31:20', '2022-09-01 14:31:20', 2, '789PO', '789PO'),
 (72, 7, 17, 'RTPO09', 'OPRRR4555', 4500, 1, 1, '2022-09-01 14:45:42', '2022-09-01 14:45:42', 2, 'RTPO09', 'OPRRR4555'),
@@ -250,10 +266,12 @@ INSERT INTO `equipos` (`id`, `id_nombre_equipos`, `id_factura`, `codigo`, `numer
 (77, 21, 19, 'SAB02', '03254744100', 85000, 0, 1, '2022-10-08 00:48:27', '2022-10-08 00:48:27', 1, 'SAB02', '03254744100'),
 (78, 21, 19, 'SAB03', '433EE5845', 85000, 0, 1, '2022-10-08 00:48:39', '2022-10-08 00:48:39', 1, 'SAB03', '433EE5845'),
 (79, 24, 20, '2897', '2897', 190000, 1, 2, '2022-10-13 16:52:07', '2022-10-13 16:52:07', 2, '2897', '2897'),
-(80, 24, 20, '2898', '2898', 190000, 1, 1, '2022-10-13 16:52:19', '2022-10-13 16:52:19', 2, '2898', '2898'),
+(80, 24, 20, '2898', '2898', 190000, 1, 2, '2022-10-13 16:52:19', '2022-10-13 16:52:19', 1, '2898', '2898'),
 (81, 24, 20, '2899', '2899', 190000, 1, 1, '2022-10-13 16:52:26', '2022-10-13 16:52:26', 2, '2899', '2899'),
-(82, 24, 20, '2830', '2830', 190000, 1, 1, '2022-10-13 16:52:32', '2022-10-13 16:52:32', 2, '2830', '2830'),
-(83, 24, 20, '2831', '2831', 190000, 1, 1, '2022-10-13 16:52:39', '2022-10-13 16:52:39', 2, '2831', '2831');
+(82, 24, 20, '2830', '2830', 190000, 1, 2, '2022-10-13 16:52:32', '2022-10-13 16:52:32', 1, '2830', '2830'),
+(83, 24, 20, '2831', '2831', 190000, 1, 1, '2022-10-13 16:52:39', '2022-10-13 16:52:39', 1, '2831', '2831'),
+(84, 26, 21, 'KVA52', 'KVA52', 2500, 1, 1, '2022-10-19 21:14:47', '2022-10-19 21:14:47', 1, 'KVA52', 'KVA52'),
+(85, 26, 21, 'KVA53', 'KVA53', 2500, 1, 1, '2022-10-19 21:14:59', '2022-10-19 21:14:59', 1, 'KVA53', 'KVA53');
 
 -- --------------------------------------------------------
 
@@ -280,32 +298,34 @@ CREATE TABLE `equipos_traslados_detalles` (
 
 CREATE TABLE `estados` (
   `id` int(11) NOT NULL,
-  `descripcion` text COLLATE utf8_spanish_ci NOT NULL
+  `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
+  `tipo_estado` text COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `estados`
 --
 
-INSERT INTO `estados` (`id`, `descripcion`) VALUES
-(1, 'DISPONIBLE'),
-(2, 'ARRENDADO'),
-(3, 'SERVICIO TECNICO'),
-(4, 'DE BAJA'),
-(5, 'EN TRASLADO'),
-(6, 'ROBADO'),
-(7, 'EN CONSTRUCCIÓN'),
-(8, 'PENDIENTE'),
-(9, 'FINALIZADO'),
-(10, 'ARRIENDO'),
-(11, 'CAMBIO'),
-(12, 'NO ENVIADA SII'),
-(13, 'ENVIADA SII'),
-(14, 'ANULADO'),
-(15, 'TERMINO ARRIENDO'),
-(16, 'POR VALIDAR RETIRO OBRA'),
-(17, 'POR VALIDAR ENTREGA OBRA'),
-(18, 'EN REVISION');
+INSERT INTO `estados` (`id`, `descripcion`, `tipo_estado`) VALUES
+(1, 'DISPONIBLE', 'EQUIPO'),
+(2, 'ARRENDADO', 'EQUIPO'),
+(3, 'SERVICIO TECNICO', 'EQUIPO'),
+(4, 'DE BAJA', 'EQUIPO'),
+(5, 'EN TRASLADO', 'EQUIPO'),
+(6, 'ROBADO', 'EQUIPO'),
+(7, 'EN CONSTRUCCIÓN', 'DOCUMENTO'),
+(8, 'PENDIENTE', 'DOCUMENTO'),
+(9, 'FINALIZADO', 'DOCUMENTO'),
+(10, 'ARRIENDO', 'DOCUMENTO'),
+(11, 'CAMBIO', 'DOCUMENTO'),
+(12, 'NO ENVIADA SII', 'DOCUMENTO'),
+(13, 'ENVIADA SII', 'DOCUMENTO'),
+(14, 'ANULADO', 'DOCUMENTO'),
+(15, 'TERMINO ARRIENDO', 'DOCUMENTO'),
+(16, 'POR VALIDAR RETIRO OBRA', 'EQUIPO'),
+(17, 'POR VALIDAR ENTREGA OBRA', 'EQUIPO'),
+(18, 'EN REVISION', 'EQUIPO'),
+(19, 'EQUIPO NO OPERATIVO', 'EQUIPO');
 
 -- --------------------------------------------------------
 
@@ -345,7 +365,8 @@ INSERT INTO `facturas_compra_equipos` (`id`, `id_proveedor`, `numero_factura`, `
 (17, 1, 784444, '2022-09-01', NULL, 0, '2022-09-01 13:56:44', 'LEONARDO FREY'),
 (18, 1, 985474, '2022-10-07', NULL, 0, '2022-10-08 00:45:43', 'LEONARDO FREY'),
 (19, 2, 7804100, '2022-10-07', NULL, 0, '2022-10-08 00:47:46', 'LEONARDO FREY'),
-(20, 1, 2147483647, '2022-10-13', NULL, 0, '2022-10-13 16:50:06', 'BASTIAN FREY');
+(20, 1, 2147483647, '2022-10-13', NULL, 0, '2022-10-13 16:50:06', 'BASTIAN FREY'),
+(21, 1, 965844, '2022-10-19', NULL, 0, '2022-10-19 21:13:32', 'LEONARDO FREY');
 
 -- --------------------------------------------------------
 
@@ -418,7 +439,12 @@ INSERT INTO `guia_despacho` (`id`, `id_empresa`, `numero_guia`, `fecha_guia`, `i
 (27, 1, 5212, '2022-09-25', 4, 8, 1, NULL, '', '0000-00-00', 1, '76015943-3', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', 'LEONARDO FREY', '2022-09-25 05:38:07', NULL, NULL),
 (29, 1, 5213, '2022-09-29', 3, 3, 1, NULL, '', '0000-00-00', 1, '76015943-3', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 14, 'A', 'LEONARDO FREY', '2022-09-29 18:46:01', NULL, NULL),
 (30, 1, 5214, '2022-09-29', 3, 6, 1, '', '', '0000-00-00', 1, '76015943-3', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', 'LEONARDO FREY', '2022-09-30 01:33:41', NULL, NULL),
-(33, 1, 5216, '2022-10-13', 3, 3, 2, NULL, '', '0000-00-00', 1, '76015943-3', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', 'BASTIAN FREY', '2022-10-13 04:01:04', NULL, NULL);
+(33, 1, 5216, '2022-10-13', 3, 3, 2, NULL, '', '0000-00-00', 1, '76015943-3', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', 'BASTIAN FREY', '2022-10-13 04:01:04', NULL, NULL),
+(45, 1, 5223, '2022-10-18', NULL, NULL, 2, NULL, NULL, NULL, 1, '76015943-3', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'T', 'BASTIAN FREY', '2022-10-19 01:23:50', 1, 20),
+(46, 1, 5224, '2022-10-18', NULL, NULL, 2, NULL, NULL, NULL, 1, '76015943-3', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'T', 'BASTIAN FREY', '2022-10-19 01:24:09', 1, 15),
+(47, 1, 5225, '2022-10-19', NULL, NULL, 1, NULL, NULL, NULL, 1, '76015943-3', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'T', 'LEONARDO FREY', '2022-10-19 03:22:10', 2, 19),
+(48, 1, 5226, '2022-10-19', NULL, NULL, 2, NULL, NULL, NULL, 1, '76015943-3', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'T', 'BASTIAN FREY', '2022-10-19 21:31:00', 1, 21),
+(49, 1, 5227, '2022-10-26', 3, 9, 1, NULL, '', '0000-00-00', 1, '76015943-3', '13485480-4', 'LEONARDO FREY', 'HFJZ-12', 13, 'A', 'LEONARDO FREY', '2022-10-26 04:26:43', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -449,71 +475,87 @@ CREATE TABLE `guia_despacho_detalle` (
   `usuario_elimina` int(11) DEFAULT NULL,
   `fecha_elimina` datetime DEFAULT NULL,
   `tipo_guia` text COLLATE utf8_spanish_ci DEFAULT 'A',
-  `id_pedido_interno_detalle` int(11) DEFAULT NULL
+  `id_pedido_interno_detalle` int(11) DEFAULT NULL,
+  `fecha_ultimo_cobro` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `guia_despacho_detalle`
 --
 
-INSERT INTO `guia_despacho_detalle` (`id`, `id_guia`, `id_equipo`, `precio_arriendo`, `fecha_arriendo`, `detalle`, `fecha_devolucion`, `fecha_devolucion_real`, `id_tipo_movimiento`, `match_cambio`, `contrato`, `devuelto`, `id_report_devolucion`, `devolucion_tipo`, `detalle_devolucion`, `fecha_retiro_obra`, `validado`, `validado_retiro`, `registro_eliminado`, `usuario_elimina`, `fecha_elimina`, `tipo_guia`, `id_pedido_interno_detalle`) VALUES
-(33, 1, 52, 1200, '2022-05-12', '', '0000-00-00', '2022-09-27', 10, NULL, 1, 1, 22, 15, '', '2022-09-27 23:17:16', 0, 0, 0, 0, NULL, 'A', NULL),
-(34, 20, 31, 7500, '2022-05-03', '', '2022-05-23', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(35, 19, 16, 5000, '2022-05-03', '', '0000-00-00', '2022-09-27', 10, NULL, 19, 1, 18, 15, '', '2022-09-27 21:09:49', 0, 0, 0, NULL, NULL, 'A', NULL),
-(36, 20, 36, 7500, '2022-05-03', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(39, 21, 11, 1200, '2022-05-09', '', '0000-00-00', NULL, 11, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(40, 21, 48, 3400, '2022-05-09', 'sin detalles', '0000-00-00', NULL, 11, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(45, 21, 10, 7500, '2022-05-09', '', '0000-00-00', NULL, 11, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(46, 21, 32, 1200, '2022-05-09', '', '0000-00-00', '2022-09-27', 10, NULL, 21, 1, 21, 15, '', '2022-09-27 23:16:49', 0, 0, 0, NULL, NULL, 'A', NULL),
-(54, 21, 2, 1000, '2022-05-12', '', '0000-00-00', NULL, 11, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(55, 20, 51, 1200, '2022-05-22', '', '2022-05-23', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(56, 20, 63, 1200, '2022-05-22', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(57, 20, 7, 1200, '2022-05-22', 'detalles de pru', '0000-00-00', '2022-10-10', 10, NULL, 20, 1, 30, 15, '', '2022-10-10 21:07:52', 0, 1, 0, NULL, NULL, 'A', NULL),
-(58, 20, 25, 5600, '2022-05-22', '', '2022-05-23', '2022-09-26', 10, NULL, 20, 1, 17, 15, '', '2022-09-26 00:46:35', 0, 0, 0, NULL, NULL, 'A', NULL),
-(59, 20, 61, 5600, '2022-05-22', '', '0000-00-00', '2022-09-26', 10, NULL, 20, 1, 17, 11, '', '2022-09-26 00:46:37', 0, 0, 0, NULL, NULL, 'A', NULL),
-(61, 21, 19, 9000, '2022-05-23', '', '0000-00-00', NULL, 11, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(62, 21, 15, 5000, '2022-05-23', '', '0000-00-00', '2022-09-27', 10, NULL, 21, 1, 21, 15, '', '2022-09-27 23:16:47', 0, 0, 0, NULL, NULL, 'A', NULL),
-(63, 21, 14, 8500, '2022-05-23', '', '0000-00-00', '2022-09-27', 10, NULL, 21, 1, 18, 15, '', '2022-09-27 21:09:47', 0, 0, 0, NULL, NULL, 'A', NULL),
-(64, 21, 13, 5000, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(65, 20, 26, 5600, '2022-05-23', '', '0000-00-00', '2022-10-10', 10, NULL, 20, 1, 30, 15, '', '2022-10-10 21:07:56', 0, 1, 0, NULL, NULL, 'A', NULL),
-(66, 20, 60, 5600, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(67, 20, 27, 5600, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(68, 20, 47, 3400, '2022-05-23', 'detalle', '2022-05-23', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(69, 20, 49, 3400, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(70, 20, 12, 3400, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(71, 20, 59, 5500, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(72, 19, 51, 1000, '2022-05-31', '', '0000-00-00', NULL, 11, NULL, 19, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(76, 26, 32, 1200, '2022-06-07', '', '0000-00-00', '2022-09-28', 10, NULL, 26, 1, 23, 15, '', '2022-09-28 00:19:14', 0, 0, 0, NULL, NULL, 'A', NULL),
-(77, 26, 10, 7500, '2022-07-11', '', '0000-00-00', '2022-09-27', 10, NULL, 26, 1, 20, 15, '', '2022-09-27 23:16:35', 0, 0, 0, NULL, NULL, 'A', NULL),
-(79, 26, 9, 4500, '2022-09-25', '', '0000-00-00', '2022-09-27', 10, NULL, 26, 1, 19, 15, '', '2022-09-27 23:06:18', 0, 0, 0, NULL, NULL, 'A', NULL),
-(80, 27, 73, 4000, '2022-09-25', '', '0000-00-00', NULL, 11, 59, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(81, 27, 28, 7500, '2022-09-25', '', '0000-00-00', NULL, 11, NULL, 27, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(84, 29, 10, 4500, '2022-09-29', '', '0000-00-00', NULL, 10, NULL, 29, 0, NULL, NULL, NULL, NULL, 1, 1, 0, NULL, NULL, 'A', NULL),
-(86, 29, 17, 7500, '2022-09-29', '', '0000-00-00', NULL, 10, NULL, 29, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 1, '2022-09-29 15:48:01', 'A', NULL),
-(87, 30, 30, 7500, '2022-09-29', '', '0000-00-00', '2022-10-02', 10, NULL, 30, 1, 29, 15, '', '2022-09-29 22:47:19', 0, 0, 0, NULL, NULL, 'A', NULL),
-(88, 30, 45, 7500, '2022-09-29', '', '0000-00-00', '2022-10-02', 10, NULL, 30, 1, 29, 15, '', '2022-09-29 22:47:24', 0, 0, 0, NULL, NULL, 'A', NULL),
-(89, 30, 62, 7500, '2022-09-29', '', '0000-00-00', NULL, 10, NULL, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 1, '2022-09-29 22:38:27', 'A', NULL),
-(90, 30, 10, 4500, '2022-10-11', '', '0000-00-00', NULL, 10, NULL, 30, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(118, 36, 52, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 15:11:54', '0', 10),
-(119, 36, 83, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 15:12:32', '0', 6),
-(120, 36, 80, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 15:12:39', '0', 6),
-(121, 36, 82, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 15:12:42', '0', 6),
-(122, 36, 52, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:43:21', '0', 10),
-(123, 36, 79, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 15:15:52', '0', 6),
-(124, 36, 81, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:43:23', '0', 6),
-(125, 33, 79, 4500, '2022-10-13', '', '0000-00-00', NULL, 10, NULL, 33, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL),
-(126, 37, 83, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:15:42', '0', 6),
-(127, 37, 80, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:15:40', '0', 6),
-(128, 37, 83, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:43:00', '0', 6),
-(129, 37, 80, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:41:41', '0', 6),
-(130, 39, 32, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:37:12', '0', 11),
-(131, 39, 72, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:41:06', '0', 11),
-(134, 41, 80, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 18:15:57', 'T', 6),
-(135, 42, 52, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 17:59:23', 'T', 11),
-(136, 42, 72, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 18:15:40', 'T', 11),
-(137, 43, 52, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 18:15:52', 'T', 10),
-(138, 43, 83, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 18:15:51', 'T', 6),
-(139, 43, 81, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 18:15:49', 'T', 6);
+INSERT INTO `guia_despacho_detalle` (`id`, `id_guia`, `id_equipo`, `precio_arriendo`, `fecha_arriendo`, `detalle`, `fecha_devolucion`, `fecha_devolucion_real`, `id_tipo_movimiento`, `match_cambio`, `contrato`, `devuelto`, `id_report_devolucion`, `devolucion_tipo`, `detalle_devolucion`, `fecha_retiro_obra`, `validado`, `validado_retiro`, `registro_eliminado`, `usuario_elimina`, `fecha_elimina`, `tipo_guia`, `id_pedido_interno_detalle`, `fecha_ultimo_cobro`) VALUES
+(33, 1, 52, 1200, '2022-05-12', '', '0000-00-00', '2022-09-27', 10, NULL, 1, 1, 22, 15, '', '2022-09-27 23:17:16', 0, 0, 0, 0, NULL, 'A', NULL, NULL),
+(34, 20, 31, 7500, '2022-05-03', '', '2022-05-23', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(35, 19, 16, 5000, '2022-05-03', '', '0000-00-00', '2022-09-27', 10, NULL, 19, 1, 18, 15, '', '2022-09-27 21:09:49', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(36, 20, 36, 7500, '2022-05-03', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(39, 21, 11, 1200, '2022-05-09', '', '0000-00-00', NULL, 11, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(40, 21, 48, 3400, '2022-05-09', 'sin detalles', '0000-00-00', NULL, 11, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(45, 21, 10, 7500, '2022-05-09', '', '0000-00-00', NULL, 11, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(46, 21, 32, 1200, '2022-05-09', '', '0000-00-00', '2022-09-27', 10, NULL, 21, 1, 21, 15, '', '2022-09-27 23:16:49', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(54, 21, 2, 1000, '2022-05-12', '', '0000-00-00', NULL, 11, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(55, 20, 51, 1200, '2022-05-22', '', '2022-05-23', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(56, 20, 63, 1200, '2022-05-22', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(57, 20, 7, 1200, '2022-05-22', 'detalles de pru', '0000-00-00', '2022-10-10', 10, NULL, 20, 1, 30, 15, '', '2022-10-10 21:07:52', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(58, 20, 25, 5600, '2022-05-22', '', '2022-05-23', '2022-09-26', 10, NULL, 20, 1, 17, 15, '', '2022-09-26 00:46:35', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(59, 20, 61, 5600, '2022-05-22', '', '0000-00-00', '2022-09-26', 10, NULL, 20, 1, 17, 11, '', '2022-09-26 00:46:37', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(61, 21, 19, 9000, '2022-05-23', '', '0000-00-00', NULL, 11, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(62, 21, 15, 5000, '2022-05-23', '', '0000-00-00', '2022-09-27', 10, NULL, 21, 1, 21, 15, '', '2022-09-27 23:16:47', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(63, 21, 14, 8500, '2022-05-23', '', '0000-00-00', '2022-09-27', 10, NULL, 21, 1, 18, 15, '', '2022-09-27 21:09:47', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(64, 21, 13, 5000, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 21, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(65, 20, 26, 5600, '2022-05-23', '', '0000-00-00', '2022-10-10', 10, NULL, 20, 1, 30, 15, '', '2022-10-10 21:07:56', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(66, 20, 60, 5600, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(67, 20, 27, 5600, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(68, 20, 47, 3400, '2022-05-23', 'detalle', '2022-05-23', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 1, '2022-10-26 23:26:02', 'A', NULL, NULL),
+(69, 20, 49, 3400, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(70, 20, 12, 3400, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(71, 20, 59, 5500, '2022-05-23', '', '0000-00-00', NULL, 10, NULL, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(72, 19, 51, 1000, '2022-05-31', '', '0000-00-00', NULL, 11, NULL, 19, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(76, 26, 32, 1200, '2022-06-07', '', '0000-00-00', '2022-09-28', 10, NULL, 26, 1, 23, 15, '', '2022-09-28 00:19:14', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(77, 26, 10, 7500, '2022-07-11', '', '0000-00-00', '2022-09-27', 10, NULL, 26, 1, 20, 15, '', '2022-09-27 23:16:35', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(79, 26, 9, 4500, '2022-09-25', '', '0000-00-00', '2022-09-27', 10, NULL, 26, 1, 19, 15, '', '2022-09-27 23:06:18', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(80, 27, 73, 4000, '2022-09-25', '', '0000-00-00', NULL, 11, 59, 20, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(81, 27, 28, 7500, '2022-09-25', '', '0000-00-00', NULL, 11, NULL, 27, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(84, 29, 10, 4500, '2022-09-29', '', '0000-00-00', NULL, 10, NULL, 29, 0, NULL, NULL, NULL, NULL, 1, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(86, 29, 17, 7500, '2022-09-29', '', '0000-00-00', NULL, 10, NULL, 29, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 1, '2022-09-29 15:48:01', 'A', NULL, NULL),
+(87, 30, 30, 7500, '2022-09-29', '', '0000-00-00', '2022-10-02', 10, NULL, 30, 1, 29, 15, '', '2022-09-29 22:47:19', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(88, 30, 45, 7500, '2022-09-29', '', '0000-00-00', '2022-10-02', 10, NULL, 30, 1, 29, 15, '', '2022-09-29 22:47:24', 0, 0, 0, NULL, NULL, 'A', NULL, NULL),
+(89, 30, 62, 7500, '2022-09-29', '', '0000-00-00', NULL, 10, NULL, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 1, '2022-09-29 22:38:27', 'A', NULL, NULL),
+(90, 30, 10, 4500, '2022-10-11', '', '0000-00-00', '2022-10-19', 10, NULL, 30, 1, 31, 15, '', '2022-10-19 16:44:44', 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(118, 36, 52, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 15:11:54', '0', 10, NULL),
+(119, 36, 83, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 15:12:32', '0', 6, NULL),
+(120, 36, 80, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 15:12:39', '0', 6, NULL),
+(121, 36, 82, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 15:12:42', '0', 6, NULL),
+(122, 36, 52, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:43:21', '0', 10, NULL),
+(123, 36, 79, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 15:15:52', '0', 6, NULL),
+(124, 36, 81, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:43:23', '0', 6, NULL),
+(125, 33, 79, 4500, '2022-10-13', '', '0000-00-00', NULL, 10, NULL, 33, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(126, 37, 83, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:15:42', '0', 6, NULL),
+(127, 37, 80, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:15:40', '0', 6, NULL),
+(128, 37, 83, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:43:00', '0', 6, NULL),
+(129, 37, 80, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:41:41', '0', 6, NULL),
+(130, 39, 32, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:37:12', '0', 11, NULL),
+(131, 39, 72, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 16:41:06', '0', 11, NULL),
+(134, 41, 80, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 18:15:57', 'T', 6, NULL),
+(135, 42, 52, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 17:59:23', 'T', 11, NULL),
+(136, 42, 72, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 18:15:40', 'T', 11, NULL),
+(137, 43, 52, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 18:15:52', 'T', 10, NULL),
+(138, 43, 83, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 18:15:51', 'T', 6, NULL),
+(139, 43, 81, 1, '2022-10-13', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 3, '2022-10-13 18:15:49', 'T', 6, NULL),
+(140, 44, 63, 1, '2022-10-18', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 1, '2022-10-18 14:49:59', 'T', 12, NULL),
+(141, 45, 52, 1, '2022-10-18', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 0, NULL, NULL, 'T', 11, NULL),
+(142, 45, 32, 1, '2022-10-18', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 0, NULL, NULL, 'T', 11, NULL),
+(143, 46, 72, 1, '2022-10-18', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'T', 10, NULL),
+(144, 46, 83, 1, '2022-10-18', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'T', 6, NULL),
+(145, 46, 80, 1, '2022-10-18', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'T', 6, NULL),
+(146, 46, 82, 1, '2022-10-18', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'T', 6, NULL),
+(147, 47, 63, 1, '2022-10-19', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 1, 0, NULL, NULL, 'T', 12, NULL),
+(148, 47, 72, 1, '2022-10-19', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'T', 12, NULL),
+(149, 48, 84, 1, '2022-10-19', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'T', 13, NULL),
+(150, 48, 85, 1, '2022-10-19', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'T', 13, NULL),
+(151, 49, 80, 4500, '2022-10-26', '', '0000-00-00', NULL, 10, NULL, 49, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(152, 49, 30, 7500, '2022-10-26', '', '0000-00-00', NULL, 10, NULL, 49, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(153, 49, 46, 7500, '2022-10-26', '', '0000-00-00', NULL, 10, NULL, 49, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL),
+(154, 49, 82, 4500, '2022-10-30', '', '0000-00-00', NULL, 10, NULL, 49, 0, NULL, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, 'A', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -560,7 +602,19 @@ INSERT INTO `log_mantenedor_equipos` (`id`, `id_equipo`, `codigo_equipo`, `serie
 (21, 73, 'ELAS45', '65877', 4000, 1, '2022-09-25 05:37:44', 1),
 (22, 32, '36545', '36521', 1200, 3, '2022-10-07 22:57:11', 1),
 (23, 75, 'SMBH02', '65844401', 4500, 1, '2022-10-08 04:42:14', 1),
-(24, 32, '36545', '36521', 1200, 2, '2022-10-13 17:07:26', 3);
+(24, 32, '36545', '36521', 1200, 2, '2022-10-13 17:07:26', 3),
+(25, 84, 'KVA52', 'KVA52', 3500, 2, '2022-10-19 21:18:22', 1),
+(26, 84, 'KVA52', 'KVA52', 650000, 2, '2022-10-19 21:18:41', 1),
+(27, 84, 'KVA52', 'KVA52', 2500, 1, '2022-10-19 21:22:47', 1),
+(28, 85, 'KVA53', 'KVA53', 2500, 1, '2022-10-19 21:22:50', 1),
+(29, 84, 'KVA52', 'KVA52', 2500, 2, '2022-10-19 21:31:25', 3),
+(30, 85, 'KVA53', 'KVA53', 2500, 2, '2022-10-19 21:31:29', 3),
+(31, 44, '6521A', '6521', 7500, 1, '2022-10-27 02:26:59', 1),
+(32, 45, '6521A', '6521', 7500, 1, '2022-10-27 02:27:12', 1),
+(33, 45, '6521B', '6521', 7500, 1, '2022-10-27 02:27:28', 1),
+(34, 47, '6521C', '6521C', 3400, 1, '2022-10-27 02:27:43', 1),
+(35, 45, '6521B', '6521B', 7500, 1, '2022-10-27 02:28:01', 1),
+(36, 26, '6522', '6522', 5600, 1, '2022-10-27 02:28:26', 1);
 
 -- --------------------------------------------------------
 
@@ -623,7 +677,8 @@ INSERT INTO `nombre_equipos` (`id`, `id_categoria`, `id_marca`, `descripcion`, `
 (22, 11, 3, 'ESMERIL ANGULAR 9\'\'', NULL, 1, 4500, 'SMBH', 18, 12, '2022-10-08 00:44:48', '2022-10-08 00:44:48', NULL),
 (23, 11, 6, 'ESMERIL ANGULAR 9\'\'', NULL, 1, 2500, 'SABYD', 24, 24, '2022-10-08 00:45:23', '2022-10-08 00:45:23', NULL),
 (24, 13, 3, 'ESMERIL 4 1/2', NULL, 1, 4500, 'ES87', 12, 10, '2022-10-13 16:50:56', '2022-10-13 16:50:56', NULL),
-(25, 13, 3, 'ESMERIL 4 1/2 \'\'', NULL, 1, 4200, 'ES90', 12, 10, '2022-10-13 16:51:36', '2022-10-13 16:51:36', NULL);
+(25, 13, 3, 'ESMERIL 4 1/2 \'\'', NULL, 1, 4200, 'ES90', 12, 10, '2022-10-13 16:51:36', '2022-10-13 16:51:36', NULL),
+(26, 15, 2, 'GENERADOR 4KVA', NULL, 1, 2500, 'KVA10', 12, 10, '2022-10-19 21:13:12', '2022-10-19 21:13:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -776,7 +831,9 @@ INSERT INTO `pedido_interno` (`id`, `id_sucursal`, `id_usuario`, `fecha_creacion
 (17, 1, 1, '2022-10-11 00:45:49', 1, 1, 0),
 (18, 1, 1, '2022-10-11 00:50:01', 1, 1, 0),
 (19, 2, 3, '2022-10-12 03:05:51', 0, 1, 0),
-(20, 1, 1, '2022-10-12 03:08:32', 0, 1, 0);
+(20, 1, 1, '2022-10-12 03:08:32', 0, 1, 0),
+(21, 1, 1, '2022-10-19 21:05:21', 0, 1, 0),
+(22, 1, 1, '2022-10-19 21:43:28', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -805,7 +862,9 @@ INSERT INTO `pedido_interno_detalle` (`id`, `id_pedido`, `id_categoria`, `cantid
 (9, 15, 10, 6, '', '2022-10-10 21:39:55', 2, 1, 0),
 (10, 15, 8, 1, '', '2022-10-10 21:40:53', 6, 1, 1),
 (11, 20, 8, 2, '', '2022-10-12 03:13:30', 6, 1, 1),
-(12, 19, 8, 6, '', '2022-10-12 03:14:51', 2, 2, 0);
+(12, 19, 8, 6, '', '2022-10-12 03:14:51', 2, 2, 0),
+(13, 21, 15, 2, '', '2022-10-19 21:25:25', 2, 2, 0),
+(14, 21, 11, 3, '', '2022-10-19 21:28:33', 5, 5, 0);
 
 -- --------------------------------------------------------
 
@@ -905,7 +964,8 @@ INSERT INTO `report_devolucion` (`id`, `id_constructoras`, `id_obras`, `fecha_re
 (27, 3, 3, '2022-09-30 01:37:42', 1, NULL, 14, 1),
 (28, 3, 3, '2022-09-30 01:40:10', 1, NULL, 14, 1),
 (29, 3, 3, '2022-09-30 01:46:26', 1, NULL, 9, 1),
-(30, 4, 8, '2022-10-11 00:07:44', 1, NULL, 9, 1);
+(30, 4, 8, '2022-10-11 00:07:44', 1, NULL, 9, 1),
+(31, 3, 6, '2022-10-19 19:44:39', 1, NULL, 9, 1);
 
 -- --------------------------------------------------------
 
@@ -1020,9 +1080,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `id_sucursal`, `creacion`) VALUES
-(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, '', 1, '2022-10-13 18:02:56', '2022-10-13 21:02:56', 1, '2022-05-13 04:24:55'),
+(1, 'LEONARDO FREY', 'lfrey', '$2a$07$asxx54ahjppf45sd87a5auFl5oL1MQ3CVLaN0VsRRmfoos4w12Lu.', 1, '', 1, '2022-10-26 22:48:45', '2022-10-27 01:48:45', 1, '2022-05-13 04:24:55'),
 (2, 'CRISTIAN VALLEJOS', 'cvallejos', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 2, 'vistas/img/usuarios/cvallejos/678.jpg', 1, '2022-02-23 18:16:46', '2022-10-11 15:06:59', 1, '2022-03-11 21:40:11'),
-(3, 'BASTIAN FREY', 'bfrey', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 1, '', 1, '2022-10-13 18:15:30', '2022-10-13 21:15:30', 2, '2022-04-01 22:21:17'),
+(3, 'BASTIAN FREY', 'bfrey', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 1, '', 1, '2022-10-19 18:29:52', '2022-10-19 21:29:52', 2, '2022-04-01 22:21:17'),
 (4, 'ADMINISTRADOR', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, '', 1, '2022-08-02 11:06:23', '2022-08-02 15:06:23', 1, '2022-04-27 06:00:09');
 
 --
@@ -1051,6 +1111,12 @@ ALTER TABLE `constructoras`
 -- Indices de la tabla `dte`
 --
 ALTER TABLE `dte`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `eepp`
+--
+ALTER TABLE `eepp`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1217,7 +1283,7 @@ ALTER TABLE `bancos`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `constructoras`
@@ -1230,6 +1296,12 @@ ALTER TABLE `constructoras`
 --
 ALTER TABLE `dte`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `eepp`
+--
+ALTER TABLE `eepp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `empresas_operativas`
@@ -1247,7 +1319,7 @@ ALTER TABLE `empresa_transporte`
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT de la tabla `equipos_traslados_detalles`
@@ -1259,13 +1331,13 @@ ALTER TABLE `equipos_traslados_detalles`
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas_compra_equipos`
 --
 ALTER TABLE `facturas_compra_equipos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `forma_pago`
@@ -1277,19 +1349,19 @@ ALTER TABLE `forma_pago`
 -- AUTO_INCREMENT de la tabla `guia_despacho`
 --
 ALTER TABLE `guia_despacho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT de la tabla `guia_despacho_detalle`
 --
 ALTER TABLE `guia_despacho_detalle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- AUTO_INCREMENT de la tabla `log_mantenedor_equipos`
 --
 ALTER TABLE `log_mantenedor_equipos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -1301,7 +1373,7 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de la tabla `nombre_equipos`
 --
 ALTER TABLE `nombre_equipos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `obras`
@@ -1325,13 +1397,13 @@ ALTER TABLE `pedido_equipo_detalle`
 -- AUTO_INCREMENT de la tabla `pedido_interno`
 --
 ALTER TABLE `pedido_interno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido_interno_detalle`
 --
 ALTER TABLE `pedido_interno_detalle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `precios_clientes`
@@ -1349,7 +1421,7 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT de la tabla `report_devolucion`
 --
 ALTER TABLE `report_devolucion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
