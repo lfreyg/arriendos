@@ -286,7 +286,7 @@ class ModeloReportDevolucionDetalles{
 		$tipo = $datos["tipo"];
 
 		if($tipo == 'V'){
-			$estado = 1; //VUELVE LOS EQUIPOS A DISPONIBLE
+			$estado = 18; //EQUIPO EN ESTADO DE REVISION
 			$estado_valido = 0;
 		}
 

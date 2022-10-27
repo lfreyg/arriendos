@@ -241,6 +241,20 @@ class ModeloObras{
 
 	}
 
+	static public function mdlMostrarObrasPorId($id){
+
+		
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM obras WHERE id = $id");
+			$stmt -> execute();			
+			return $stmt -> fetch();			
+
+		    $stmt -> close();
+
+		    $stmt = null;
+
+	}
+
 	
 
 }

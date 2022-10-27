@@ -200,8 +200,11 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "pedido-interno-validar" ||
          $_GET["ruta"] == "pedido-interno-despacho-detalle-vista-validar" ||
          $_GET["ruta"] == "pedido-interno-despacho-detalle-validar" ||
+         $_GET["ruta"] == "eepp" ||
+         $_GET["ruta"] == "obrasEEPP" ||
+         $_GET["ruta"] == "equiposEEPP" ||
 
-         
+        
 
          
          $_GET["ruta"] == "salir"){
@@ -220,6 +223,7 @@ CUERPO DOCUMENTO
 
     }
 
+    
     /*=============================================
     FOOTER
     =============================================*/

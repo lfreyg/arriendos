@@ -175,6 +175,14 @@
 
 							</li>
 
+							<li>
+								<a href="eepp">
+									<i class="fa fa-circle-o"></i>
+									<span>Generar EEPP</span>
+								</a>
+
+							</li>
+
 
 
 				         </ul>

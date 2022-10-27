@@ -232,6 +232,15 @@ class ControladorObras{
 		return $respuesta;
 	
 	}
+
+	 static public function ctrMostrarObrasPorId($idObra){
+
+		
+		$respuesta = ModeloObras::mdlMostrarObrasPorId($idObra);
+
+		return $respuesta;
+	
+	}
 	
 		
 	}
