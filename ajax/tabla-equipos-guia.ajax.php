@@ -20,12 +20,12 @@ $idGuia = $_POST['id'];
    <thead style="background-color: #ccc;color: black; font-weight: bold;">
 
                  <tr>   
-                  <th>Código</th>              
-                  <th>Equipo</th>
-                  <th>precio</th>
-                  <th>Fecha</th>
-                  <th>Movimiento</th>                                    
-                  <th>Acciones</th>
+                  <th><div align="center">Código</div></th>              
+                  <th><div align="center">Equipo</div></th>
+                  <th><div align="center">precio</div></th>
+                  <th><div align="center">Fecha</div></th>
+                  <th><div align="center">Mov/Cant</div></th>                                    
+                  <th><div align="center">Acciones</div></th>
                 </tr>
 
     </thead>
@@ -46,6 +46,7 @@ $idGuia = $_POST['id'];
            $marca = $value["marca"];
            $precio = $value["precio"];          
            $movimiento = $value["movimiento"];
+           $guia = $value["guia"];
 
            $dateReg = date_create($value["fecha"]);
            $fecha = date_format($dateReg,"d-m-Y");
@@ -68,6 +69,10 @@ $idGuia = $_POST['id'];
               $disabled = "disabled";
               $disabled_valida = "disabled";
            }
+
+           if($guia == null){
+            $disabled_valida = "disabled";
+           }
            
 
 
@@ -79,8 +84,8 @@ $idGuia = $_POST['id'];
   <tr>
     <td ><div align="left"><?php echo $codigo?></div></td>
     <td ><div align="left"><?php echo $arriendo?></div></td>
-    <td ><div align="left"><?php echo $precio?></div></td>  
-    <td ><div align="left"><?php echo $fecha?></div></td>  
+    <td ><div align="right"><?php echo $precio?></div></td>  
+    <td ><div align="center"><?php echo $fecha?></div></td>  
     <td ><div align="left"><?php echo $movimiento?></div></td>  
 
        
@@ -89,7 +94,7 @@ $idGuia = $_POST['id'];
       <?php
       if($value["validado"] == 1) {
       ?>  
-           <button class="btn btn-success btn-xm" title="Validar Entrega" onclick="validarEquipoRecepcionado('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">V</button>
+           <button class="btn btn-success btn-xm" title="Validar Entrega" <?php echo $disabled_valida?> onclick="validarEquipoRecepcionado('<?php echo $value["idRegistro"]?>','<?php echo $value["idEquipo"]?>')">V</button>
       <?php
       }else{
       ?>
@@ -107,7 +112,81 @@ $idGuia = $_POST['id'];
 
             }  
 
+               $materiales = ModeloGuiaDespachoDetalles::mdlMaterialesGuiaDespacho($idGuia);
+
+
+                   foreach ($materiales as $key => $value){
+
+                     $idRegistroMaterial = $value["idRegistro"];
+                     $idMaterial = $value["idMaterial"];
+                     $codigoMaterial = $value["codigoMaterial"];
+                     $material = $value["material"];
+                     $precioMaterial = $value["precioMaterial"];          
+                     $cantidad = number_format($value["cantidad"],0,"",".");
+                     $precioMaterial = "$ " . number_format($precioMaterial,0,"",".");
+                     $seCobra = $value["cobro"];
+                     $guia = $value["guia"];
+                     $cobro = '';
+
+                     if($seCobra == 1){
+                       $cobro = ' (Cobro)';                       
+                     }else{
+                       $precioMaterial = '$ 1';
+                     }
+
+
+
+                     $dateReg = date_create($value["fecha"]);
+                     $fechaMaterial = date_format($dateReg,"d-m-Y");
+                     
+                     $disabled = '';
+                     $disabled_valida = '';
+
+                     if($value["eepp"] != null){
+                      $disabled = "disabled";
+                     }
+                     
+                     if($value["validado"] == 0){
+                        $disabled = "disabled";
+                     }
+
+                     if($guia == null){
+                      $disabled_valida = "disabled";
+                     }
+
+                     $estilo = 'style="background-color: rgb(102, 255, 153)"';
+
+                             
   ?>
+
+              <tr >
+                  <td <?php echo $estilo?>><div align="left"><?php echo $codigoMaterial?></div></td <?php echo $estilo?>>
+                  <td <?php echo $estilo?>><div align="left"><?php echo $material.$cobro?></div></td>
+                  <td <?php echo $estilo?>><div align="right"><?php echo $precioMaterial?></div></td>  
+                  <td <?php echo $estilo?>><div align="center"><?php echo $fechaMaterial?></div></td>  
+                  <td <?php echo $estilo?>><div align="center"><?php echo $cantidad?></div></td>  
+
+                     
+                  <td align="center" nowrap=""><button class="btn btn-warning btn-xm" title="Editar" onclick="editarMaterialGuia('<?php echo $idRegistroMaterial?>')">E</button>
+                    <button class="btn btn-danger btn-xm" title="Eliminar" <?php echo $disabled?> onclick="eliminarConsultaMaterial('<?php echo $idRegistroMaterial?>','<?php echo $value["idMaterial"]?>')">X</button>
+                    <?php
+                    if($value["validado"] == 1) {
+                    ?>  
+                         <button class="btn btn-success btn-xm" title="Validar Entrega" <?php echo $disabled_valida?> onclick="validarMaterialRecepcionado('<?php echo $idRegistroMaterial?>')">V</button>
+                    <?php
+                    }else{
+                    ?>
+                        <button class="btn btn-info btn-xm" title="Quitar Validación entrega" <?php echo $disabled_valida?> onclick="quitarvalidarMaterialRecepcionado('<?php echo $idRegistroMaterial?>')">OK</button>
+                     <?php
+                    }     
+                    ?>
+
+                  </td>
+            </tr>
+            <?php
+                }
+            ?>
+
    </tbody>
 </table>
 </body>

@@ -22,10 +22,15 @@ if(empty($_SESSION["idObraEEPP"])){
 
 date_default_timezone_set('America/Santiago');
 $hoy = $_SESSION['fechaEEPP'];
+$idConstructora = $_SESSION['idConstructoraEEPP'];
 
 
 $obra = ControladorObras::ctrMostrarObrasPorId($idObra);
 $nombreObra = $obra["nombre"];
+$tipoCobro = $obra["tipoCobro"];
+
+
+
 
 $dateReg = date_create($hoy);
 $periodo = date_format($dateReg,"M-Y");
@@ -43,7 +48,7 @@ $fechaEEPP = date_format($dateReg,"d-M-Y");
     </h1>
     <br>
     <h4>      
-       <?php echo $nombreObra.' Periodo '.$periodo.' ('.$fechaEEPP.')'?>   
+       <?php echo $nombreObra.' Periodo '.$periodo.' ('.$fechaEEPP.')'.' Tipo Cobro : '.$tipoCobro?>   
     </h4>
 
      
@@ -64,19 +69,28 @@ $fechaEEPP = date_format($dateReg,"d-M-Y");
 
   <section class="content">
 
-    <div class="box">      
+    <div class="box"> 
+     
+            <div class="form-row align-items-center">
+              <div class="box-header with-border">
+                 <div class="col-auto">
+                   <button class="btn btn-success" id="btnEquiposVolverEEPP" >Volver</button>
 
-      <div class="box-header with-border">
-        <button class="btn btn-success" id="btnEquiposVolverEEPP" >Volver</button>
-      </div>
+                   <button class="btn btn-primary" id="btnEquiposProcesarEEPP" >GENERAR PRESENTE EEPP</button>
+                 </div>
+              </div>
+             </div> 
 
-       <div class="box-body">  
-               <input type="hidden" id="idObra" name="idObra" value="<?php echo $idObra?>"> 
-               <input type="hidden" id="fecha" name="fecha" value="<?php echo $hoy?>">          
-               <div class="col-lg-12 col-xs-11">  
-                    <div id="equipos_cobror" align="left"></div>
-               </div>           
-      </div>
+              
+               <div class="box-body">  
+                       <input type="hidden" id="idObra" name="idObra" value="<?php echo $idObra?>"> 
+                       <input type="hidden" id="fecha" name="fecha" value="<?php echo $hoy?>">
+                       <input type="hidden" id="idConstructora" name="idConstructora" value="<?php echo $idConstructora?>">             
+                       <div class="col-lg-12 col-xs-11">  
+                            <div id="equipos_cobro" align="left"></div>
+                       </div>           
+              </div>
+               
 
     </div>
 
@@ -87,8 +101,7 @@ $fechaEEPP = date_format($dateReg,"d-M-Y");
 
 <script src="vistas/js/eepp.js?v=<?php echo(rand());?>"></script>
 
-<script type="text/javascript">
-  
+<script type="text/javascript"> 
   
   
   $(document).ready(function(){

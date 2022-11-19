@@ -166,7 +166,13 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
       DETALLE EQUIPOS GUIA DESPACHO
       ======================================-->       
 
-                 <hr>            
+                 <hr> 
+
+      <!--=====================================
+           DIV SELECCION DE EQUIPOS
+       ======================================-->             
+
+   <div id="divEquipos">
                 <h2>Equipos en esta Guía</h2>
 
           <div class="row">             
@@ -208,7 +214,7 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
                     <input type="hidden" class="form-control" id="precioEquipoSinFormato" readonly>                  
               </div> 
 
-              <div class="col-lg-2 col-xs-11">                                   
+              <div class="col-lg-3 col-xs-11">                                   
                      <label for="fechaArriendo">Fecha Arriendo</label> 
                     <input type="date" class="form-control" id="fechaArriendo" value="<?php echo $hoy?>">                  
               </div>           
@@ -221,7 +227,7 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
                      </select>                    
               </div>
 
-              <div class="col-lg-5 col-xs-11">                                   
+              <div class="col-lg-4 col-xs-11">                                   
                      <label for="detalleEquipo">Detalle</label> 
                     <input type="text" class="form-control" id="detalleEquipo" value="">                  
               </div>
@@ -235,7 +241,69 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
 
                         <button class="btn btn-primary" id="btnAgregarEquipo">Agregar Equipo</button>
             
-                   </div>       
+                   </div>  
+   </div>      
+
+      <!--=====================================
+           DIV SELECCION DE MATERIALES
+       ======================================-->             
+
+   <div id="divMateriales">
+                <h2>Insumos / Materiales en esta Guía</h2>
+
+          <div class="row">             
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="codigoEquipo">Código</label> 
+                    <input type="text" class="form-control" id="codigoMaterial" value="" readonly>
+                     <input type="hidden" id="idMaterial" name="idMaterial">                  
+              </div>
+              
+              <div class="col-lg-6 col-xs-11">                                   
+                     <label for="descripcionEquipo">Descripción</label> 
+                    <input type="text" class="form-control" id="descripcionMaterial" value="" readonly>                  
+              </div>     
+
+           </div> 
+
+           <br>
+
+            <!--=====================================
+            PRECIO Y DETALLE MATERIALES GUIA DESPACHO
+            ======================================--> 
+
+            <div class="row">    
+
+             <div class="col-lg-2 col-xs-11">                                   
+                     <label for="precioEquipo">Precio</label> 
+                    <input type="text" class="form-control" id="precioMaterial" value="" readonly>
+                    <input type="hidden" class="form-control" id="precioMaterialSinFormato" readonly>     
+                    <input type="hidden" class="form-control" id="stock" readonly>                
+              </div> 
+
+             
+              <div class="col-lg-4 col-xs-11">                                   
+                     <label for="detalleEquipo">Cantidad</label> 
+                    <input type="number" class="form-control" id="cantidadMaterial" value="">                  
+              </div>
+
+             <div class="col-lg-4 col-xs-11">
+                  <h5><strong>Se cobra el insumo?</strong></h5>                  
+                  <input class="form-check-input" type="checkbox" id="chkCobraMaterial">
+                  
+              </div>
+                            
+
+           </div>               
+                
+           <br>
+
+                  <div class="pull-right">
+
+                        <button class="btn btn-primary" id="btnAgregarMaterial">Agregar Insumo</button>
+            
+                   </div>  
+   </div>                
                 
                 <br/>
                 <br/>
@@ -268,10 +336,10 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
       </div>
 
       <!--=====================================
-      LA TABLA DE PRODUCTOS
+      LA TABLA DE EQUIPOS
       ======================================-->
 
-      <div class="col-lg-5 col-xs-11">
+      <div id="divTablaEquipos" class="col-lg-5 col-xs-11">
         
         <div class="box box-warning">
 
@@ -323,9 +391,51 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
           </div>
 
         </div>
-
+            
+              <button class="btn btn-lg btn-info btn-block text-uppercase" id="verMateriales">Insumos / Materiales</button>
 
       </div>
+
+
+
+
+       <!--=====================================
+      LA TABLA DE PRODUCTOS
+      ======================================-->
+
+      <div id="divTablaMateriales" class="col-lg-5 col-xs-11">
+        
+        <div class="box box-warning">
+
+          <div class="box-header with-border"></div>
+
+          <div class="box-body">
+
+            
+            <table class="table table-bordered table-striped table-hover dt-responsive tablaMaterialesGuia">
+              
+             <thead style="background-color: #ccc;color: black; font-weight: bold;">
+
+                 <tr>                  
+                  <th>Código</th>                  
+                  <th>Descripcion</th>
+                  <th>Selección</th>
+                </tr>
+
+              </thead>
+
+            </table>
+
+          </div>
+
+        </div>
+            
+              <button class="btn btn-lg btn-info btn-block text-uppercase" id="verEquipos">Equipos</button>
+
+      </div>
+
+
+
 
     </div>
    
@@ -445,6 +555,114 @@ MODAL EDITAR
 </div>
 
 
+<!--=====================================
+MODAL EDITAR MATERIALES
+======================================-->
+
+<div id="modalEditarMaterial" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog modal-lg">
+
+    <div class="modal-content">
+
+     
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar Insumo/Material</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+             <div class="row">             
+
+              <div class="col-lg-2 col-xs-11">                                   
+                     <label for="ecodigoEquipo">Código</label> 
+                    <input type="text" class="form-control" id="ecodigoMaterial" value="" readonly>
+                     <input type="hidden" id="eidMaterial" name="eidMaterial"> 
+                     <input type="hidden" id="eidRegistro" name="eidRegistro">
+
+              </div>
+
+
+              <div class="col-lg-6 col-xs-11">                                   
+                     <label for="edescripcionEquipo">Descripción</label> 
+                    <input type="text" class="form-control" id="edescripcionMaterial" value="" readonly>                  
+              </div>                            
+
+           </div> 
+
+           <br>
+
+            <!--=====================================
+            PRECIO Y DETALLE EQUIPOS GUIA DESPACHO
+            ======================================--> 
+
+            <div class="row">  
+
+               <div class="col-lg-3 col-xs-11">                                   
+                     <label for="precioEquipo">Precio</label> 
+                    <input type="text" class="form-control" id="eprecioMaterial" value="" readonly>                        
+                    <input type="hidden" class="form-control" id="estock" readonly>
+                    <input type="hidden" class="form-control" id="ecantidadActual" readonly>                
+              </div> 
+
+             
+              <div class="col-lg-3 col-xs-11">                                   
+                     <label for="detalleEquipo">Cantidad</label> 
+                    <input type="number" class="form-control" id="ecantidadMaterial" value="">                  
+              </div>
+
+             <div class="col-lg-3 col-xs-11">
+                  <h5><strong>Se cobra el insumo?</strong></h5>                  
+                  <input class="form-check-input" type="checkbox" id="echkCobraMaterial">
+                  
+              </div> 
+      
+
+           </div>               
+           
+
+              
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+
+          <button type="button" data-dismiss="modal"  id="btnGuardarEditaMaterial" class="btn btn-primary">Guardar Cambios</button>
+
+        </div>
+
+
+     
+
+    </div>
+
+  </div>
+
+</div>
+
+
 <script src="vistas/js/guiaDespachoDetalle.js?v=<?php echo(rand());?>"></script>
 
 <script type="text/javascript">
@@ -458,6 +676,9 @@ MODAL EDITAR
 
 
      }
+
+     $('#divTablaMateriales').css("display", "none");
+     $('#divMateriales').css("display", "none");
     
      genera_tabla_arriendos();
 

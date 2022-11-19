@@ -212,6 +212,13 @@ class ModeloGuiaDespacho{
            
 			$stmt2 = Conexion::conectar()->prepare("DELETE FROM guia_despacho_detalle WHERE id_guia = $id");		
 			$stmt2 -> execute();
+
+			 $sqlMaterial = Conexion::conectar()->prepare("UPDATE materiales_insumos mi JOIN guia_despacho_materiales gdm ON mi.id = gdm.id_materiales_insumos SET mi.cantidad_sale = mi.cantidad_sale - gdm.cantidad WHERE gdm.id_guia = $id"); 
+
+                         $sqlMaterial->execute();
+
+			$stmt3 = Conexion::conectar()->prepare("DELETE FROM guia_despacho_materiales WHERE id_guia = $id");		
+			$stmt3 -> execute();
 			
 
 			   return "ok";
@@ -251,6 +258,14 @@ class ModeloGuiaDespacho{
 		   $stmt2 -> execute();
 
 		   $stmt2->bindParam(":hoy", $hoy, PDO::PARAM_STR);
+
+		   $sqlMaterial = Conexion::conectar()->prepare("UPDATE materiales_insumos mi JOIN guia_despacho_materiales gdm ON mi.id = gdm.id_materiales_insumos SET mi.cantidad_sale = mi.cantidad_sale - gdm.cantidad WHERE gdm.id_guia = $id"); 
+			 
+                   $sqlMaterial->execute();
+
+			
+           $stmt3 = Conexion::conectar()->prepare("UPDATE guia_despacho_materiales SET registro_eliminado = true WHERE id_guia = $id");		
+		   $stmt3 -> execute();		   
 			
 
 			   return "ok";
@@ -273,6 +288,20 @@ class ModeloGuiaDespacho{
 		
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho_detalle WHERE validado = 0 and id_guia = $idGuia");
+
+			
+		    $stmt -> execute();
+   		    return $stmt -> fetchAll();
+		    $stmt -> close();
+		    $stmt = null;
+
+	}
+
+	static public function mdlValidaMaterialValidado($idGuia){
+
+		
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM guia_despacho_materiales WHERE validado = 0 and id_guia = $idGuia");
 
 			
 		    $stmt -> execute();

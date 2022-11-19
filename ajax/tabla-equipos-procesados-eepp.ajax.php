@@ -5,19 +5,25 @@ require_once "../modelos/obras.modelo.php";
 
 
  
-$idObra = $_GET['idObra'];
-$fecha = $_GET['fecha'];
+$idEEPP = $_POST['idEEPP'];
+$idObra = $_POST['idObra'];
 
-$equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
+$descuentoDias = ModeloEEPP::mdlCuentaDiasDescuento($idEEPP);
+
+$descuentoDias = $descuentoDias["diasDescuento"];
+
+
+$equiposCobro = ModeloEEPP::mdlMostrarEquiposProcesados($idEEPP);
+
+
+if($equiposCobro){
 
 ?>
 
-<form role="form" method="post" id="formdata">
 
-  
-                     
-<label>EQUIPOS PARA COBRO</label>   
-<table class="table-bordered table-striped table-hover dt-responsive" id="tablasEquiposCobro" width="100%"> 
+
+<label style="background-color: rgb(102, 255, 153)">EQUIPOS PARA COBRO</label> 
+<table class="table-bordered table-striped table-hover dt-responsive" id="tablasEquiposProcesados" width="100%"> 
    <thead style="background-color: #ccc;color: black; font-weight: bold;">
 
                  <tr >   
@@ -35,6 +41,7 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
                   <th width="7%">Hasta</th>
                   <th width="5%">Días</th>
                   <th width="5%">Cobro</th>
+                  <th width="5%">Acciones</th>
                 </tr>
 
     </thead>
@@ -44,10 +51,13 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
                                   
             for($i = 0; $i < count($equiposCobro); $i++){   
 
+              $idRegistro = $equiposCobro[$i]["id"];
               $idGuiaDetalle = $equiposCobro[$i]["idGuiaDetalle"];
+              
               $guia = $equiposCobro[$i]["guia"];
               $contrato = $equiposCobro[$i]["contrato"];
               $codigo = $equiposCobro[$i]["codigo"];
+              $serie = $equiposCobro[$i]["serie"];
               $equipo = $equiposCobro[$i]["descripcion"].' '.$equiposCobro[$i]["modelo"].' '.$equiposCobro[$i]["marca"];
               $precio = $equiposCobro[$i]["precio"];
               $fecArriendo = $equiposCobro[$i]["fecha_arriendo"];
@@ -57,20 +67,17 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
               $tipoDevolucionNombre = $equiposCobro[$i]["nombreDevolucion"];
               $ultimo_cobro = $equiposCobro[$i]["ultimo_cobro"];
               $matchCambio = $equiposCobro[$i]["match_cambio"];
+              $fechaDesde = $equiposCobro[$i]["cobro_desde"];
+              $fechaHasta = $equiposCobro[$i]["cobro_hasta"];
 
               $obraConsulta = ModeloObras::mdlMostrarObrasPorId($idObra);
               $tipoCobro = $obraConsulta["tipoCobro"];
 
-             if($equiposCobro[$i]["devuelto"] == 1){
-                $fechaHasta = $equiposCobro[$i]["fecha_devolucion"];
-              }else{
-                $fechaHasta = $fecha;
+              if($report == 0){
+                $report = '';
               }
-
-             
-              $fechaDesde = $equiposCobro[$i]["fecha_desde"];
-              
-             if($tipoCobro == 'LUNES A LUNES'){
+  
+              if($tipoCobro == 'LUNES A LUNES'){
                 $dias = 0;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
@@ -170,6 +177,10 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
                           }
                       }
              }  
+              
+
+
+
 
               
               //FORMATEO DE FECHAS
@@ -178,14 +189,18 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
                 $fecArriendo = date_format($dateReg1,"d-m-Y");
               }
 
-              if($fecDevolucion != null){
+              if($fecDevolucion != '0000-00-00'){
                 $dateReg2 = date_create($fecDevolucion);
                 $fecDevolucion = date_format($dateReg2,"d-m-Y");
+              }else{
+                $fecDevolucion = '';
               }
 
-              if($ultimo_cobro != null){
+              if($ultimo_cobro != '0000-00-00'){
                 $dateReg3 = date_create($ultimo_cobro);
                 $ultimo_cobro = date_format($dateReg3,"d-m-Y");
+              }else{
+                $ultimo_cobro = '';
               }
 
               if($fechaDesde != null){
@@ -201,7 +216,7 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
 
               //FIN FORMATEO DE FECHAS
 
-                          
+              $dias = $dias - $descuentoDias;            
 
               $cobro = $dias * $precio;
 
@@ -210,6 +225,16 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
               if($tipoDevolucion == 11){
                 $estilo = 'style="background-color: rgb(102, 255, 153)"';
               }
+
+              if($tipoDevolucion == 15){
+                $tipoDevolucionNombre = 'TERMINO';
+              }
+
+              if($matchCambio != 0){
+                $estilo = 'style="background-color: rgb(102, 255, 153)"';
+              }
+
+              $disabled = '';
 
             
   ?>
@@ -227,125 +252,21 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
     <td ><div align="center"><?php echo $fechaDesde?></div></td>   
     <td ><div align="center"><?php echo $fechaHasta?></div></td>   
     <td ><div align="center"><?php echo $dias?></div></td>   
-    <td ><div align="right"><?php echo '$ '. number_format($cobro,0,'','.')?></div></td>   
+    <td ><div align="right"><?php echo '$ '. number_format($cobro,0,'','.')?></div></td>  
+    <td align="center" nowrap=""><button class="btn btn-warning btn-xm" title="Editar" onclick="editarEquipoEEPP('<?php echo $idRegistro?>','<?php echo $idEEPP?>','<?php echo $idGuiaDetalle?>')">E</button>
+      <button class="btn btn-danger btn-xm" title="Eliminar" <?php echo $disabled?> onclick="eliminarConsulta('<?php echo $idRegistro?>','<?php echo $idEEPP?>','<?php echo $idGuiaDetalle?>')">X</button></td> 
     
     
   </tr>
   <?php
 
     
-      if($matchCambio != null){
-           $QueryequipoMatch = ControladorEEPP::ctrEquiposCambiadosEEPP($matchCambio);
-
-        
-       
-       if($QueryequipoMatch){
-           $codigoCambio = $QueryequipoMatch[0]["codigo"];
-           $equipoCambio = $QueryequipoMatch[0]["equipo"];
-           $modeloCambio = $QueryequipoMatch[0]["modelo"];
-           $marcaCambio =  $QueryequipoMatch[0]["marca"];
-           $guiaCambio = $QueryequipoMatch[0]["gd"];
-           $fechaArriendoCambio = $QueryequipoMatch[0]["fecha_arriendo"];
-           $dateReg1 = date_create($fechaArriendoCambio);
-           $fechaArriendoCambio = date_format($dateReg1,"d-m-Y");
-
-           $nombreEquipoCambio = $equipoCambio.' '.$modeloCambio.' '.$marcaCambio;
-
-         echo '<tr>';
-         echo '<td colspan = 13>';
-         echo '<strong>'; 
-         echo 'Equipo cambiado por '.$nombreEquipoCambio.' Código '.$codigoCambio.' Entregado con fecha '.$fechaArriendoCambio.' en la GD '.$guiaCambio;
-         echo '</strong>'; 
-         echo '</td>';
-         echo '</tr>'; 
-       }
-
-
-
-      }
+  
             
 
 
             }  
-
-  ?>
-   </tbody>
-</table>
-<br>
-<br>
-
-<?php
- $materialesCobro = ControladorEEPP::ctrMostrarMaterialesParaCobro($idObra, $fecha);
-
- if($materialesCobro){
-
-  ?>
-        
-  <label style="background-color: rgb(102, 255, 153)">MATERIALES Y/O INSUMOS PARA COBRO</label> 
-   <table class="table-bordered table-striped table-hover dt-responsive" id="tablasMaterialesCobro" width="70%"> 
-   <thead style="background-color: #ccc;color: black; font-weight: bold;">
-
-                 <tr > 
-                  <th width="5%">Guía</th>
-                  <th width="10%">Fecha</th>
-                  <th width="10%">Código</th>
-                  <th width="40%">Material-Insumo</th>
-                  <th width="10%">Cantidad</th>                  
-                  <th width="10%">Precio</th>                     
-                  <th width="20%">Cobro</th>                  
-                </tr>
-
-    </thead>
-     <tbody>
-   
-  <?php
-            
-          
-                               
-            for($i = 0; $i < count($materialesCobro); $i++){   
-
-              $idRegistro = $materialesCobro[$i]["idRegistro"];
-              $guiaMaterial = $materialesCobro[$i]["guia"];
-              $fecha = $materialesCobro[$i]["fecha"];
-              $codigo = $materialesCobro[$i]["codigoMaterial"];
-              $material = $materialesCobro[$i]["material"];
-              $cantidad = $materialesCobro[$i]["cantidad"];
-              $precio = $materialesCobro[$i]["precio"];
-              $total = $materialesCobro[$i]["total"];
-              
-              
-             
-
-              $datetime = date_create($fecha);
-              $fecha =  date_format($datetime,"d-m-Y");
-
-             
-
-             
-
-            
-
-            
-
-            
-  ?>
-  <tr>
-    <td ><div align="center"><?php echo $guiaMaterial?></div></td> 
-    <td ><div align="center"><?php echo $fecha?></div></td> 
-     <td ><div align="left"><?php echo $codigo?></div></td> 
-    <td ><div align="left"><?php echo $material?></div></td>    
-    <td ><div align="center"><?php echo number_format($cantidad,0,'','.')?></div></td> 
-    <td ><div align="right"><?php echo '$ '.number_format($precio,0,'','.')?></div></td>
-    <td ><div align="right"><?php echo '$ '.number_format($total,0,'','.')?></div></td>  
-     
-    
-    
-  </tr>
- <?php          
-
-
-      }  
-    }
+  }
 
   ?>
    </tbody>
@@ -353,11 +274,43 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
 
 
 
+<script type="text/javascript">
+      $(document).ready(function() {
 
+        $.extend( true, $.fn.dataTable.defaults, {
+            "searching": true,
+            "ordering": false
+        } );
 
+        var idioma_espanol = {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron registros",
+                "sEmptyTable":     "No existen registros",
+                "sInfo":           "_START_ al _END_  de _TOTAL_ registros",
+                "sInfoEmpty":      "0 registros",
+                "sInfoFiltered":   "( de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                  "sFirst":    "Primero",
+                  "sLast":     "Último",
+                  "sNext":     "Siguiente",
+                  "sPrevious": "Anterior"
+                },
+                "oAria": {
+                  "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                  "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+              }
 
-   
-
-</form>
-
-
+          $('#tablasEquiposProcesados').DataTable(
+              {
+            "language":idioma_espanol
+        }
+            );
+      } );
+</script>

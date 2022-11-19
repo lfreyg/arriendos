@@ -33,6 +33,37 @@ class ControladorEEPP{
 		return $respuesta;
 	
 	}
+
+	static public function ctrEquiposCambiadosEEPP($match){
+
+		
+		$respuesta = ModeloEEPP::mdlEquiposCambiadosEEPP($match);
+
+		return $respuesta;
+	
+	}
+
+	static public function ctrMostrarMaterialesParaCobro($idObra, $fecha){
+
+		
+		$respuesta = ModeloEEPP::mdlMostrarMaterialesParaCobro($idObra, $fecha);
+
+		return $respuesta;
+	
+	}
+
+	static public function ctrMostrarEquiposProcesados($idEEPP){
+
+		
+		$respuesta = ModeloEEPP::mdlMostrarEquiposProcesados($idEEPP);
+
+		return $respuesta;
+	
+	}
+
+
+
+	
 		
 	
 	

@@ -56,11 +56,7 @@ if(empty($_SESSION["fechaEEPP"])){
               <div class="col-lg-2 col-xs-11">                                   
                    
                     <input type="date" class="form-control" id="fechaCorte" value="<?php echo $hoy?>" >                  
-              </div>
-
-              <div class="col-lg-3 col-xs-11">                  
-                    <button class="btn btn-primary" id="btnProcesaEEPP">Procesar EEPP</button>                
-              </div>
+              </div>              
 
           </div>
        </div>

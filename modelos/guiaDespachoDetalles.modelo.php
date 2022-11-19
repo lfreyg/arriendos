@@ -15,12 +15,12 @@ class ModeloGuiaDespachoDetalles{
 
 		$stmt->bindParam(":idGuia", $datos["idGuia"], PDO::PARAM_INT);
 		$stmt->bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
-		$stmt->bindParam(":precio", strtoupper($datos["precio"]), PDO::PARAM_INT);
-		$stmt->bindParam(":fechaArriendo", strtoupper($datos["fechaArriendo"]), PDO::PARAM_STR);
+		$stmt->bindParam(":precio", $datos["precio"], PDO::PARAM_INT);
+		$stmt->bindParam(":fechaArriendo", $datos["fechaArriendo"], PDO::PARAM_STR);
 		$stmt->bindParam(":detalle", strtoupper($datos["detalle"]), PDO::PARAM_STR);
-		$stmt->bindParam(":fechaDevolucion", strtoupper($datos["fechaDevolucion"]), PDO::PARAM_STR);
-		$stmt->bindParam(":movimiento", strtoupper($datos["movimiento"]), PDO::PARAM_INT);	
-		$stmt->bindParam(":contrato", strtoupper($datos["contrato"]), PDO::PARAM_INT);			
+		$stmt->bindParam(":fechaDevolucion", $datos["fechaDevolucion"], PDO::PARAM_STR);
+		$stmt->bindParam(":movimiento", $datos["movimiento"], PDO::PARAM_INT);	
+		$stmt->bindParam(":contrato", $datos["contrato"], PDO::PARAM_INT);			
 		
 		
 		if($stmt->execute()){
@@ -28,6 +28,42 @@ class ModeloGuiaDespachoDetalles{
 				$id = $datos["idEquipo"];
 				$estado = 17; //POR VALIDAR ENTREGA OBRA
 	          $stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET tiene_movimiento = 1, id_estado = $estado WHERE id = $id");
+
+	          $stmt2->execute();
+			    
+
+			  return 1;
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+
+	static public function mdlIngresarMaterialGuiaDespacho($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO guia_despacho_materiales(id_materiales_insumos, cantidad, precio, id_guia, fecha, se_cobra) VALUES (:idMaterial, :cantidad, :precio, :idGuia, :fecha, :seCobra)");
+        
+        
+		$stmt->bindParam(":idGuia", $datos["idGuia"], PDO::PARAM_INT);
+		$stmt->bindParam(":idMaterial", $datos["idMaterial"], PDO::PARAM_INT);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio", $datos["precio"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":seCobra", $datos["seCobra"], PDO::PARAM_STR);			
+		
+		
+		if($stmt->execute()){
+			
+				$id = $datos["idMaterial"];	
+				$cantidad = $datos["cantidad"];			
+	          $stmt2 = Conexion::conectar()->prepare("UPDATE materiales_insumos SET cantidad_sale = cantidad_sale + $cantidad WHERE id = $id");
 
 	          $stmt2->execute();
 			    
@@ -54,10 +90,10 @@ class ModeloGuiaDespachoDetalles{
 
 		$stmt->bindParam(":idGuia", $datos["idGuia"], PDO::PARAM_INT);
 		$stmt->bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
-		$stmt->bindParam(":precio", strtoupper($datos["precio"]), PDO::PARAM_INT);
+		$stmt->bindParam(":precio", $datos["precio"], PDO::PARAM_INT);
 		$stmt->bindParam(":hoy", $hoy, PDO::PARAM_STR);
 		$stmt->bindParam(":tipoGuia", strtoupper($datos["tipoGuia"]), PDO::PARAM_STR);
-		$stmt->bindParam(":id_pedido_interno", strtoupper($datos["id_pedido_interno"]), PDO::PARAM_INT);
+		$stmt->bindParam(":id_pedido_interno", $datos["id_pedido_interno"], PDO::PARAM_INT);
         
 		
 		
@@ -123,6 +159,36 @@ class ModeloGuiaDespachoDetalles{
 
 	}	
 
+	static public function mdlEliminarMaterialGuiaDespacho($idRegistroGuia,$idMaterial,$numeroGuia,$cantidad){
+
+		
+      if($numeroGuia == 0){
+		$stmt = Conexion::conectar()->prepare("DELETE FROM guia_despacho_materiales WHERE id = $idRegistroGuia");
+      }else{
+		
+        $stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_materiales SET registro_eliminado = true WHERE id = $idRegistroGuia");
+       }
+		
+		if($stmt -> execute()){			
+	                
+	          $stmt2 = Conexion::conectar()->prepare("UPDATE materiales_insumos SET cantidad_sale = cantidad_sale - $cantidad WHERE id = $idMaterial");
+
+	          $stmt2->execute();
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
 	static public function mdlFinalizaGuia($idGuia,$idEmpresa){
                
                $estado = 13;
@@ -154,7 +220,7 @@ class ModeloGuiaDespachoDetalles{
 
 	static public function mdlGuiaDespachoPorId($idGuia){
 
-		$stmt = Conexion::conectar()->prepare("SELECT gd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.precio_arriendo as precio, gd.fecha_arriendo as fecha, es.descripcion as movimiento,  gd.devuelto as devuelto, gd.validado as validado, gd.match_cambio FROM guia_despacho_detalle gd JOIN equipos e ON gd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gd.id_tipo_movimiento = es.id WHERE gd.id_guia = $idGuia and gd.tipo_guia = 'A' and gd.registro_eliminado = false order by gd.id desc");
+		$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gdd.precio_arriendo as precio, gdd.fecha_arriendo as fecha, es.descripcion as movimiento,  gdd.devuelto as devuelto, gdd.validado as validado, gdd.match_cambio, gd.numero_guia as guia FROM guia_despacho_detalle gdd JOIN equipos e ON gdd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN estados es ON gdd.id_tipo_movimiento = es.id join guia_despacho gd ON gdd.id_guia = gd.id WHERE gdd.id_guia = $idGuia and gdd.tipo_guia = 'A' and gdd.registro_eliminado = false order by gdd.id desc");
 
 		
 		$stmt -> execute();
@@ -166,6 +232,8 @@ class ModeloGuiaDespachoDetalles{
 		$stmt = null;
 
 	}
+
+
 
 	static public function mdlGuiaDespachoTrasladoPorId($idGuia){
 
@@ -211,6 +279,43 @@ class ModeloGuiaDespachoDetalles{
 		$stmt -> bindParam(":detalle", $datos["detalle"], PDO::PARAM_STR);	
 		
 		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	static public function mdlEditarMaterialGuiaDespacho($datos){
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_materiales SET cantidad = :cantidad, precio = :precio, se_cobra = :cobra  WHERE id = :idRegistro");
+         
+         			
+		$stmt -> bindParam(":idRegistro", $datos["idRegistro"], PDO::PARAM_INT);
+		$stmt -> bindParam(":precio", $datos["precio"], PDO::PARAM_INT);
+		$stmt -> bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);		
+		$stmt -> bindParam(":cobra", $datos["cobra"], PDO::PARAM_INT);
+		
+
+
+		if($stmt -> execute()){
+
+			$cantidadActual = $datos["cantidadActual"];
+			$cantidad = $datos["cantidad"];
+			$idMaterial = $datos["idMaterial"];
+            
+            $stmt2 = Conexion::conectar()->prepare("UPDATE materiales_insumos SET cantidad_sale = (cantidad_sale - $cantidadActual) + $cantidad WHERE id = $idMaterial");
+
+            $stmt2 -> execute();
+
 
 			return "ok";
 		
@@ -274,6 +379,28 @@ static public function mdlValidarEquipoRecepcionado($datos){
 
 	}
 
+
+	static public function mdlValidarMaterialRecepcionado($datos){
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_materiales SET validado = 0 WHERE id = :idRegistro");
+
+		$stmt -> bindParam(":idRegistro", $datos["idRegistro"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+		$stmt = null;
+		
+
+	}
+
 static public function mdlQuitarValidarEquipoRecepcionado($datos){
 	
 		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET validado = 1 WHERE id = :idRegistro");
@@ -303,6 +430,27 @@ static public function mdlQuitarValidarEquipoRecepcionado($datos){
 		$stmt2 = null;
 
 	}	
+
+	static public function mdlQuitarValidarMaterialRecepcionado($datos){
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_materiales SET validado = 1 WHERE id = :idRegistro");
+
+		$stmt -> bindParam(":idRegistro", $datos["idRegistro"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+		$stmt = null;
+		
+
+	}
 
 
 	static public function mdlValidarEquipoRecepcionadoTraslado($datos){
@@ -366,6 +514,38 @@ static public function mdlQuitarValidarEquipoRecepcionado($datos){
 		$stmt2 = null;
 
 	}	
+
+	//MATERIALES EN GUIA DE DESPACHO
+
+	static public function mdlMaterialesGuiaDespacho($idGuia){
+
+		$stmt = Conexion::conectar()->prepare("SELECT gdm.id as idRegistro, gdm.id_materiales_insumos as idMaterial, mi.codigo as codigoMaterial, mi.descripcion as material, gdm.precio as precioMaterial, gdm.cantidad as cantidad, gdm.fecha as fecha, gdm.id_eepp as eepp, gdm.validado as validado, gdm.se_cobra as cobro, gd.numero_guia as guia FROM guia_despacho_materiales gdm JOIN materiales_insumos mi ON gdm.id_materiales_insumos = mi.id JOIN guia_despacho gd ON gdm.id_guia = gd.id WHERE gdm.registro_eliminado = false and gdm.id_guia = $idGuia order by mi.descripcion");
+
+		
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	static public function mdlEditarMaterialesGuia($idRegistroMaterial){
+
+		$stmt = Conexion::conectar()->prepare("SELECT gdm.id as idRegistro, gdm.id_materiales_insumos as idMaterial, mi.codigo as codigo, mi.descripcion as material, mi.cantidad_entra - mi.cantidad_sale as stock, gdm.precio as precio, gdm.cantidad as cantidad, gdm.se_cobra as cobra FROM guia_despacho_materiales gdm join materiales_insumos mi ON gdm.id_materiales_insumos = mi.id WHERE gdm.id = $idRegistroMaterial");
+
+		
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
 
 
 }

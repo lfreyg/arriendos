@@ -203,6 +203,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "eepp" ||
          $_GET["ruta"] == "obrasEEPP" ||
          $_GET["ruta"] == "equiposEEPP" ||
+         $_GET["ruta"] == "eeppProcesado" ||
 
         
 

@@ -14,6 +14,7 @@ if($_SESSION["perfil"] != "Administrador"){
 }
 
 $_SESSION['idObraEEPP'] = '';
+$_SESSION["idEEPP"] = '';
 
 if(empty($_SESSION["idConstructoraEEPP"])){
   $_SESSION["idConstructoraEEPP"] = $_GET["idConstructora"];
@@ -29,9 +30,12 @@ $hoy = $_SESSION['fechaEEPP'];
 $constructora = ControladorConstructoras::ctrMostrarConstructoras("id",$valorIdConstructora);
 $nombreConstructora = $constructora["nombre"];
 
+
 $dateReg = date_create($hoy);
+
 $periodo = date_format($dateReg,"M-Y");
 $fechaEEPP = date_format($dateReg,"d-M-Y");
+
 
 
 ?>
