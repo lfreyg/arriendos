@@ -8,9 +8,21 @@ require_once "../modelos/obras.modelo.php";
 $idEEPP = $_POST['idEEPP'];
 $idObra = $_POST['idObra'];
 
-$descuentoDias = ModeloEEPP::mdlCuentaDiasDescuento($idEEPP);
+$consultaDias = ModeloEEPP::mdlCuentaDiasDescuento($idEEPP);
 
-$descuentoDias = $descuentoDias["diasDescuento"];
+$descuentoDias = 0;
+if($consultaDias){
+  $descuentoDias = $consultaDias["diasDescuento"];
+}
+
+
+$preguntaFecha = ModeloEEPP::mdlPrimerDiaDescuento($idEEPP);
+
+if($preguntaFecha){
+  $primeraFecha = $preguntaFecha["primeraFecha"];
+}
+
+
 
 
 $equiposCobro = ModeloEEPP::mdlMostrarEquiposProcesados($idEEPP);
@@ -76,9 +88,32 @@ if($equiposCobro){
               if($report == 0){
                 $report = '';
               }
+              
+              $aplicaDescuento = 1;
+              if($fecDevolucion != '0000-00-00'){
+                $preguntaFechaDevolucion = strtotime($fecDevolucion);
+                $preguntaFechaDescuento = strtotime($primeraFecha);
+                
+                 if($preguntaFechaDevolucion < $preguntaFechaDescuento){
+                      $aplicaDescuento = 0;
+                 }
+
+              }
+
+
+                $preguntaFechaArriendo = strtotime($fecArriendo);
+                $preguntaFechaDescuento = strtotime($primeraFecha);
+                
+                 if($preguntaFechaArriendo > $preguntaFechaDescuento){
+                      $aplicaDescuento = 0;
+                 }
+
+              
+             
+              
   
               if($tipoCobro == 'LUNES A LUNES'){
-                $dias = 0;   
+                $dias = 1;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -115,7 +150,7 @@ if($equiposCobro){
              }  
              
              if($tipoCobro == 'LUNES A VIERNES'){                 
-                  $dias = 0;   
+                  $dias = 1;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -146,7 +181,7 @@ if($equiposCobro){
              }   
 
              if($tipoCobro == 'LUNES A SABADO'){
-                  $dias = 0;   
+                  $dias = 1;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -216,7 +251,10 @@ if($equiposCobro){
 
               //FIN FORMATEO DE FECHAS
 
-              $dias = $dias - $descuentoDias;            
+
+                if($aplicaDescuento == 1){
+                  $dias = $dias - $descuentoDias;   
+                  }         
 
               $cobro = $dias * $precio;
 

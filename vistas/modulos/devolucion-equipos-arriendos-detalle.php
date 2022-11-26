@@ -250,9 +250,13 @@ $report = ModeloReportDevolucionDetalles::mdlMostrarReportDevolucionDetalle($idR
 
           <div class="box-footer">
              <div class="pull-right-container">
-             <button class="btn btn-lg btn-primary btn-block text-uppercase" id="btnTerminarReport">FINALIZAR REPORT</button> 
+             <button class="btn btn-lg btn-danger btn-block text-uppercase" id="btnFirmarReport">FIRMA DOCUMENTO</button> 
              </div> 
              <br>  
+             <div class="pull-right-container">
+             <button class="btn btn-lg btn-primary btn-block text-uppercase" id="btnTerminarReport">FINALIZAR REPORT</button> 
+             </div> 
+             <br>               
              <div class="pull-right-container">
              <button class="btn btn-lg btn-warning btn-block text-uppercase" id="btnVolver">Volver a Lista</button> 
              </div> 

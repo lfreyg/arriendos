@@ -199,8 +199,7 @@ $bloque5 = <<<EOF
 			</td>			
 		</tr>
 		<tr>			
-			<td style="solid #666; color:#333; background-color:white; width:540px; text-align:center">------------FIN DEL DOCUMENTO------------
-			</td>
+			<td style="width:540px; text-align:center"><img src="../../../vistas/img/firmaReport/firma_$idReport.png" width="120" height="120"></td>	
 		</tr>
 
 	</table>

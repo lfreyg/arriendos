@@ -29,6 +29,8 @@ $bodeguero = $cabecera["contacto"];
 $formaPago = $cabecera["formaPago"];
 
 $dateReg = date_create($cabecera["fechaEEPP"]);
+
+
 $fechaEEPP = date_format($dateReg,"d-m-Y H:i:s");
 
 $fechaCobroEEPP = $cabecera["fechaCorte"];
@@ -38,10 +40,8 @@ $fechaCorte = date_format($dateReg,"d-m-Y");
 $mesProceso = date_format($dateReg,"m");
 $anoProceso = date_format($dateReg,"Y");
 
-        setlocale(LC_TIME, 'es_ES');
-        $monthNum  = $mesProceso;
-        $dateObj   = DateTime::createFromFormat('!m', $monthNum);
-        $mes = strftime('%B', $dateObj->getTimestamp());
+       
+        $mes = ControladorEEPP::ctrNombreMeses($mesProceso);
 
  $proceso = $mes.'-'.$anoProceso;       
 
@@ -204,8 +204,10 @@ $pdf->writeHTML($bloque3, false, false, false, false, '');
 // ---------------------------------------------------------
 
 $descuentoDias = ModeloEEPP::mdlCuentaDiasDescuento($idEEPP);
-
 $descuentoDias = $descuentoDias["diasDescuento"];
+
+$preguntaFecha = ModeloEEPP::mdlPrimerDiaDescuento($idEEPP);
+$primeraFecha = $preguntaFecha["primeraFecha"];
 
 $equiposCobro = ModeloEEPP::mdlMostrarEquiposProcesados($idEEPP);
 $x = 1;
@@ -235,9 +237,29 @@ $x = 1;
               if($report == 0){
                 $report = '';
               }
+
+              $preguntaFechaDescuento = strtotime($primeraFecha);
+
+              $aplicaDescuento = 1;
+              if($fecDevolucion != '0000-00-00'){
+                $preguntaFechaDevolucion = strtotime($fecDevolucion);
+                
+                
+                 if($preguntaFechaDevolucion < $preguntaFechaDescuento){
+                      $aplicaDescuento = 0;
+                 }
+
+              }
+
+                $preguntaFechaArriendo = strtotime($fecArriendo);
+               
+                
+                 if($preguntaFechaArriendo > $preguntaFechaDescuento){
+                      $aplicaDescuento = 0;
+                 }
   
               if($tipoCobro == 'LUNES A LUNES'){
-                $dias = 0;   
+                $dias = 1;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -274,7 +296,7 @@ $x = 1;
              }  
              
              if($tipoCobro == 'LUNES A VIERNES'){                 
-                  $dias = 0;   
+                  $dias = 1;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -305,7 +327,7 @@ $x = 1;
              }   
 
              if($tipoCobro == 'LUNES A SABADO'){
-                  $dias = 0;   
+                  $dias = 1;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -375,7 +397,9 @@ $x = 1;
 
               //FIN FORMATEO DE FECHAS
 
-              $dias = $dias - $descuentoDias;            
+              if($aplicaDescuento == 1){
+                  $dias = $dias - $descuentoDias;   
+                  }             
 
               $cobro = $dias * $precio;
 
@@ -491,7 +515,7 @@ EOF;
 
 $x++;
 
-if($x >= 15){   
+if($x >= 10){   
  
   $pdf->AddPage();
   $pdf->writeHTML($bloque1, false, false, false, false, '');

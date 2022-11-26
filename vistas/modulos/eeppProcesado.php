@@ -19,9 +19,40 @@ if(empty($_SESSION["idEEPP"])){
   $idEEPP = $_SESSION["idEEPP"];
 }
 
+if(empty($_SESSION["fechaEEPP"])){
+  $_SESSION["fechaEEPP"] = $_GET["fechaEEPP"];
+  $hoy = $_GET["fechaEEPP"];
+}else{
+  $hoy = $_SESSION["fechaEEPP"];
+}
+
+if(empty($_SESSION["idObraEEPP"])){
+  $_SESSION["idObraEEPP"] = $_GET["idObraEEPP"];
+  $idObra = $_GET["idObraEEPP"];
+}else{
+  $idObra = $_SESSION["idObraEEPP"];
+}
+
+$edita = 0;
+$btnFinaliza = 'FINALIZAR';
+if(empty($_SESSION["editaEEPP"])){
+     if(isset($_GET["edita"])){   
+      $_SESSION["editaEEPP"] = $_GET["edita"];
+      $edita = $_GET["idObraEEPP"];
+    }
+}else{        
+      $edita = $_SESSION["editaEEPP"];    
+}
+
+if($edita == 1){
+    $btnFinaliza = 'VOLVER SELECCIÓN';
+}
+
+
+
 date_default_timezone_set('America/Santiago');
-$hoy = $_SESSION['fechaEEPP'];
-$idObra = $_SESSION["idObraEEPP"];
+//$hoy = $_SESSION['fechaEEPP'];
+//$idObra = $_SESSION["idObraEEPP"];
 
 
 $obra = ControladorObras::ctrMostrarObrasPorId($idObra);
@@ -29,8 +60,12 @@ $nombreObra = $obra["nombre"];
 $tipoCobro = $obra["tipoCobro"];
 
 $dateReg = date_create($hoy);
-$periodo = date_format($dateReg,"M-Y");
-$fechaEEPP = date_format($dateReg,"d-M-Y");
+$mes = date_format($dateReg,"m");
+$anno = date_format($dateReg,"Y");
+$nombreMes = ControladorEEPP::ctrNombreMeses($mes);
+
+$periodo = $nombreMes.'-'.$anno;
+$fechaEEPP = date_format($dateReg,"d-m-Y");
 
 $ultimoEEPP = ModeloEEPP::mdlUltimoEEPP($idObra);
 
@@ -42,6 +77,12 @@ if($idEEPP == $ultimoEEPP){
     $ultimo = 0;
 }
 
+if($edita == 0){
+   $titulo = 'EEPP Generado';
+}else{
+   $titulo = 'Edita EEPP Generado'; 
+}   
+
 
 ?>
 <div class="content-wrapper">
@@ -49,11 +90,11 @@ if($idEEPP == $ultimoEEPP){
   <section class="content-header">
     
     <h1>      
-       EEPP Generado   
+       <?php echo $titulo.' '.$nombreObra?>   
     </h1>
     <br>
     <h4>      
-       <?php echo $nombreObra.' Periodo '.$periodo.' ('.$fechaEEPP.')'.' Tipo Cobro : '.$tipoCobro?>   
+       <?php echo 'Periodo '.$periodo.' ('.$fechaEEPP.')'.' Tipo Cobro : '.$tipoCobro?>   
     </h4>
     <br>
     <ol class="breadcrumb">
@@ -77,7 +118,7 @@ if($idEEPP == $ultimoEEPP){
     <div class="box">
             <div class="box-header with-border">
                <div class="col-lg-12 col-xs-8"> 
-                  <button class="btn btn-success" id="btnEEPPGeneradoVolver" >FINALIZAR</button>
+                  <button class="btn btn-success" id="btnEEPPGeneradoVolver" ><?php echo $btnFinaliza ?></button>
                   <button class="btn btn-warning" id="btnEEPPGeneradoDescuento" data-toggle="modal" data-target="#modalAgregarDescuento" >Agregar Descuento</button>
                   <button class="btn btn-default" id="btnEEPPGeneradoAgregar" data-toggle="modal" data-target="#modalAgregarExtra" >Agregar Cobro Extra</button>
                  <button class="btn btn-danger" id="btnEEPPDiasDescuento" data-toggle="modal" data-target="#modalDiasDescuentos" >Días a Descontar</button>
@@ -97,6 +138,7 @@ if($idEEPP == $ultimoEEPP){
                   <input type="hidden" id="ultimoEEPP" name="ultimoEEPP" value="<?php echo $ultimo?>">
                   <input type="hidden" id="fechaEEPPEdita" value="<?php echo $hoy?>">
                   <input type="hidden" id="tipoCobroTxt" value="<?php echo $tipoCobro?>">
+                  <input type="hidden" id="esEditar" value="<?php echo $edita?>">
 
                   <div class="col-lg-12 col-xs-8">  
                             <div id="equipos_cobrados_eepp" align="left"></div>
@@ -555,9 +597,7 @@ MODAL AGREGAR DESCUENTO
   $(document).ready(function(){
 
      if($('#ultimoEEPP').val() == 0){
-        $('#btnEEPPGeneradoAnular').attr('disabled', true)
-
-
+        $('#btnEEPPGeneradoAnular').attr('disabled', true);
      }
 
     var idEEPP = $('#idEEPPCobro').val(); 

@@ -168,7 +168,7 @@ class ModeloEEPP{
 
 	static public function mdlGenerarDetalleEEPP($idEEPP, $idObra, $fecha){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO eepp_detalle_equipos (id_eepp, id_guia_detalle, guia, contrato, codigo, serie, descripcion, modelo, marca, precio, fecha_arriendo, fecha_devolucion, fecha_retiro_obra, report_devolucion, tipo_devolucion, devuelto, match_cambio, ultimo_cobro, nombreDevolucion, cobro_desde, cobro_hasta) SELECT $idEEPP, gdd.id, gd.numero_guia, gdd.contrato, e.codigo, e.numero_serie, ne.descripcion, ne.modelo, m.descripcion, gdd.precio_arriendo, gdd.fecha_arriendo, gdd.fecha_devolucion_real, gdd.fecha_retiro_obra, gdd.id_report_devolucion, gdd.devolucion_tipo, gdd.devuelto, gdd.match_cambio, gdd.fecha_ultimo_cobro, estados.descripcion, if(gdd.fecha_ultimo_cobro is null, gdd.fecha_arriendo, date_add(gdd.fecha_ultimo_cobro, interval 1 day)) as fecha_desde_cobro, if(gdd.devuelto = 1, gdd.fecha_devolucion_real, :fecha) as fecha_hasta_cobro FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id join categorias c on ne.id_categoria = c.id left join estados on gdd.devolucion_tipo = estados.id WHERE gdd.registro_eliminado = false and gd.id_obras = $idObra and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') and (gdd.fecha_devolucion_real is null or gdd.fecha_devolucion_real > gdd.fecha_ultimo_cobro or gdd.fecha_ultimo_cobro is null)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO eepp_detalle_equipos (id_eepp, id_guia_detalle, guia, contrato, codigo, serie, descripcion, modelo, marca, precio, fecha_arriendo, fecha_devolucion, fecha_retiro_obra, report_devolucion, tipo_devolucion, devuelto, match_cambio, ultimo_cobro, nombreDevolucion, cobro_desde, cobro_hasta) SELECT $idEEPP, gdd.id, gd.numero_guia, gdd.contrato, e.codigo, e.numero_serie, ne.descripcion, ne.modelo, m.descripcion, gdd.precio_arriendo, gdd.fecha_arriendo, gdd.fecha_devolucion_real, gdd.fecha_retiro_obra, gdd.id_report_devolucion, gdd.devolucion_tipo, gdd.devuelto, gdd.match_cambio, gdd.fecha_ultimo_cobro, estados.descripcion, if(gdd.fecha_ultimo_cobro is null, gdd.fecha_arriendo, date_add(gdd.fecha_ultimo_cobro, interval 1 day)) as fecha_desde_cobro, if(gdd.devuelto = 1 and gdd.fecha_devolucion_real <= '$fecha', gdd.fecha_devolucion_real, :fecha) as fecha_hasta_cobro FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id join categorias c on ne.id_categoria = c.id left join estados on gdd.devolucion_tipo = estados.id WHERE gdd.registro_eliminado = false and gd.id_obras = $idObra and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') and (gdd.fecha_devolucion_real is null or gdd.fecha_devolucion_real > gdd.fecha_ultimo_cobro or gdd.fecha_ultimo_cobro is null)");
 
 		      $stmt->bindParam(":fecha", $fecha, PDO::PARAM_STR);		
 
@@ -632,6 +632,23 @@ class ModeloEEPP{
 
 	}	
 
+	static public function mdlPrimerDiaDescuento($idEEPP){
+
+		
+		
+			$stmt = Conexion::conectar()->prepare("SELECT min(fecha) as primeraFecha from eepp_dias_descuento WHERE id_eepp = $idEEPP");	
+			   
+			$stmt -> execute();
+
+			return $stmt -> fetch();		
+		
+
+		    $stmt -> close();
+
+		    $stmt = null;
+
+	}	
+
 	static public function mdlMostrarDiasDescuento($idEEPP){
 
 		
@@ -663,6 +680,24 @@ class ModeloEEPP{
 		$stmt = null;
 		
 
+	}
+
+
+	static public function mdlMostrarEEPPGenerados($mes, $anno){
+
+       
+		$stmt = Conexion::conectar()->prepare("SELECT ep.id as idEEPP, o.id as idObra, c.nombre as constructora, o.nombre as obra, ep.fecha_eepp, ep.fecha_corte FROM eepp ep join constructoras c on ep.id_constructoras = c.id join obras o on ep.id_obras = o.id where month(fecha_corte) = $mes and year(fecha_corte) = $anno");
+
+		
+		
+       	
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();		
+
+		$stmt -> close();
+
+		$stmt = null;
 	}
 	
 

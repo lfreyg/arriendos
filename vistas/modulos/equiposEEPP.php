@@ -13,6 +13,8 @@ if($_SESSION["perfil"] != "Administrador"){
 
 }
 
+$_SESSION["idEEPP"] = null; 
+
 if(empty($_SESSION["idObraEEPP"])){
   $_SESSION["idObraEEPP"] = $_GET["idObra"];
   $idObra = $_GET["idObra"];
@@ -33,8 +35,11 @@ $tipoCobro = $obra["tipoCobro"];
 
 
 $dateReg = date_create($hoy);
-$periodo = date_format($dateReg,"M-Y");
-$fechaEEPP = date_format($dateReg,"d-M-Y");
+$mes = date_format($dateReg,"m");
+$anno = date_format($dateReg,"Y");
+$nombreMes = ControladorEEPP::ctrNombreMeses($mes);
+$periodo = $nombreMes.'-'.$anno;
+$fechaEEPP = date_format($dateReg,"d-m-Y");
 
 
 ?>
@@ -44,11 +49,11 @@ $fechaEEPP = date_format($dateReg,"d-M-Y");
   <section class="content-header">
     
     <h1>      
-       Equipos para cobro en obra   
+       Equipos para cobro en obra<?php echo ' '.$nombreObra?>   
     </h1>
     <br>
     <h4>      
-       <?php echo $nombreObra.' Periodo '.$periodo.' ('.$fechaEEPP.')'.' Tipo Cobro : '.$tipoCobro?>   
+       <?php echo 'Periodo '.$periodo.' ('.$fechaEEPP.')'.' Tipo Cobro : '.$tipoCobro?>   
     </h4>
 
      
@@ -85,7 +90,8 @@ $fechaEEPP = date_format($dateReg,"d-M-Y");
                <div class="box-body">  
                        <input type="hidden" id="idObra" name="idObra" value="<?php echo $idObra?>"> 
                        <input type="hidden" id="fecha" name="fecha" value="<?php echo $hoy?>">
-                       <input type="hidden" id="idConstructora" name="idConstructora" value="<?php echo $idConstructora?>">             
+                       <input type="hidden" id="idConstructora" name="idConstructora" value="<?php echo $idConstructora?>"> 
+                       <input type="hidden" id="tipoCobroEEPP" name="fecha" value="<?php echo $tipoCobro?>">            
                        <div class="col-lg-12 col-xs-11">  
                             <div id="equipos_cobro" align="left"></div>
                        </div>           

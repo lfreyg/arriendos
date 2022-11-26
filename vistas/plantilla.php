@@ -187,6 +187,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "guia-despacho-arriendos-detalle" ||
          $_GET["ruta"] == "devolucion-equipos-arriendos" ||
          $_GET["ruta"] == "devolucion-equipos-arriendos-detalle" ||
+         $_GET["ruta"] == "firma-report" ||
          $_GET["ruta"] == "transportista" ||
          $_GET["ruta"] == "mantenedor-equipos" ||
          $_GET["ruta"] == "carga-masiva-precios-lista" ||
@@ -204,6 +205,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "obrasEEPP" ||
          $_GET["ruta"] == "equiposEEPP" ||
          $_GET["ruta"] == "eeppProcesado" ||
+         $_GET["ruta"] == "eeppEdita" ||
 
         
 

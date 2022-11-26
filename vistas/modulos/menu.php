@@ -183,6 +183,14 @@
 
 							</li>
 
+							<li>
+								<a href="eeppEdita">
+									<i class="fa fa-circle-o"></i>
+									<span>Editar EEPP</span>
+								</a>
+
+							</li>
+
 
 
 				         </ul>

@@ -20,6 +20,13 @@ if(empty($_SESSION["fechaEEPP"])){
   $hoy = $_SESSION['fechaEEPP'];
 }
 
+         
+         $_SESSION["idEEPP"] = null;         
+         $_SESSION["idObraEEPP"] = null;
+         $_SESSION["editaEEPP"] = null;
+         $_SESSION["mesEditaEEPP"] = null;  
+         $_SESSION["anoEditaEEPP"] = null;   
+
 
 ?>
 <div class="content-wrapper">

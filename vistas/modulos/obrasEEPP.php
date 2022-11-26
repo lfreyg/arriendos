@@ -13,8 +13,8 @@ if($_SESSION["perfil"] != "Administrador"){
 
 }
 
-$_SESSION['idObraEEPP'] = '';
-$_SESSION["idEEPP"] = '';
+         $_SESSION["idEEPP"] = null; 
+         $_SESSION["editaEEPP"] = null;
 
 if(empty($_SESSION["idConstructoraEEPP"])){
   $_SESSION["idConstructoraEEPP"] = $_GET["idConstructora"];
@@ -33,8 +33,13 @@ $nombreConstructora = $constructora["nombre"];
 
 $dateReg = date_create($hoy);
 
-$periodo = date_format($dateReg,"M-Y");
-$fechaEEPP = date_format($dateReg,"d-M-Y");
+$mes = date_format($dateReg,"m");
+$anno = date_format($dateReg,"Y");
+$nombreMes = ControladorEEPP::ctrNombreMeses($mes);
+$periodo = $nombreMes.'-'.$anno;
+
+
+$fechaEEPP = date_format($dateReg,"d-m-Y");
 
 
 
@@ -45,8 +50,11 @@ $fechaEEPP = date_format($dateReg,"d-M-Y");
   <section class="content-header">
     
     <h1>      
-       <?php echo $nombreConstructora.' Periodo '.$periodo.' ('.$fechaEEPP.')'?>   
+       <?php echo $nombreConstructora?>   
     </h1>
+    <h4>      
+       <?php echo $periodo.' ('.$fechaEEPP.')'?>   
+    </h4>
 
      
 

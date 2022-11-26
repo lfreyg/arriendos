@@ -8,12 +8,14 @@ session_start();
           $datos = array("idConstructora"=>$_POST["idConstructora"],           
                   "idObra"=>$_POST["idObra"],
                   "fecha"=>$_POST["fecha"]
+                
                                     
              ); 
 
          $idConstructora = $datos["idConstructora"];
          $idObra = $datos["idObra"];
          $fecha = $datos["fecha"];
+        
 
           
           $validaEEPP = ModeloEEPP::mdlValidaEEPPMes($idObra, $fecha);
@@ -39,6 +41,7 @@ session_start();
             
            
            $_SESSION["idEEPP"] = $detalleEEPP["id"];
+           $_SESSION["editaEEPP"] = 0;
 
            return "ok";
             

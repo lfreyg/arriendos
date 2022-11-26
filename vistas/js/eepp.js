@@ -127,9 +127,11 @@ $('#btnEquiposProcesarEEPP').click(function(){
 	fecha = $('#fecha').val();
 	
 	
+	
 	datos = "idConstructora=" + idConstructora +
 		"&idObra=" + idObra +
 		"&fecha=" + fecha;
+		
 	
 	$.ajax({
 
@@ -235,9 +237,14 @@ function llenaMaterialesProcesados(idEEPP) {
 
 $('#btnEEPPGeneradoVolver').click(function(){ 
 
-	var idConstructora = $(this).attr("idConstructora");
+	var esEditar = $('#esEditar').val()
 
-	window.location = "index.php?ruta=obrasEEPP";
+	if(esEditar == 0){
+				var idConstructora = $(this).attr("idConstructora");
+				window.location = "index.php?ruta=obrasEEPP";
+	}else{
+		   window.location = "index.php?ruta=eeppEdita";
+	}
 
 });
 
@@ -360,11 +367,15 @@ function anula_eepp(idEEPP){
 
 		success: function(res) {
 
-				
-	              window.location = "index.php?ruta=equiposEEPP";
-	              		
+			      var esEditar = $('#esEditar').val()
 
-					
+								if(esEditar == 0){
+											var idConstructora = $(this).attr("idConstructora");
+											window.location = "index.php?ruta=equiposEEPP";
+								}else{
+									   window.location = "index.php?ruta=eeppEdita";
+								}
+
 			
 		}
 	});	 
@@ -818,3 +829,123 @@ function elimina_dia_descuento(idRegistro) {
 		}
 	});
 }
+
+
+function EEPPGenerados() {
+  
+   var mes = $('#cmbMesEEPP').val();
+   var anno = $('#CmbAnnoEEPP').val();
+
+   var datos = new FormData();
+	datos.append("mes", mes);	
+	datos.append("anno", anno);	
+
+
+	$('.tablaEEPPGenerados').DataTable({
+		"ajax": {
+			"url": "ajax/datatable-eepp-generados.ajax.php",
+			"method": 'POST',
+			"datatype": 'json',
+			"destroy": "true",
+			"data": {
+				mes: mes,	anno: anno
+			}
+		},
+		"deferRender": true,
+		"order":[[1,"asc"]],
+		"retrieve": true,
+		"processing": true,
+		"language": {
+
+			"sProcessing": "Procesando...",
+			"sLengthMenu": "Mostrar _MENU_ registros",
+			"sZeroRecords": "No se encontraron resultados",
+			"sEmptyTable": "NO SE ENCONTRARON EEPP PARA EDITAR",
+			"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+			"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+			"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix": "",
+			"sSearch": "Buscar:",
+			"sUrl": "",
+			"sInfoThousands": ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+				"sFirst": "Primero",
+				"sLast": "Último",
+				"sNext": "Siguiente",
+				"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+
+		}
+
+	});
+
+
+} 
+
+
+$(".tablaEEPPGenerados").on("click", ".seleccionaEEPP", function(){
+
+	var idEEPP = $(this).attr("idEEPP");
+	var idObra = $(this).attr("idObra");
+	var fechaEEPP = $(this).attr("fechaEEPP");
+	var edita = 1;
+	var mes = $('#cmbMesEEPP').val();
+  var anno = $('#CmbAnnoEEPP').val();
+
+	datos = "idEEPP=" + idEEPP +
+		"&idObra=" + idObra +
+		"&fechaEEPP=" + fechaEEPP +
+		"&mes=" + mes + 
+		"&anno=" + anno;
+	
+	$.ajax({
+
+		type: "POST",
+		url: "ajax/editarEEPP.ajax.php",
+		data: datos,
+		
+
+		success: function(res) {
+				
+	               window.location = "index.php?ruta=eeppProcesado"; 
+	   	
+		}
+	});	 
+
+	
+
+});
+
+$(".tablaEEPPGenerados").on("click", ".verEEPP", function(){
+
+	var idEEPP = $(this).attr("idEEPP");
+	var idObra = $(this).attr("idObra");
+
+	window.open("extensiones/pdf/TCPDF/eepp.php?id="+idEEPP+"&idObra="+idObra, "_blank");
+
+});
+
+$('#cmbMesEEPP').change(function() {
+
+	    $('.tablaEEPPGenerados').DataTable().destroy();
+
+      EEPPGenerados();
+      $('.tablaEEPPGenerados').DataTable().ajax.reload();
+   
+
+	});
+
+$('#CmbAnnoEEPP').change(function() {
+
+	    $('.tablaEEPPGenerados').DataTable().destroy();
+
+      EEPPGenerados();
+      $('.tablaEEPPGenerados').DataTable().ajax.reload();
+   
+
+	});

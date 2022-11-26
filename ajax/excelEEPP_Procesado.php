@@ -54,6 +54,14 @@ $documento->getActiveSheet()->setAutoFilter('A1:H1');
 
 $numeroDeFila = 2;
 
+$descuentoDias = ModeloEEPP::mdlCuentaDiasDescuento($idEEPP);
+
+$descuentoDias = $descuentoDias["diasDescuento"];
+
+$preguntaFecha = ModeloEEPP::mdlPrimerDiaDescuento($idEEPP);
+$primeraFecha = $preguntaFecha["primeraFecha"];
+
+
  $equiposCobro = ModeloEEPP::mdlMostrarEquiposProcesados($idEEPP);
     
      
@@ -83,6 +91,17 @@ $numeroDeFila = 2;
 
               if($report == 0){
                 $report = $blanco;
+              }
+
+              $aplicaDescuento = 1;
+              if($fecDevolucion != '0000-00-00'){
+                $preguntaFechaDevolucion = strtotime($fecDevolucion);
+                $preguntaFechaDescuento = strtotime($primeraFecha);
+                
+                 if($preguntaFechaDevolucion < $preguntaFechaDescuento){
+                      $aplicaDescuento = 0;
+                 }
+
               }
 
               if($tipoCobro == 'LUNES A LUNES'){
@@ -219,7 +238,9 @@ $numeroDeFila = 2;
 
               //FIN FORMATEO DE FECHAS
 
-                          
+              if($aplicaDescuento == 1){
+                  $dias = $dias - $descuentoDias;   
+                  } 
 
               $cobro = $dias * $precio;
 

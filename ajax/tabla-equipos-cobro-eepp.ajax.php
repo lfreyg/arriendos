@@ -61,7 +61,11 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
               $obraConsulta = ModeloObras::mdlMostrarObrasPorId($idObra);
               $tipoCobro = $obraConsulta["tipoCobro"];
 
-             if($equiposCobro[$i]["devuelto"] == 1){
+             
+             $preguntaFechaDevolucion = strtotime($fecDevolucion);
+             $preguntaFechaEEPP = strtotime($fecha);
+
+             if($equiposCobro[$i]["devuelto"] == 1 and $preguntaFechaDevolucion <= $preguntaFechaEEPP){
                 $fechaHasta = $equiposCobro[$i]["fecha_devolucion"];
               }else{
                 $fechaHasta = $fecha;
@@ -71,7 +75,7 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
               $fechaDesde = $equiposCobro[$i]["fecha_desde"];
               
              if($tipoCobro == 'LUNES A LUNES'){
-                $dias = 0;   
+                $dias = 1;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -108,7 +112,7 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
              }  
              
              if($tipoCobro == 'LUNES A VIERNES'){                 
-                  $dias = 0;   
+                  $dias = 1;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -139,7 +143,7 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
              }   
 
              if($tipoCobro == 'LUNES A SABADO'){
-                  $dias = 0;   
+                  $dias = 1;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
