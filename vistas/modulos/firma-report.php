@@ -78,7 +78,7 @@ if($existeArchivo){
  <div class="row">
 
 
-     <div class="col-lg-4 col-xs-6">
+     <div class="col-lg-6 col-xs-12">
         
         <div class="box box-warning">
 
