@@ -111,7 +111,7 @@
     body: fd,
   });
   const nombreImagenSubida = await respuestaHttp.json();
-  alertify.success("La imagen ha sido enviada y tiene el nombre de: " + nombreImagenSubida);
+  alertify.success("Se ha firmado el documento");
   
    
 
@@ -127,11 +127,9 @@ $('#btnVolverFirma').click(function() {
 
 });
 
-$('#btnVerDocumento').click(function() {    
+$('#btnLimpiarFirma').click(function() {    
 
         
-           var id = $('#idReport').val();;
-
-         window.open("extensiones/pdf/TCPDF/report-retiro.php?id="+id, "_blank"); 
+         window.location = "index.php?ruta=firma-report";
 
 });

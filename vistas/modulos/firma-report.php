@@ -101,6 +101,10 @@ if($existeArchivo){
                         <button id="btnGuardaFirma" class="btn btn-lg btn-success btn-block text-uppercase">Firmar Documento</button>
                       </div>
                        <br> 
+                       <div class="pull-right-container">                    
+                        <button id="btnLimpiarFirma" class="btn btn-lg btn-primary btn-block text-uppercase">Limpiar Firma</button>
+                      </div>
+                       <br> 
 
                        <div class="pull-right-container">  
                              <button id="btnVerDocumento" class="btn btn-lg btn-warning btn-block text-uppercase">Ver Documento</button>
