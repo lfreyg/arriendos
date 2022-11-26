@@ -88,33 +88,45 @@ if($existeArchivo){
                                                  
                    <div class="input-group">
                      <canvas id="pizarra"></canvas>  
-                     <input type="hidden" id="idReport" name="idReport" value="<?php echo $idReport?>">                      
-                   </div>                 
-                
+                     <input type="hidden" id="idReport" name="idReport" value="<?php echo $idReport?>">
+
+                                      
+                   </div> 
              
                
                  <div class="form-group">                      
                      <div class="input-group"> 
-                      <div class="col">                     
-                        <button type="submit" id="btnGuardaFirma" class="btn btn-success">Firmar Documento</button>
+                     
+                       <div class="pull-right-container">                    
+                        <button id="btnGuardaFirma" class="btn btn-lg btn-success btn-block text-uppercase">Firmar Documento</button>
+                      </div>
+                       <br> 
 
-                        <button type="submit" id="btnVerDocumento" class="btn btn-warning">Ver Documento</button>
+                       <div class="pull-right-container">  
+                             <button id="btnVerDocumento" class="btn btn-lg btn-warning btn-block text-uppercase">Ver Documento</button>
+                      </div>
+                       <br> 
                        
-                         <button type="submit" id="btnVolverFirma" class="btn btn-danger">Volver Report</button>
+                         <button id="btnVolverFirma" class="btn btn-lg btn-danger btn-block text-uppercase">Volver Report</button>
                        </div>
-                     </div>
+                     
                  </div> 
-              </div>   
+              </div>  
+                  
+                    <?php
+                          if($existeArchivo){
+                       ?>
+                      <div class="box-footer">  
+                        <img width="120" height="120" src="<?php echo $archivo?>">  
+                      </div>  
 
-             <?php
-                if($existeArchivo){
-             ?>
-              <img src="<?php echo $archivo?>">  
+                      <?php
+                       }
 
-            <?php
-             }
+                      ?>       
 
-            ?>  
+             
+             
 
 
 
