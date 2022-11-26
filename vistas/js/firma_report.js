@@ -133,3 +133,12 @@ $('#btnLimpiarFirma').click(function() {
          window.location = "index.php?ruta=firma-report";
 
 });
+
+$('#btnVerDocumento').click(function() {    
+
+        
+     var id = $('#idReport').val();
+
+    window.open("extensiones/pdf/TCPDF/report-retiro.php?id="+id, "_blank");
+
+});
