@@ -26,11 +26,19 @@ if($_SESSION["idReportDevolucion"] == ''){
 
 $idReport = $_SESSION["idReportDevolucion"];
 
-$archivo = 'http://localhost/arriendos/vistas/img/firmaReport/firma_'.$idReport.'.png';
+
+$archivo = 'vistas/img/firmaReport/firma_'.$idReport.'.png';
 
 
 
 $existeArchivo = is_file($archivo);
+
+
+if($existeArchivo){
+  $respuesta = 'El documento ya se encuentra firmado';
+}else{
+  $respuesta = 'Firme el documento en recuadro, luego haga clic en FIRMAR DOCUMENTO';
+}
 
 
 ?>
@@ -52,6 +60,7 @@ $existeArchivo = is_file($archivo);
     Firmar Documento N° <?php echo $idReport?>
     
     </h1>
+    <h3><strong><?php echo $respuesta?></strong></h3>
     
     <ol class="breadcrumb">
       
@@ -96,8 +105,18 @@ $existeArchivo = is_file($archivo);
                      </div>
                  </div> 
               </div>   
-             
+
+             <?php
+                if($existeArchivo){
+             ?>
               <img src="<?php echo $archivo?>">  
+
+            <?php
+             }
+
+            ?>  
+
+
 
                   
            
