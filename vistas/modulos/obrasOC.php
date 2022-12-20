@@ -13,35 +13,18 @@ if($_SESSION["perfil"] != "Administrador"){
 
 }
 
-         $_SESSION["idEEPP"] = null; 
-         $_SESSION["editaEEPP"] = null;
-         $_SESSION["idObraEEPP"] = null;
+$_SESSION["idObraOC"] = null;
 
-if(empty($_SESSION["idConstructoraEEPP"])){
-  $_SESSION["idConstructoraEEPP"] = $_GET["idConstructora"];
+if(empty($_SESSION["idConstructoraOC"])){
+  $_SESSION["idConstructoraOC"] = $_GET["idConstructora"];
   $valorIdConstructora = $_GET["idConstructora"];
 }else{
-  $valorIdConstructora = $_SESSION["idConstructoraEEPP"];
+  $valorIdConstructora = $_SESSION["idConstructoraOC"];
 }
-
-date_default_timezone_set('America/Santiago');
-$hoy = $_SESSION['fechaEEPP'];
-
+ 
 
 $constructora = ControladorConstructoras::ctrMostrarConstructoras("id",$valorIdConstructora);
 $nombreConstructora = $constructora["nombre"];
-
-
-$dateReg = date_create($hoy);
-
-$mes = date_format($dateReg,"m");
-$anno = date_format($dateReg,"Y");
-$nombreMes = ControladorEEPP::ctrNombreMeses($mes);
-$periodo = $nombreMes.'-'.$anno;
-
-
-$fechaEEPP = date_format($dateReg,"d-m-Y");
-
 
 
 ?>
@@ -51,21 +34,17 @@ $fechaEEPP = date_format($dateReg,"d-m-Y");
   <section class="content-header">
     
     <h1>      
-       <?php echo $nombreConstructora?>   
+       Orden Compra <?php echo $nombreConstructora?>   
     </h1>
-    <h4>      
-       <?php echo $periodo.' ('.$fechaEEPP.')'?>   
-    </h4>
-
-     
+        
 
     <ol class="breadcrumb">
       
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li><a href="eepp">EEPP</a></li>
+      <li><a href="asociar-oc">Asociar OC</a></li>
       
-      <li class="active">Obras</li>
+      <li class="active">Obra OC</li>
     
     </ol>
 
@@ -76,7 +55,7 @@ $fechaEEPP = date_format($dateReg,"d-m-Y");
     <div class="box">      
 
       <div class="box-header with-border">
-        <button class="btn btn-success" id="btnObraVolverEEPP" >Volver</button>
+        <button class="btn btn-success" id="btnObraVolverOC" >Volver</button>
       </div>
 
        <div class="box-body">
@@ -88,22 +67,22 @@ $fechaEEPP = date_format($dateReg,"d-m-Y");
                    
                    <tr>
                      <th style="width: 60%;">Nombre Obra</th>           
-                     <th style="width: 10%;">Vista EEPP</th>
+                     <th style="width: 10%;">Selecciona</th>
                    </tr> 
 
                   </thead> 
                <tbody>
 
         <?php
-        
            
-           $respuestaObra = ModeloEEPP::mdlMostrarObrasEEPP($valorIdConstructora,$hoy);
-
+           $respuestaObra  = ControladorObras::ctrMostrarObrasSoloConEquiposActivos($valorIdConstructora);
+           
+          
             foreach ($respuestaObra as $key => $value) {
            
             echo ' <tr>
                     <td class="text-uppercase">'.$value["nombre"].'</td>';
-                    echo '<td><button class="btn btn-success btn-xs btnProcesaEEPP" idObra="'.$value["id"].'">Vista EEPP</button></td>';
+                    echo '<td><button class="btn btn-success btn-xs btnVerOC" idObra="'.$value["id"].'">Seleccionar</button></td>';
              echo '</tr>';
           }
         
@@ -124,4 +103,4 @@ $fechaEEPP = date_format($dateReg,"d-m-Y");
 </div>
 
 
-<script src="vistas/js/eepp.js?v=<?php echo(rand());?>"></script>
+<script src="vistas/js/asociar_oc.js?v=<?php echo(rand());?>"></script>

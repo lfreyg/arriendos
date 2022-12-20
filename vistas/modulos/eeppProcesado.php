@@ -12,6 +12,8 @@ if($_SESSION["perfil"] != "Administrador"){
 
 }
 
+$_SESSION["idObraOC"] = null;
+
 if(empty($_SESSION["idEEPP"])){
   $_SESSION["idEEPP"] = $_GET["idEEPP"];
   $idEEPP = $_GET["idEEPP"];
@@ -51,13 +53,12 @@ if($edita == 1){
 
 
 date_default_timezone_set('America/Santiago');
-//$hoy = $_SESSION['fechaEEPP'];
-//$idObra = $_SESSION["idObraEEPP"];
 
 
 $obra = ControladorObras::ctrMostrarObrasPorId($idObra);
 $nombreObra = $obra["nombre"];
 $tipoCobro = $obra["tipoCobro"];
+$idConstructora = $obra["id_constructoras"];
 
 $dateReg = date_create($hoy);
 $mes = date_format($dateReg,"m");
@@ -124,6 +125,7 @@ if($edita == 0){
                  <button class="btn btn-danger" id="btnEEPPDiasDescuento" data-toggle="modal" data-target="#modalDiasDescuentos" >Días a Descontar</button>
                   <button class="btn btn-info" id="btnEEPP_PDF" >Generar PDF</button>
                   <button class="btn btn-primary" id="btnEEPP_Excel" >Generar Excel</button>
+                  <button class="btn btn-success" id="btnEEPP_OC" >Asociar OC</button>
               </div> 
              <div  align="right">                    
                   <button class="btn btn-danger" id="btnEEPPGeneradoAnular" >ANULAR EEPP</button>
@@ -134,11 +136,13 @@ if($edita == 0){
 
      <div class="box-body"> 
                   <input type="hidden" id="idEEPPCobro" name="idEEPPCobro" value="<?php echo $idEEPP?>">
+                  <input type="hidden" id="idConstructora" value="<?php echo $idConstructora?>">
                   <input type="hidden" id="idObraEEPP" name="idObraEEPP" value="<?php echo $idObra?>">
                   <input type="hidden" id="ultimoEEPP" name="ultimoEEPP" value="<?php echo $ultimo?>">
                   <input type="hidden" id="fechaEEPPEdita" value="<?php echo $hoy?>">
                   <input type="hidden" id="tipoCobroTxt" value="<?php echo $tipoCobro?>">
                   <input type="hidden" id="esEditar" value="<?php echo $edita?>">
+
 
                   <div class="col-lg-12 col-xs-8">  
                             <div id="equipos_cobrados_eepp" align="left"></div>
@@ -598,6 +602,10 @@ MODAL AGREGAR DESCUENTO
 
      if($('#ultimoEEPP').val() == 0){
         $('#btnEEPPGeneradoAnular').attr('disabled', true);
+     }
+
+     if($('#esEditar').val() == 0){
+         $('#btnEEPP_OC').css("display", "none");
      }
 
     var idEEPP = $('#idEEPPCobro').val(); 

@@ -259,7 +259,7 @@ $x = 1;
                  }
   
               if($tipoCobro == 'LUNES A LUNES'){
-                $dias = 1;   
+                $dias = 0;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -296,7 +296,7 @@ $x = 1;
              }  
              
              if($tipoCobro == 'LUNES A VIERNES'){                 
-                  $dias = 1;   
+                  $dias = 0;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -327,7 +327,7 @@ $x = 1;
              }   
 
              if($tipoCobro == 'LUNES A SABADO'){
-                  $dias = 1;   
+                  $dias = 0;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){

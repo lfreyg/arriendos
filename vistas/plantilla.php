@@ -160,6 +160,8 @@ CUERPO DOCUMENTO
     define("CAMBIO",11);
     define("TERMINO",15);
 
+    //VALOR IVA
+    define("VALOR_IVA",19);
     /*=============================================
     CONTENIDO
     =============================================*/
@@ -206,6 +208,15 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "equiposEEPP" ||
          $_GET["ruta"] == "eeppProcesado" ||
          $_GET["ruta"] == "eeppEdita" ||
+         $_GET["ruta"] == "factura-eepp-constructora" ||
+         $_GET["ruta"] == "obrasFacturacionEEPP" ||
+         $_GET["ruta"] == "EEPPFacturar" ||
+         $_GET["ruta"] == "asociar-oc" ||
+         $_GET["ruta"] == "obrasOC" ||
+         $_GET["ruta"] == "obras-oc-detalle" ||
+         $_GET["ruta"] == "orden-compra-detalle" ||
+         $_GET["ruta"] == "obras-factura-detalle" ||
+         $_GET["ruta"] == "EEPPFacturarSeleccion" ||
 
         
 

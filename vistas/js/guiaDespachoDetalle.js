@@ -635,7 +635,7 @@ $(".tablaMaterialesGuia").on("click", ".agregarMaterial", function() {
 			$('#precioMaterial').val(precio);
 			$('#precioMaterialSinFormato').val(precioSF);
 			$('#stock').val(stock);
-			$('#cantidadMaterial').val('');
+			$('#cantidadMaterial').val('1');
 			$('#chkCobraMaterial').prop("checked", false);
 			$('#cantidadMaterial').focus();
 

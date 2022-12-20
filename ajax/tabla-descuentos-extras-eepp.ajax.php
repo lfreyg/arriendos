@@ -1,6 +1,7 @@
 <?php
 require_once "../controladores/eepp.controlador.php";
 require_once "../modelos/eepp.modelo.php";
+require_once "../modelos/facturacion.modelo.php";
 
 
  
@@ -75,6 +76,47 @@ $idEEPP = $_POST['idEEPP'];
 
 
       }  
+
+             $equipos = ModeloFacturacionEEPP::mdlMostrarEEPPFacturacionPreviaEquipos($idEEPP);
+
+             if($equipos){
+                $montoEqui = $equipos['total'];
+             }else{
+                $montoEqui = 0;
+             }
+
+
+             $materiales = ModeloFacturacionEEPP::mdlMostrarEEPPFacturacionPreviaMateriales($idEEPP);
+
+             if($materiales){
+                $montoMat = $materiales['total'];
+             }else{
+                $montoMat = 0;
+             }
+
+             $extras = ModeloFacturacionEEPP::mdlMostrarEEPPFacturacionPreviaExtras($idEEPP);
+
+             if($extras){
+                $montoextras = $extras['total'];
+             }else{
+                $montoextras = 0;
+             }
+
+             $dscto = ModeloFacturacionEEPP::mdlMostrarEEPPFacturacionPreviaDscto($idEEPP);
+
+             if($dscto){
+                $montodscto = $dscto['total'];
+             }else{
+                $montodscto = 0;
+             }
+
+             
+            $total_facturacion_eepp = $montoEqui + $montoMat + $montoextras + $montodscto;
+
+            $total = ModeloEEPP::mdlActualizaTotalEEPP($idEEPP,$total_facturacion_eepp);
+
+
+
     }
 
   ?>

@@ -245,7 +245,7 @@ class ModeloObras{
 
 		
 
-			$stmt = Conexion::conectar()->prepare("SELECT o.id, o.id_constructoras, o.nombre, o.contacto, o.direccion, o.telefono, o.email, o.forma_cobro_id, o.estado, tc.descripcion as tipoCobro FROM obras o join tipo_cobro tc on o.forma_cobro_id = tc.id WHERE o.id = $id");
+			$stmt = Conexion::conectar()->prepare("SELECT o.id, o.id_constructoras, o.nombre, o.contacto, o.direccion, o.telefono, o.email, o.forma_cobro_id, o.estado, tc.descripcion as tipoCobro, c.nombre as constructora FROM obras o join tipo_cobro tc on o.forma_cobro_id = tc.id JOIN constructoras c ON o.id_constructoras = c.id WHERE o.id = $id");
 			$stmt -> execute();			
 			return $stmt -> fetch();			
 

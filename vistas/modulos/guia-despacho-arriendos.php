@@ -62,8 +62,7 @@ $_SESSION['idGuiaDespachoArriendo'] = '';
            <th>N° Guía</th> 
            <th>Fecha Guía</th>          
            <th>Cliente</th>
-           <th>Destino</th>  
-           <th>OC</th>         
+           <th>Destino</th> 
            <th>Guía Firmada</th>
            <th>Chofer</th>
            <th>Estado</th>
@@ -202,16 +201,14 @@ MODAL AGREGAR
 
             <!-- ENTRADA ORDEN COMPRA -->
 
-             <div class="col-lg-4 col-xs-11">              
-                 <label for="nuevoFechaGuia">Orden Compra</label>  
-                <input type="text" class="form-control input-lg" name="nuevoGuiaOC" id="nuevoGuiaOC" autocomplete="off" placeholder="Orden Compra">
+             <div class="col-lg-4 col-xs-11">
+                <input type="hidden" class="form-control input-lg" name="nuevoGuiaOC" id="nuevoGuiaOC" autocomplete="off" placeholder="Orden Compra">
               </div>
 
             
 
-            <div class="col-lg-4 col-xs-11">              
-                 <label for="nuevoFechaGuia">Fecha Termino Arriendo</label> 
-                <input type="date" class="form-control input-lg" name="nuevoFechaTermino" id="nuevoFechaTermino" autocomplete="off">
+            <div class="col-lg-4 col-xs-11">  
+                <input type="hidden" class="form-control input-lg" name="nuevoFechaTermino" id="nuevoFechaTermino" autocomplete="off">
 
               </div>
 

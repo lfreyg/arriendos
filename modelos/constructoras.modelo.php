@@ -178,7 +178,7 @@ class ModeloConstructoras{
 	}
 
 	static public function mdlMostrarConstructoraSoloConArriendosActivos(){
-		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT c.id as id, c.nombre as nombre FROM guia_despacho_detalle gdd join guia_despacho gd on gdd.id_guia = gd.id join constructoras c on gd.id_constructoras = c.id where gdd.devuelto = 0 and gdd.registro_eliminado = false and validado = 0");
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT c.id as id, c.nombre as nombre, c.rut as rut FROM guia_despacho_detalle gdd join guia_despacho gd on gdd.id_guia = gd.id join constructoras c on gd.id_constructoras = c.id where gdd.devuelto = 0 and gdd.registro_eliminado = false and validado = 0");
 
 		$stmt -> execute();
 

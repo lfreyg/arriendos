@@ -4,7 +4,7 @@
 require_once "../modelos/equipos.modelo.php";
 session_start();
 
-class TablaEquiposReport{
+class TablaEquiposOC{
 
  	/*=============================================
  	 MOSTRAR LA TABLA DE PRODUCTOS
@@ -13,7 +13,7 @@ class TablaEquiposReport{
   	public $idTipoEquipo;
   	public $idObra;
 
-	public function mostrarTablaEquiposArrendados(){
+	public function mostrarTablaEquiposOC(){
 
 	   if($this->idTipoEquipo == ''){		     
 		      $filtro = null;
@@ -46,13 +46,13 @@ class TablaEquiposReport{
 
 		  			  	
 		  			  	
-		  	$botones =  "<div class='btn-group'><button class='btn btn-primary agregarEquipo' idGuiaDetalle='".$productos[$i]["idGuiaDetalle"]."' idEquipoParaRetiro='".$productos[$i]["idEquipo"]."'>Seleccion</button></div>"; 
+		   	$botones =  "<div class='btn-group'><button class='btn btn-primary agregarEquipo' idGuiaDetalle='".$productos[$i]["idGuiaDetalle"]."' idEquipoParaRetiro='".$productos[$i]["idEquipo"]."'>Selecciona</button></div>"; 
 
-		  	$datosJson .='[      
-			       "'.$botones.'",
+		  	$datosJson .='[  
 			      "'.$productos[$i]["codigo"].'",			      
 			      "'.$equipo.'",		
-			      "'.$productos[$i]["guia"].'"     
+			      "'.$productos[$i]["guia"].'",
+			      "'.$botones.'"     
 			    ],';
 
 		  }
@@ -78,14 +78,14 @@ ACTIVAR TABLA DE PRODUCTOS
 =============================================*/ 
 
 if(isset($_POST["idTipoEquipo"])){
-  $activarProductosVentas = new TablaEquiposReport();
+  $activarProductosVentas = new TablaEquiposOC();
   $activarProductosVentas -> idTipoEquipo = $_POST["idTipoEquipo"];
   $activarProductosVentas -> idObra = $_POST["idObra"];
-  $activarProductosVentas -> mostrarTablaEquiposArrendados();
+  $activarProductosVentas -> mostrarTablaEquiposOC();
 }else{
-  $activarProductosVentas = new TablaEquiposReport();
+  $activarProductosVentas = new TablaEquiposOC();
   $activarProductosVentas -> idTipoEquipo = '';
   $activarProductosVentas -> idObra = $_POST["idObra"];
-  $activarProductosVentas -> mostrarTablaEquiposArrendados();
+  $activarProductosVentas -> mostrarTablaEquiposOC();
 }
 

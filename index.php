@@ -28,6 +28,8 @@ require_once "controladores/reportDevolucion.controlador.php";
 require_once "controladores/transportista.controlador.php";
 require_once "controladores/pedidoInterno.controlador.php";
 require_once "controladores/eepp.controlador.php";
+require_once "controladores/facturacion.controlador.php";
+require_once "controladores/ordenCompra.controlador.php";
 
 require_once "modelos/categorias.modelo.php";
 require_once "modelos/clientes.modelo.php";
@@ -54,6 +56,8 @@ require_once "modelos/transportista.modelo.php";
 require_once "modelos/pedidoInterno.modelo.php";
 require_once "modelos/eepp.modelo.php";
 require_once "modelos/materiales.modelo.php";
+require_once "modelos/facturacion.modelo.php";
+require_once "modelos/ordenCompra.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 

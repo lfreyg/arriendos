@@ -92,19 +92,17 @@ $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
                 
               </div>
 
-               <div class="col-lg-2 col-xs-11">                                   
+               <div class="col-lg-3 col-xs-11">                                   
                      <label for="fechaGuia">Fecha Guía</label> 
                     <input type="date" class="form-control" id="fechaGuia" value="<?php echo $guiaDespacho["fecha"]?>" readonly>                  
               </div>
 
-              <div class="col-lg-2 col-xs-11">                                   
-                     <label for="ordenCompra">Orden Compra</label> 
-                    <input type="text" class="form-control" id="ordenCompra" value="<?php echo $guiaDespacho["oc"]?>" readonly>                  
+              <div class="col-lg-2 col-xs-11">      
+                    <input type="hidden" class="form-control" id="ordenCompra" value="<?php echo $guiaDespacho["oc"]?>" readonly>                  
               </div>            
 
-              <div class="col-lg-2 col-xs-11">                                   
-                     <label for="fechaTerminoGuia">Fecha Termino</label> 
-                    <input type="date" class="form-control" id="fechaTerminoGuia" value="<?php echo $guiaDespacho["fechaTermino"]?>" readonly>                  
+              <div class="col-lg-2 col-xs-11">  
+                    <input type="hidden" class="form-control" id="fechaTerminoGuia" value="<?php echo $guiaDespacho["fechaTermino"]?>" readonly>                  
               </div>
               
           </div> 

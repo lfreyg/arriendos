@@ -27,7 +27,7 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
                   <th width="20%">Equipo</th>    
                   <th width="5%">Precio</th>
                   <th width="7%">Fecha Arriendo</th> 
-                  <th width="7%">Fecha Dev.</th> 
+                  <th width="7%">Fecha Term.</th> 
                   <th width="5%">Report</th> 
                   <th width="5%">Tipo Dev.</th>
                   <th width="5%">Último Cobro</th>
@@ -65,17 +65,25 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
              $preguntaFechaDevolucion = strtotime($fecDevolucion);
              $preguntaFechaEEPP = strtotime($fecha);
 
-             if($equiposCobro[$i]["devuelto"] == 1 and $preguntaFechaDevolucion <= $preguntaFechaEEPP){
+             if($fecDevolucion != null){
+              if( $preguntaFechaDevolucion <= $preguntaFechaEEPP){
                 $fechaHasta = $equiposCobro[$i]["fecha_devolucion"];
               }else{
                 $fechaHasta = $fecha;
               }
+            }else{
+                $fechaHasta = $fecha;
+              }
+
+             
+
+             
 
              
               $fechaDesde = $equiposCobro[$i]["fecha_desde"];
               
              if($tipoCobro == 'LUNES A LUNES'){
-                $dias = 1;   
+                $dias = 0;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -112,7 +120,7 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
              }  
              
              if($tipoCobro == 'LUNES A VIERNES'){                 
-                  $dias = 1;   
+                  $dias = 0;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){
@@ -143,7 +151,7 @@ $equiposCobro = ControladorEEPP::ctrMostrarEquiposParaCobro($idObra,$fecha);
              }   
 
              if($tipoCobro == 'LUNES A SABADO'){
-                  $dias = 1;   
+                  $dias = 0;   
                   $fechaInicio=strtotime($fechaDesde);
                   $fechaFin=strtotime($fechaHasta);
                       for($z=$fechaInicio; $z<=$fechaFin; $z+=86400){

@@ -13,7 +13,7 @@ class ModeloEEPP{
        $fecha = date('Y-m-d', strtotime($fecha)); 
        
        
-		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT c.id as id, c.rut as rut, c.nombre as nombre FROM guia_despacho_detalle gdd join guia_despacho gd on gdd.id_guia = gd.id join constructoras c on gd.id_constructoras = c.id where gdd.registro_eliminado = false and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') and (gdd.fecha_devolucion_real is null or gdd.fecha_devolucion_real > gdd.fecha_ultimo_cobro or gdd.fecha_ultimo_cobro is null) order by c.nombre");
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT c.id as id, c.rut as rut, c.nombre as nombre FROM guia_despacho_detalle gdd join guia_despacho gd on gdd.id_guia = gd.id join constructoras c on gd.id_constructoras = c.id WHERE gdd.registro_eliminado = false and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') and (gdd.fecha_devolucion_real is null or gdd.fecha_devolucion_real > gdd.fecha_ultimo_cobro or gdd.fecha_ultimo_cobro is null) and gd.tipo_guia = 'A' order by c.nombre");
 		
        /*
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT c.id as id, c.rut as rut, c.nombre as nombre FROM guia_despacho gd left join guia_despacho_detalle gdd on gdd.id_guia = gd.id and gdd.fecha_arriendo <= '2022-10-31' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '2022-10-31') and gdd.registro_eliminado = false and gdd.validado = 0 left join guia_despacho_materiales gdm on gd.id = gdm.id_guia and gdm.registro_eliminado = false and gdm.validado = 0 and gdm.id_eepp is null join constructoras c on gd.id_constructoras = c.id order by c.nombre");
@@ -32,7 +32,7 @@ class ModeloEEPP{
 	static public function mdlMostrarObrasEEPP($idConstructora, $fecha){
 
 		   
-			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT o.id as id, o.nombre as nombre FROM guia_despacho_detalle gdd join guia_despacho gd on gdd.id_guia = gd.id join obras o on gd.id_obras = o.id where o.id_constructoras = $idConstructora and gdd.registro_eliminado = false and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') and (gdd.fecha_devolucion_real is null or gdd.fecha_devolucion_real > gdd.fecha_ultimo_cobro or gdd.fecha_ultimo_cobro is null) ORDER BY o.nombre");
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT o.id as id, o.nombre as nombre FROM guia_despacho_detalle gdd join guia_despacho gd on gdd.id_guia = gd.id join obras o on gd.id_obras = o.id where o.id_constructoras = $idConstructora and gdd.registro_eliminado = false and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') and (gdd.fecha_devolucion_real is null or gdd.fecha_devolucion_real > gdd.fecha_ultimo_cobro or gdd.fecha_ultimo_cobro is null) and gd.tipo_guia = 'A' ORDER BY o.nombre");
 			
           /*
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT o.id as id, o.nombre as nombre FROM guia_despacho gd left join guia_despacho_detalle gdd on gdd.id_guia = gd.id and gdd.registro_eliminado = false and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') left join guia_despacho_materiales gdm on gd.id = gdm.id_guia and gdm.registro_eliminado = false and gdm.validado = 0 and gdm.id_eepp is null join obras o on gd.id_obras = o.id where o.id_constructoras = $idConstructora  ORDER BY o.nombre");
@@ -54,7 +54,7 @@ class ModeloEEPP{
 
 		
 		
-			$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idGuiaDetalle, gd.numero_guia as guia, gdd.contrato as contrato, c.categoria as categoria, e.id as idEquipo, e.codigo as codigo, e.numero_serie as serie, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca, gdd.fecha_arriendo as fecha_arriendo, gdd.fecha_devolucion_real as fecha_devolucion, gdd.fecha_retiro_obra as fecha_retiro, gdd.precio_arriendo as precio, gdd.devolucion_tipo as tipo_devolucion, gdd.devuelto as devuelto, gdd.match_cambio as match_cambio, gdd.fecha_ultimo_cobro as ultimo_cobro, gdd.id_report_devolucion as report_devolucion, estados.descripcion as nombreDevolucion, if(gdd.fecha_ultimo_cobro is null, gdd.fecha_arriendo, date_add(gdd.fecha_ultimo_cobro, interval 1 day)) as fecha_desde FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id join categorias c on ne.id_categoria = c.id left join estados on gdd.devolucion_tipo = estados.id WHERE gdd.registro_eliminado = false and gd.id_obras = $idObra and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') and (gdd.fecha_devolucion_real is null or gdd.fecha_devolucion_real > gdd.fecha_ultimo_cobro or gdd.fecha_ultimo_cobro is null) order by gdd.contrato desc, ne.descripcion");		
+			$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idGuiaDetalle, gd.numero_guia as guia,  gdd.contrato as contrato, c.categoria as categoria, e.id as idEquipo, e.codigo as codigo, e.numero_serie as serie, ne.descripcion as descripcion, ne.modelo as modelo, m.descripcion as marca, gdd.fecha_arriendo as fecha_arriendo, if(gdd.fecha_devolucion_real <= '$fecha', gdd.fecha_devolucion_real, null) as fecha_devolucion, if(gdd.fecha_devolucion_real <= '$fecha', gdd.fecha_retiro_obra, null) as fecha_retiro, gdd.precio_arriendo as precio, if(gdd.fecha_devolucion_real <= '$fecha', gdd.devolucion_tipo, null) as tipo_devolucion, if(gdd.fecha_devolucion_real <= '$fecha', gdd.devuelto, 0) as devuelto, gdd.match_cambio as match_cambio, gdd.fecha_ultimo_cobro as ultimo_cobro, if(gdd.fecha_devolucion_real <= '$fecha', gdd.id_report_devolucion, null) as report_devolucion, if(gdd.fecha_devolucion_real <= '$fecha', estados.descripcion, null) as nombreDevolucion, if(gdd.fecha_ultimo_cobro is null, gdd.fecha_arriendo, date_add(gdd.fecha_ultimo_cobro, interval 1 day)) as fecha_desde FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id join categorias c on ne.id_categoria = c.id left join estados on gdd.devolucion_tipo = estados.id WHERE gdd.registro_eliminado = false and gd.id_obras = $idObra and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') and (gdd.fecha_devolucion_real is null or gdd.fecha_devolucion_real > gdd.fecha_ultimo_cobro or gdd.fecha_ultimo_cobro is null) and gdd.tipo_guia = 'A' order by gdd.contrato desc, ne.descripcion");		
 
 			$stmt -> execute();
 
@@ -86,7 +86,7 @@ class ModeloEEPP{
 
 		
 		
-			$stmt = Conexion::conectar()->prepare("SELECT gd.numero_guia as guia, gdm.id as idRegistro, mi.codigo as codigoMaterial, gdm.id_materiales_insumos as idMaterial, mi.descripcion as material, gdm.cantidad as cantidad, gdm.precio as precio, gdm.fecha as fecha, gdm.precio * gdm.cantidad as total FROM guia_despacho_materiales gdm JOIN materiales_insumos mi on gdm.id_materiales_insumos = mi.id JOIN guia_despacho gd on gdm.id_guia = gd.id where gd.id_obras = $idObra and gdm.se_cobra = 1 and gdm.validado = 0 and gdm.registro_eliminado = false and gdm.id_eepp is null and gdm.fecha <= '$fecha'");		
+			$stmt = Conexion::conectar()->prepare("SELECT gd.numero_guia as guia, gdm.id as idRegistro, mi.codigo as codigoMaterial, gdm.id_materiales_insumos as idMaterial, mi.descripcion as material, gdm.cantidad as cantidad, gdm.precio as precio, gdm.fecha as fecha, gdm.precio * gdm.cantidad as total FROM guia_despacho_materiales gdm JOIN materiales_insumos mi on gdm.id_materiales_insumos = mi.id JOIN guia_despacho gd on gdm.id_guia = gd.id where gd.id_obras = $idObra and gdm.se_cobra = 1 and gdm.validado = 0 and gdm.registro_eliminado = false and gdm.id_eepp is null and gdm.fecha <= '$fecha' and gd.tipo_guia = 'A'");		
 
 			$stmt -> execute();
 
@@ -168,7 +168,7 @@ class ModeloEEPP{
 
 	static public function mdlGenerarDetalleEEPP($idEEPP, $idObra, $fecha){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO eepp_detalle_equipos (id_eepp, id_guia_detalle, guia, contrato, codigo, serie, descripcion, modelo, marca, precio, fecha_arriendo, fecha_devolucion, fecha_retiro_obra, report_devolucion, tipo_devolucion, devuelto, match_cambio, ultimo_cobro, nombreDevolucion, cobro_desde, cobro_hasta) SELECT $idEEPP, gdd.id, gd.numero_guia, gdd.contrato, e.codigo, e.numero_serie, ne.descripcion, ne.modelo, m.descripcion, gdd.precio_arriendo, gdd.fecha_arriendo, gdd.fecha_devolucion_real, gdd.fecha_retiro_obra, gdd.id_report_devolucion, gdd.devolucion_tipo, gdd.devuelto, gdd.match_cambio, gdd.fecha_ultimo_cobro, estados.descripcion, if(gdd.fecha_ultimo_cobro is null, gdd.fecha_arriendo, date_add(gdd.fecha_ultimo_cobro, interval 1 day)) as fecha_desde_cobro, if(gdd.devuelto = 1 and gdd.fecha_devolucion_real <= '$fecha', gdd.fecha_devolucion_real, :fecha) as fecha_hasta_cobro FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id join categorias c on ne.id_categoria = c.id left join estados on gdd.devolucion_tipo = estados.id WHERE gdd.registro_eliminado = false and gd.id_obras = $idObra and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') and (gdd.fecha_devolucion_real is null or gdd.fecha_devolucion_real > gdd.fecha_ultimo_cobro or gdd.fecha_ultimo_cobro is null)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO eepp_detalle_equipos (id_eepp, id_guia_detalle, guia, contrato, codigo, serie, descripcion, modelo, marca, precio, fecha_arriendo, fecha_devolucion, fecha_retiro_obra, report_devolucion, tipo_devolucion, devuelto, match_cambio, ultimo_cobro, nombreDevolucion, cobro_desde, cobro_hasta) SELECT $idEEPP, gdd.id, gd.numero_guia, gdd.contrato, e.codigo, e.numero_serie, ne.descripcion, ne.modelo, m.descripcion, gdd.precio_arriendo, gdd.fecha_arriendo, if(gdd.fecha_devolucion_real <= '$fecha', gdd.fecha_devolucion_real, '0000-00-00'), if(gdd.fecha_devolucion_real <= '$fecha', gdd.fecha_retiro_obra, '0000-00-00'), if(gdd.fecha_devolucion_real <= '$fecha', gdd.id_report_devolucion, 0), if(gdd.fecha_devolucion_real <= '$fecha', gdd.devolucion_tipo, 0), if(gdd.fecha_devolucion_real <= '$fecha', gdd.devuelto, 0), gdd.match_cambio, gdd.fecha_ultimo_cobro, if(gdd.fecha_devolucion_real <= '$fecha', estados.descripcion,''), if(gdd.fecha_ultimo_cobro is null, gdd.fecha_arriendo, date_add(gdd.fecha_ultimo_cobro, interval 1 day)) as fecha_desde_cobro, if(gdd.devuelto = 1 and gdd.fecha_devolucion_real <= '$fecha', gdd.fecha_devolucion_real, :fecha) as fecha_hasta_cobro FROM equipos e JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho_detalle gdd ON gdd.id_equipo = e.id JOIN guia_despacho gd ON gdd.id_guia = gd.id join categorias c on ne.id_categoria = c.id left join estados on gdd.devolucion_tipo = estados.id WHERE gdd.registro_eliminado = false and gd.id_obras = $idObra and gdd.validado = 0 and gdd.fecha_arriendo <= '$fecha' and (gdd.fecha_ultimo_cobro IS NULL or gdd.fecha_ultimo_cobro < '$fecha') and (gdd.fecha_devolucion_real is null or gdd.fecha_devolucion_real > gdd.fecha_ultimo_cobro or gdd.fecha_ultimo_cobro is null) and gdd.tipo_guia = 'A'");
 
 		      $stmt->bindParam(":fecha", $fecha, PDO::PARAM_STR);		
 
@@ -333,6 +333,14 @@ class ModeloEEPP{
                  $sqlEEPP = Conexion::conectar()->prepare("DELETE FROM eepp WHERE id = $idEEPP"); 
 
                  $sqlEEPP->execute();
+
+                 $sqlEEPPOC = Conexion::conectar()->prepare("DELETE FROM oc_arriendos WHERE id_eepp = $idEEPP"); 
+
+                 $sqlEEPPOC->execute();
+
+                 $sqlEEPPOCDet = Conexion::conectar()->prepare("DELETE FROM oc_arriendos_detalle WHERE id_eepp = $idEEPP"); 
+
+                 $sqlEEPPOCDet->execute();
 		         
 		         return "ok";            
                	     
@@ -698,6 +706,40 @@ class ModeloEEPP{
 		$stmt -> close();
 
 		$stmt = null;
+	}
+
+
+	static public function mdlActualizaValoresEEPP($idRegistro, $dias, $total){
+	   
+	            $sql = Conexion::conectar()->prepare("UPDATE eepp_detalle_equipos SET dias = $dias, total = $total WHERE id = $idRegistro"); 
+	          	 
+	          	 $sql->execute();
+
+	          	              
+				
+         	
+         	   return "ok";
+			
+
+		$sql -> close();
+		$sql = null;
+		
+
+	}
+
+
+	static public function mdlActualizaTotalEEPP($idEEPP, $total){
+	   
+	            $sql = Conexion::conectar()->prepare("UPDATE eepp SET total_eepp = $total WHERE id = $idEEPP"); 
+	          	 
+	          	 $sql->execute();
+         	
+         	   return "ok";			
+
+		$sql -> close();
+		$sql = null;
+		
+
 	}
 	
 

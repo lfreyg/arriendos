@@ -78,6 +78,8 @@ $('#btnObraVolverEEPP').click(function(){
 
 });  
 
+
+
 $(".tablas").on("click", ".btnProcesaEEPP", function(){
 
 	var idObra = $(this).attr("idObra");
@@ -949,3 +951,14 @@ $('#CmbAnnoEEPP').change(function() {
    
 
 	});
+
+
+//*********************************************************************//
+//************PROCESO ASIGNAR ORDEN DE COMPRA**************************//
+//*********************************************************************//
+
+$('#btnEEPP_OC').click(function(){ 
+        
+        window.location = "index.php?ruta=obras-oc-detalle";  
+
+});  

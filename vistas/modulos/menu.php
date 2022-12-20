@@ -197,6 +197,32 @@
 
 			</li>
 
+			<li class="treeview">
+
+				<a href="#">
+					<i class="fa fa-dollar"></i>			
+					<span>Facturación</span>					
+					<span class="pull-right-container">					
+						<i class="fa fa-angle-left pull-right"></i>
+					</span>
+				</a>
+
+					<ul class="treeview-menu">
+						<li>
+								<a href="factura-eepp-constructora">
+									<i class="fa fa-circle-o"></i>
+									<span>Factura EEPP</span>
+								</a>
+
+							</li>
+
+
+
+					</ul>	
+
+
+		    </li>		
+
 		
 
 		</ul>
