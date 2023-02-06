@@ -375,7 +375,7 @@ class ModeloEEPP{
 	}
 
 	public static function ObtenerDatosEEPP($id){
-             $stmt = Conexion::conectar()->prepare("SELECT ep.fecha_corte as fechaCorte, ep.fecha_eepp as fechaEEPP, c.rut as rut, c.nombre as constructora, o.nombre as obra, o.contacto as contacto, tc.descripcion as formaPago FROM eepp ep JOIN constructoras c ON ep.id_constructoras = c.id JOIN obras o ON ep.id_obras = o.id JOIN tipo_cobro tc ON o.forma_cobro_id = tc.id WHERE ep.id = $id");	
+             $stmt = Conexion::conectar()->prepare("SELECT ep.fecha_corte as fechaCorte, ep.fecha_eepp as fechaEEPP, c.rut as rut, c.nombre as constructora, o.nombre as obra, o.contacto as contacto, tc.descripcion as formaPago, ep.como_factura, ep.cerrado FROM eepp ep JOIN constructoras c ON ep.id_constructoras = c.id JOIN obras o ON ep.id_obras = o.id JOIN tipo_cobro tc ON o.forma_cobro_id = tc.id WHERE ep.id = $id");	
 			   
 			$stmt -> execute();
 

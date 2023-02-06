@@ -14,6 +14,9 @@ if($_SESSION["perfil"] != "Administrador"){
 
 
 $_SESSION['idOrdenCompra'] = null;
+$_SESSION["idFacturaArriendo"] = null;
+$_SESSION["idObraFacturar"] = null;
+ 
 
 
 $idEEPP = $_SESSION["idEEPP"];
@@ -82,7 +85,8 @@ $usuario = $_SESSION["nombre"];
            <th>N° Orden</th> 
            <th>Fecha Orden</th>          
            <th>Fecha Ingreso</th>
-           <th>Usuario</th>            
+           <th>Factura</th> 
+           <th>Neto</th>           
            <th>Acciones</th>           
          </tr> 
 

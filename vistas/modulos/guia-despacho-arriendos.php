@@ -14,6 +14,10 @@ if($_SESSION["perfil"] != "Administrador"){
 
 $hoy = date('Y-m-d');
 
+$fechaMas = date("Y-m-d",strtotime($hoy."+ 3 days")); 
+
+$fechaMenos = date("Y-m-d",strtotime($hoy."- 3 days")); 
+
 $_SESSION['idGuiaDespachoArriendo'] = '';
 
 ?>
@@ -191,7 +195,7 @@ MODAL AGREGAR
              <div class="col-lg-4 col-xs-11"> 
               
                 <label for="nuevoFechaGuia">Fecha Guía</label> 
-                <input type="date" class="form-control input-lg" name="nuevoFechaGuia" value="<?php echo $hoy?>" id="nuevoFechaGuia" readonly autocomplete="off" placeholder="Fecha" required>
+                <input type="date" class="form-control input-lg" name="nuevoFechaGuia" value="<?php echo $hoy?>" id="nuevoFechaGuia" min="<?=$fechaMenos?>" max="<?=$fechaMas?>" autocomplete="off" placeholder="Fecha" required>
                 <input type="hidden" name="tipoGuia" value="A">
 
               </div>
@@ -400,7 +404,7 @@ MODAL EDITAR
               
                 <label for="editaFechaGuia">Fecha Guía</label> 
 
-                <input type="date" class="form-control input-lg" name="editaFechaGuia" id="editaFechaGuia" autocomplete="off" readonly placeholder="Fecha" required>
+                <input type="date" class="form-control input-lg" name="editaFechaGuia" id="editaFechaGuia" autocomplete="off" min="<?=$fechaMenos?>" max="<?=$fechaMas?>" placeholder="Fecha" required>
 
               </div>
 

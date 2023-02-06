@@ -29,6 +29,7 @@ function recargaTablaMantenedor(id) {
 		},
 		"deferRender": true,
 		"retrieve": true,
+		"order":[[2,"asc"]],
 		"processing": true,
 		"language": {
 

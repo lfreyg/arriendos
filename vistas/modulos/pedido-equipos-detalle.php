@@ -71,47 +71,15 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
 
           <div class="box-header with-border"></div>
 
-          <div class="box-body">
-                
-                     <div class="form-group">
-                      
-                      <div class="input-group">
-                      
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-
-                        <select class="form-control input-lg select2" id="seleccionaMarcaEquipo" name="seleccionaMarcaEquipo"> 
-                         <option value="">Seleccionar Categoria</option>              
-                          
-                          <?php                 
-
-                          $marca = ControladorCategorias::ctrMostrarCategorias(null,null);
-
-                          foreach ($marca as $key => $value) {
-                                      
-                                      echo '<option value="'.$value["id"].'">'.strtoupper($value["categoria"]).'</option>';
-                                    }
-                                          
-
-                          ?>
-
-
-                        </select>
-
-                      </div>
-
-                    </div>
-                  
+          <div class="box-body">  
             
             <table class="table table-bordered table-striped table-hover dt-responsive tablaEquiposFactura">
               
              <thead style="background-color: #ccc;color: black; font-weight: bold;">
 
-                 <tr> 
+                <tr> 
                   <th>Acciones</th>  
-                  <th>Categoria</th>
-                  <th>Marca</th>
-                  <th>Equipo</th>
-                  <th>Modelo</th>                  
+                  <th>Categoria</th>                                   
                 </tr>
 
               </thead>
@@ -149,7 +117,9 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
 
                     <input type="text" class="form-control" id="constructoraPedido" value="<?php echo $pedido["constructora"];?>" readonly>                    
 
-                    <input type="hidden" id="idPedidoGenerado" name="idPedidoGenerado" value="<?php echo $idPedido; ?>">
+                    <input type="hidden" id="idPedidoGenerado" name="idPedidoGenerado" value="<?php echo $idPedido?>">
+                    <input type="hidden" class="form-control" id="idConstructoraPedido" value="<?php echo $pedido["idConstructora"]?>">
+                    <input type="hidden" class="form-control" id="idObraPedido" value="<?php echo $pedido["idObra"]?>">
 
                   </div>
 
@@ -162,32 +132,16 @@ $pedido = ModeloPedidoEquipo::mdlMostrarPedidoEquipoDetalle($idPedido);
                   </div>
                 </div> 
                  <hr>            
-                <h2>Detalle Pedido</h2>
-                <div class="form-group">
-                    <div class="form-group">                
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" id="compraDetalleMarca" value="" readonly>                 
-                     </div>
-                   </div> 
-                </div>
+                <h2>Detalle Pedido</h2>                
                 <div class="form-group">
                     <div class="form-group">                
                       <div class="input-group">                    
                        <span class="input-group-addon"><i class="fa fa-th"></i></span>  
                          <input type="text" class="form-control" id="compraDetalleDescripcion" value="" readonly> 
-                         <input type="hidden" id="idEquipoDetalle" name="idEquipoDetalle">                
+                         <input type="hidden" id="idCategoria" name="idCategoria">                
                      </div>
                    </div> 
-                </div>
-                <div class="form-group">
-                    <div class="form-group">                
-                      <div class="input-group">                    
-                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                         <input type="text" class="form-control" id="compraDetalleModelo" value="" readonly>                 
-                     </div>
-                   </div> 
-                </div>
+                </div>               
 
                 <div class="form-group row">
 

@@ -28,7 +28,7 @@ class ModeloPedidoEquipo{
 
 		
 			
-			$stmt = Conexion::conectar()->prepare("SELECT pe.id as numero, c.nombre as constructora, o.nombre as obra, s.nombre as sucursal, u.nombre as usuario, e.descripcion as estado, pe.compartido as compartido, pe.documento as documento, pe.creado as creado, pe.orden_compra as oc FROM pedido_equipo pe join constructoras c on pe.id_constructoras = c.id join obras o on pe.id_obras = o.id join sucursales s on pe.id_sucursal = s.id join usuarios u on pe.id_usuario = u.id join estados e on pe.estado = e.id WHERE pe.id = $id");
+			$stmt = Conexion::conectar()->prepare("SELECT pe.id as numero, c.nombre as constructora, o.nombre as obra, s.nombre as sucursal, u.nombre as usuario, e.descripcion as estado, pe.compartido as compartido, pe.documento as documento, pe.creado as creado, pe.orden_compra as oc, pe.id_constructoras as idConstructora, pe.id_obras as idObra FROM pedido_equipo pe join constructoras c on pe.id_constructoras = c.id join obras o on pe.id_obras = o.id join sucursales s on pe.id_sucursal = s.id join usuarios u on pe.id_usuario = u.id join estados e on pe.estado = e.id WHERE pe.id = $id");
 
 			$stmt -> execute();
 
@@ -172,6 +172,56 @@ class ModeloPedidoEquipo{
 			$stmt -> execute();
    		    return $stmt -> fetchAll();
 		    $stmt -> close();
+		    $stmt = null;
+
+	}
+
+
+	static public function mdlMostrarDespacharPedidoEquipo($idUsuario){
+
+		
+			
+			$stmt = Conexion::conectar()->prepare("SELECT c.nombre as constructora, o.nombre as obra, o.comuna as comuna, COUNT(pd.id_obra) as pendiente, c.id as idConstructora, o.id as idObra FROM pedido_equipo_detalle pd JOIN constructoras c ON pd.id_constructora = c.id JOIN obras o ON pd.id_obra = o.id WHERE id_guia_despacho is null GROUP BY pd.id_obra");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
+
+		    $stmt -> close();
+
+		    $stmt = null;
+
+	}
+
+
+	static public function mdlMostrarVerDetalleDespacharPedidoEquipo($idUsuario){
+
+		
+			
+			$stmt = Conexion::conectar()->prepare("SELECT c.nombre as constructora, o.nombre as obra, o.comuna as comuna, pe.id as pedido, ca.categoria as equipo, pe.creado as fecha, e.descripcion as tipo, u.nombre as usuario, s.nombre as sucursal FROM pedido_equipo_detalle pd JOIN pedido_equipo pe ON pd.id_pedido_equipo = pe.id JOIN constructoras c ON pd.id_constructora = c.id JOIN obras o ON pd.id_obra = o.id  JOIN categorias ca ON pd.id_nombre_equipo = ca.id JOIN estados e ON pd.tipo = e.id JOIN usuarios u ON pe.id_usuario = u.id JOIN sucursales s ON pe.id_sucursal = s.id WHERE id_guia_despacho is null");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
+
+		    $stmt -> close();
+
+		    $stmt = null;
+
+	}
+
+	static public function mdlEquiposPedidoParaGD($idObra){
+
+		
+			
+			$stmt = Conexion::conectar()->prepare("SELECT ped.id as idPedido, ped.id_nombre_equipo as idCategoria, c.categoria, e.descripcion FROM pedido_equipo_detalle ped JOIN categorias c on ped.id_nombre_equipo = c.id JOIN estados e on ped.tipo = e.id WHERE id_obra = $idObra and id_guia_detalle is null");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
+
+		    $stmt -> close();
+
 		    $stmt = null;
 
 	}

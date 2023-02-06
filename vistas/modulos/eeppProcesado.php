@@ -13,6 +13,11 @@ if($_SESSION["perfil"] != "Administrador"){
 }
 
 $_SESSION["idObraOC"] = null;
+$_SESSION["idObraFacturar"] = null;
+$_SESSION["idFacturaArriendo"] = null;
+$_SESSION["idOrdenCompra"] = null;
+
+
 
 if(empty($_SESSION["idEEPP"])){
   $_SESSION["idEEPP"] = $_GET["idEEPP"];
@@ -51,6 +56,24 @@ if($edita == 1){
 }
 
 
+$estadoPagoConsulta = ModeloEEPP::ObtenerDatosEEPP($idEEPP);
+
+$disableAsignaOC = '';
+$disable = '';
+
+$comoFactura = $estadoPagoConsulta["como_factura"];
+
+if($comoFactura != null){
+    $disableAsignaOC = 'disabled';
+    $disable = 'disabled';
+}
+
+$ordenCompra = ModeloOrdenCompra::mdlMostrarListadoOC($idObra, $idEEPP);
+
+if($ordenCompra){
+  $disable = 'disabled';
+}
+
 
 date_default_timezone_set('America/Santiago');
 
@@ -75,6 +98,7 @@ $ultimoEEPP = $ultimoEEPP['id'];
 if($idEEPP == $ultimoEEPP){
     $ultimo = 1;
 }else{
+    $disable = 'disabled';
     $ultimo = 0;
 }
 
@@ -125,10 +149,10 @@ if($edita == 0){
                  <button class="btn btn-danger" id="btnEEPPDiasDescuento" data-toggle="modal" data-target="#modalDiasDescuentos" >Días a Descontar</button>
                   <button class="btn btn-info" id="btnEEPP_PDF" >Generar PDF</button>
                   <button class="btn btn-primary" id="btnEEPP_Excel" >Generar Excel</button>
-                  <button class="btn btn-success" id="btnEEPP_OC" >Asociar OC</button>
+                  <button class="btn btn-success" <?=$disableAsignaOC?> id="btnEEPP_OC" >Asociar OC</button>
               </div> 
              <div  align="right">                    
-                  <button class="btn btn-danger" id="btnEEPPGeneradoAnular" >ANULAR EEPP</button>
+                  <button class="btn btn-danger" <?=$disable?> id="btnEEPPGeneradoAnular" >ANULAR EEPP</button>
              </div> 
              </div> 
     </div>      
@@ -600,10 +624,7 @@ MODAL AGREGAR DESCUENTO
   
   $(document).ready(function(){
 
-     if($('#ultimoEEPP').val() == 0){
-        $('#btnEEPPGeneradoAnular').attr('disabled', true);
-     }
-
+     
      if($('#esEditar').val() == 0){
          $('#btnEEPP_OC').css("display", "none");
      }

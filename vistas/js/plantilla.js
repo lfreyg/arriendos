@@ -82,5 +82,10 @@ function formatConstructora(rutNuevaConstructora)
 	rutNuevaConstructora.value=rutNuevaConstructora.value.replace(/[.-]/g, '').replace( /^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4')
 }
 
+function formatTaller(rutTaller)
+{
+	rutTaller.value=rutTaller.value.replace(/[.-]/g, '').replace( /^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4')
+}
+
  //Initialize Select2 Elements
     $('.select2').select2()

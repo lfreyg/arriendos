@@ -12,7 +12,7 @@ class ModeloOrdenCompra{
 
 		
 			
-			$stmt = Conexion::conectar()->prepare("SELECT id as idRegistro, id_constructora as constructora, id_obra as obra, numero_oc as oc, fecha_oc as fechaOC, fecha_creacion as fechaCrea, usuario_crea as usuario FROM oc_arriendos where id_obra = $idObra and id_eepp = $idEEPP");
+			$stmt = Conexion::conectar()->prepare("SELECT oc.id as idRegistro, oc.id_constructora as constructora, oc.id_obra as obra, oc.numero_oc as oc, oc.fecha_oc as fechaOC, oc.fecha_creacion as fechaCrea, oc.usuario_crea as usuario, oc.id_factura, f.numero_factura, f.neto FROM oc_arriendos oc left join factura f on oc.id_factura = f.id where oc.id_obra = $idObra and oc.id_eepp = $idEEPP");
 
 			$stmt -> execute();
 
@@ -46,7 +46,7 @@ class ModeloOrdenCompra{
 
 		
 
-			$stmt = Conexion::conectar()->prepare("SELECT oc.numero_oc as oc, oc.fecha_oc as fecha, c.nombre as constructora, o.nombre as obra, oc.id_constructora as idConstructora, oc.id_obra as idObra, oc.id as idOC, oc.id_eepp FROM oc_arriendos oc JOIN constructoras c ON oc.id_constructora = c.id JOIN obras o ON oc.id_obra = o.id WHERE oc.id = $id");
+			$stmt = Conexion::conectar()->prepare("SELECT oc.numero_oc as oc, oc.fecha_oc as fecha, c.nombre as constructora, o.nombre as obra, oc.id_constructora as idConstructora, oc.id_obra as idObra, oc.id as idOC, oc.id_eepp, oc.id_factura FROM oc_arriendos oc JOIN constructoras c ON oc.id_constructora = c.id JOIN obras o ON oc.id_obra = o.id WHERE oc.id = $id");
 
 		   $stmt -> execute();
 
@@ -106,6 +106,19 @@ class ModeloOrdenCompra{
 		
 
 		if($stmt->execute()){
+
+		     $sqlocDet = Conexion::conectar()->prepare("UPDATE oc_arriendos_detalle SET numero_oc = :numero_oc where id_oc_arriendo = :id");
+
+			$sqlocDet->bindParam(":numero_oc", strtoupper($datos["oc"]), PDO::PARAM_STR);
+			$sqlocDet->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+			$sqlocDet->execute();
+
+			$sqlRef = Conexion::conectar()->prepare("UPDATE referencia_factura SET numero_referencia = :numero_oc, fecha_referencia = :fecha_oc where id_oc_arriendo = :id");
+
+			$sqlRef->bindParam(":numero_oc", strtoupper($datos["oc"]), PDO::PARAM_STR);
+			$sqlRef->bindParam(":fecha_oc", $datos["fechaOC"], PDO::PARAM_STR);
+			$sqlRef->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+			$sqlRef->execute();
 
 			return "ok";
 
@@ -265,6 +278,29 @@ class ModeloOrdenCompra{
 		$stmt = null;
 
 	}
+
+	static public function mdlValidarExisteEnOC($datos){
+
+       		
+      	$stmt = Conexion::conectar()->prepare("SELECT id FROM oc_arriendos_detalle WHERE id_eepp_detalle = :id and tabla = :tipoTabla and id_oc_arriendo = :idOC");
+
+      	 $stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+      	 $stmt->bindParam(":tipoTabla", $datos["tipoTabla"], PDO::PARAM_STR);
+      	 $stmt->bindParam(":idOC", $datos["idOC"], PDO::PARAM_INT);
+      	        
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+		
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+
 
 
 	static public function mdlMostrarDescuentosExtrasOC($id){

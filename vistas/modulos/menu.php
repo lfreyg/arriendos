@@ -102,6 +102,33 @@
 								</a>
 							</li>
 
+							<li>
+								<a href="usuarios-tipo-estado">
+									<i class="fa fa-circle-o"></i>
+									<span>Usuarios-Estado</span>
+								</a>
+							</li>
+
+							<li>
+								<a href="cambia-estado-equipos">
+									<i class="fa fa-circle-o"></i>
+									<span>Estado Equipos</span>
+								</a>
+							</li>
+
+							<li>
+								<a href="aprobar-cambio-estado">
+									<i class="fa fa-circle-o"></i>
+									<span>Aprobar Estados</span>
+								</a>
+							</li>
+							<li>
+								<a href="talleres">
+									<i class="fa fa-circle-o"></i>
+									<span>Talleres</span>
+								</a>
+							</li>
+
 				</ul>
 
 			</li>
@@ -148,6 +175,14 @@
 								</a>
 
 							</li>
+
+							<li>
+								<a href="despachar-pedido-equipos">
+									<i class="fa fa-circle-o"></i>
+									<span>Despacho Ped.Obra</span>
+								</a>
+
+							</li>
 				       
 
 				        				
@@ -155,6 +190,30 @@
 								<a href="guia-despacho-arriendos">
 									<i class="fa fa-circle-o"></i>
 									<span>Guía Despacho</span>
+								</a>
+
+							</li>
+
+							<li>
+								<a href="hoja-ruta">
+									<i class="fa fa-circle-o"></i>
+									<span>Hoja de Ruta</span>
+								</a>
+
+							</li>
+
+							<li>
+								<a href="guia-despacho-taller">
+									<i class="fa fa-circle-o"></i>
+									<span>Guía Taller</span>
+								</a>
+
+							</li>
+
+							<li>
+								<a href="costos-reparacion-equipos">
+									<i class="fa fa-circle-o"></i>
+									<span>Costos Reparaciones</span>
 								</a>
 
 							</li>
@@ -186,7 +245,7 @@
 							<li>
 								<a href="eeppEdita">
 									<i class="fa fa-circle-o"></i>
-									<span>Editar EEPP</span>
+									<span>Procesar EEPP</span>
 								</a>
 
 							</li>
@@ -215,6 +274,14 @@
 								</a>
 
 							</li>
+
+					    <li>
+								<a href="facturas-nc-nd">
+									<i class="fa fa-circle-o"></i>
+									<span>NC - ND</span>
+								</a>
+
+							</li>		
 
 
 

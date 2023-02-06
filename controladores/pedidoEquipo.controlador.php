@@ -169,6 +169,23 @@ class ControladorPedidoEquipo{
 
 	}
 
+
+	static public function ctrMostrarDespacharPedidoEquipo($idSucursal){	
+
+		$respuesta = ModeloPedidoEquipo::mdlMostrarDespacharPedidoEquipo($idSucursal);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrMostrarVerDetallePedidoEquipo($idSucursal){	
+
+		$respuesta = ModeloPedidoEquipo::mdlMostrarVerDetalleDespacharPedidoEquipo($idSucursal);
+
+		return $respuesta;
+
+	}
+
 	
 
 }

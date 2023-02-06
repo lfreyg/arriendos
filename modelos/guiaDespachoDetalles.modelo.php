@@ -24,12 +24,37 @@ class ModeloGuiaDespachoDetalles{
 		
 		
 		if($stmt->execute()){
+
+			       $sql = "SELECT max(id) AS id from guia_despacho_detalle";
+			  
+                      $rs = Conexion::conectar()->query($sql);
+                       while($row=$rs->fetch())
+                        {
+                        $idInsert = $row["id"];
+                        }   
+
+			  
 			
 				$id = $datos["idEquipo"];
 				$estado = 17; //POR VALIDAR ENTREGA OBRA
 	          $stmt2 = Conexion::conectar()->prepare("UPDATE equipos SET tiene_movimiento = 1, id_estado = $estado WHERE id = $id");
 
 	          $stmt2->execute();
+
+	          $idPedidoObra = $datos["idPedidoObra"];
+
+	          if($idPedidoObra != 0){   
+
+	                
+
+                    $stmt3 = Conexion::conectar()->prepare("UPDATE pedido_equipo_detalle SET id_guia_despacho = :idGuia, id_equipo = :idEquipo, id_guia_detalle = :idInsert WHERE id = $idPedidoObra");
+
+                    $stmt3->bindParam(":idGuia", $datos["idGuia"], PDO::PARAM_INT);
+                    $stmt3->bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
+                    $stmt3->bindParam(":idInsert", $idInsert, PDO::PARAM_INT);
+                    $stmt3->execute();
+
+	          }
 			    
 
 			  return 1;
@@ -145,6 +170,10 @@ class ModeloGuiaDespachoDetalles{
 
 	          $stmt2->execute();
 
+	           $stmt3 = Conexion::conectar()->prepare("UPDATE pedido_equipo_detalle SET id_guia_despacho = null, id_guia_detalle = null, id_equipo = null, fecha_entrega = null WHERE id_guia_detalle = $id");
+
+	          $stmt3->execute();
+
 			return "ok";
 		
 		}else{
@@ -158,6 +187,44 @@ class ModeloGuiaDespachoDetalles{
 		$stmt = null;
 
 	}	
+
+
+    static public function mdlEliminarEquipoGuiaTaller($id,$idLog,$idUsuario,$numeroGuia){
+
+		
+      if($numeroGuia == 0){
+		$stmt = Conexion::conectar()->prepare("DELETE FROM guia_despacho_detalle WHERE id = $id");
+      }else{
+		date_default_timezone_set('America/Santiago');
+        $hoy = date('Y-m-d H:i:s');
+
+        $stmt = Conexion::conectar()->prepare("UPDATE guia_despacho_detalle SET registro_eliminado = true, usuario_elimina = $idUsuario, fecha_elimina = :hoy WHERE id = $id");
+
+        $stmt->bindParam(":hoy", $hoy, PDO::PARAM_STR);
+       }
+		
+		if($stmt -> execute()){			
+	                
+	          $stmt2 = Conexion::conectar()->prepare("UPDATE log_cambia_estados SET id_guia_despacho_envia = null WHERE id = $idLog");
+
+	          $stmt2->execute();
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+
+
 
 	static public function mdlEliminarMaterialGuiaDespacho($idRegistroGuia,$idMaterial,$numeroGuia,$cantidad){
 
@@ -540,6 +607,57 @@ static public function mdlQuitarValidarEquipoRecepcionado($datos){
 		$stmt -> execute();
 
 		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+
+	//AGREGA REISTRO PARA GUIA TRASLADO A TALLER
+
+	static public function mdlIngresarGuiaDespachoTallerDetalle($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO guia_despacho_detalle(id_guia, id_equipo, precio_arriendo, detalle, tipo_guia, validado) VALUES (:idGuia, :idEquipo, :precio, :detalle, :tipoGuia, 1)");
+
+		$stmt->bindParam(":idGuia", $datos["idGuia"], PDO::PARAM_INT);
+		$stmt->bindParam(":idEquipo", $datos["idEquipo"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio", $datos["precio"], PDO::PARAM_INT);		
+		$stmt->bindParam(":detalle", strtoupper($datos["detalle"]), PDO::PARAM_STR);			
+		$stmt->bindParam(":tipoGuia", strtoupper($datos["tipoGuia"]), PDO::PARAM_STR);		
+		
+		
+		if($stmt->execute()){
+			
+				$id = $datos["idLog"];
+				$idGuia = $datos["idGuia"];
+	          $stmt2 = Conexion::conectar()->prepare("UPDATE log_cambia_estados SET id_guia_despacho_envia = $idGuia WHERE id = $id");
+
+	          $stmt2->execute();
+			    
+
+			  return 1;
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlGuiaDespachoTallerPorId($idGuia){
+
+		$stmt = Conexion::conectar()->prepare("SELECT gdd.id as idRegistro, e.id as idEquipo, e.codigo as codigo, e.numero_serie as serie, ne.descripcion as equipo, ne.modelo as modelo, m.descripcion as marca, gd.numero_guia as guia, ce.id as idLog FROM guia_despacho_detalle gdd JOIN equipos e ON gdd.id_equipo = e.id JOIN nombre_equipos ne ON e.id_nombre_equipos = ne.id JOIN marcas m ON ne.id_marca = m.id JOIN guia_despacho gd ON gdd.id_guia = gd.id JOIN log_cambia_estados ce ON ce.id_equipo = e.id WHERE gdd.id_guia = $idGuia and gdd.tipo_guia = 'TA' and gdd.registro_eliminado = false and ce.id_guia_despacho_envia = $idGuia order by gdd.id desc");
+
+		
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
 
 		$stmt -> close();
 

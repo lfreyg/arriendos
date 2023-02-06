@@ -9,9 +9,16 @@ $facturacion = ModeloFacturacionEEPP::obtenerDatosFactura($idFactura);
 $estadoFactura = $facturacion["estado_factura"];
 
 $disable = '';
-if($estadoFactura == 7 || $estadoFactura == 13){
+if($estadoFactura == 7 || $estadoFactura == 13 || $estadoFactura == 14){
    $disable = "disabled";
 }
+
+ $productos = ModeloFacturacionEEPP::mdlMostrarListadoEEPPSeleccionado($idFactura);
+
+ if(!$productos){
+  echo '';
+  die;
+ }
 
 ?>
 <head>
@@ -38,7 +45,7 @@ if($estadoFactura == 7 || $estadoFactura == 13){
    
   <?php
             
-            $productos = ModeloFacturacionEEPP::mdlMostrarListadoEEPPSeleccionado($idFactura);
+           
          $contar = 0;
          foreach ($productos as $key => $value){
 

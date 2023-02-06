@@ -11,7 +11,7 @@ $idFactura = $_GET['idFactura'];
 $facturacion = ModeloFacturacionEEPP::obtenerDatosFactura($idFactura);
 $estadoFactura = $facturacion["estado_factura"];
 
-$eeppCobro = ControladorFacturacion::ctrMostrarEEPPFacturacionPrevia($idObra);
+$eeppCobro = ControladorFacturacion::ctrMostrarEEPPFacturacionPreviaVolverFacturar($idObra, $idFactura);
 
 $disable = '';
 if($estadoFactura == 7 || $estadoFactura == 13){
@@ -29,11 +29,13 @@ if($estadoFactura == 7 || $estadoFactura == 13){
    <thead style="background-color: #ccc;color: black; font-weight: bold;">
 
                  <tr >   
-                  <th width="10%">Periodo EEPP</th>
-                  <th width="5%">Fecha EEPP</th>
-                  <th width="5%">Fecha Cierre</th>   
-                  <th width="10%">Monto EEPP</th>  
-                  <th width="10%">Seleccionar</th>  
+                  <th width="15%">Periodo EEPP</th>
+                  <th width="7%">Fecha EEPP</th>
+                  <th width="7%">Fecha Cierre</th>   
+                  <th width="7%">Monto EEPP</th>  
+                  <th width="7%">Facturado</th>
+                  <th width="7%">Saldo</th>
+                  <th width="7%">Seleccionar</th>  
                   <th width="5%"><div align="center">Ver</div></th>  
                   
                 </tr>
@@ -103,6 +105,39 @@ if($estadoFactura == 7 || $estadoFactura == 13){
 
              
             $total_facturacion_eepp = $total_equipos + $montoMat + $montoextras + $montodscto;
+
+
+            $factura = ModeloFacturacionEEPP::mdlMontoFacturadoEEPP($id_eepp);
+
+              if(!$factura){
+                $montoFacturado = 0;
+              }else{
+                $montoFacturado = $factura["totalFactura"];
+              }
+
+               $nc = ModeloFacturacionEEPP::mdlMontoNotaCredito($id_eepp);
+
+              if(!$nc){
+                $montonc = 0;
+              }else{
+                $montonc = $nc["totalNC"];
+              }
+
+               $nd = ModeloFacturacionEEPP::mdlMontoNotaDebito($id_eepp);
+
+              if(!$nd){
+                $montond = 0;
+              }else{
+                $montond = $nd["totalND"];
+              }
+
+              $totalFacturado = ($montoFacturado + $montond) + $montonc;
+
+
+
+              $saldo = $total_facturacion_eepp - $totalFacturado;
+
+            
                           
 
              
@@ -113,6 +148,8 @@ if($estadoFactura == 7 || $estadoFactura == 13){
     <td ><div align="center"><?php echo $fecha_eepp?></div></td> 
     <td ><div align="center"><?php echo $fecha_corte?></div></td> 
     <td ><div align="right"><?php echo '$ '.number_format($total_facturacion_eepp,0,'','.')?></div></td>
+    <td ><div align="right"><?php echo '$ '.number_format($totalFacturado,0,'','.')?></div></td>
+    <td ><div align="right"><?php echo '$ '.number_format($saldo,0,'','.')?></div></td>
     <td align="center" nowrap=""><button class="btn btn-success btn-xm" <?php echo $disable?> onclick="SeleccionaEEPP('<?php echo $id_eepp?>')">Agregar EEPP</button>
       </td>  
     <td align="center" nowrap=""><button class="btn btn-warning btn-xm" onclick="verEEPP('<?php echo $id_eepp?>','<?php echo $idObra?>')">Ver EEPP</button>

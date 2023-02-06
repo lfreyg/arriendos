@@ -28,6 +28,7 @@ if(empty($_SESSION["idObraFacturar"])){
 
 $facturacion = ModeloFacturacionEEPP::obtenerDatosFactura($idFacturaEEPP);
 $estadoFactura = $facturacion["estado_factura"];
+$idEmpresa = $facturacion["id_empresa"];
 
 
 $obra = ControladorObras::ctrMostrarObrasPorId($idObra);
@@ -62,7 +63,8 @@ $idConstructora = $obra["id_constructoras"];
                  <div class="col-lg-6 col-xs-11"> 
                    <button class="btn btn-success" id="btnEEPPFacturarSelVolver" >Volver a Selección</button>
                    <input type="hidden" id="idObra" name="idObra" value="<?php echo $idObra?>">
-                   <input type="hidden" id="idConstructora" name="idConstructora" value="<?php echo $idConstructora?>">   
+                   <input type="hidden" id="idConstructora" name="idConstructora" value="<?php echo $idConstructora?>">
+                    <input type="hidden" id="idEmpresaOperativa" name="idEmpresaOperativa" value="<?php echo $idEmpresa?>">     
                    <input type="hidden" id="idFacturaEEPPSel" name="idFacturaEEPPSel" value="<?php echo $idFacturaEEPP?>">  
                    <input type="hidden" id="estadoFactura" name="estadoFactura" value="<?php echo $estadoFactura?>"> 
 
@@ -118,18 +120,21 @@ $idConstructora = $obra["id_constructoras"];
                               MOSTRAR EEPP RESUMEN
                             </label>
                           </div>
+                         <!-- 
                           <div class="form-check">
                             <input class="form-check-input" onclick="genera_tabla_eepp_agrupado()" type="radio" name="mostrarEEPP" id="mostrarEEPP2" value="2">
                             <label class="form-check-label" for="mostrarEEPP2">
                               MOSTRAR EEPP AGRUPA EQUIPOS
                             </label>
                           </div>
+
                           <div class="form-check disabled">
                             <input class="form-check-input" onclick="genera_tabla_eepp_detalle()" type="radio" name="mostrarEEPP" id="mostrarEEPP3" value="3">
                             <label class="form-check-label" for="mostrarEEPP3">
                               MOSTRAR EEPP DETALLES
                             </label>
                         </div>
+                        -->
                         <div class="form-check disabled">
                             <input class="form-check-input" onclick="genera_tabla_eepp_consolidado()" type="radio" name="mostrarEEPP" id="mostrarEEPP4" value="3">
                             <label class="form-check-label" for="mostrarEEPP3">
@@ -142,30 +147,47 @@ $idConstructora = $obra["id_constructoras"];
                <div id="contenedorText"> 
                      <div class="row">
                           <div class="col-lg-8 col-xs-11"> 
-                            <label for="ocFactura">Orden Compra</label> 
-                            <input type="text" class="form-control" name="ocFactura" id="ocFactura" >
+                            <label for="cmbReferencias">Referencias</label> 
+                               <select class="form-control" id="cmbReferencias" name="cmbReferencias"> 
+
+                                  <?php
+
+                                  $referencias = ModeloFacturacionEEPP::mdlReferencias();
+
+                                  foreach ($referencias as $key => $value) {
+                                    
+                                    echo '<option value="'.$value["id"].'">'.$value["descripcion"].'</option>';
+                                  }
+
+                                  ?>
+
+                                </select>
+                                <br>
+                        </div>
+                        <br>
+                          <div class="col-lg-8 col-xs-11"> 
+                            <label for="numeroRef">Numero Documento</label> 
+                            <input type="text" class="form-control" name="numeroRef" id="numeroRef" >
                         </div>
                      
                       <br>
                      
                         <div class="col-lg-8 col-xs-11"> 
-                            <label for="fechaOCFactura">Fecha Orden Compra</label> 
-                            <input type="date" class="form-control" name="fechaOCFactura" id="fechaOCFactura" >
+                            <label for="fechaRef">Fecha Documento</label> 
+                            <input type="date" class="form-control" name="fechaRef" id="fechaRef" >
                         </div>
 
                          <br>
                       
                           <div class="col-lg-8 col-xs-11"> 
-                            <label for="montoOCFactura">Neto OC</label> 
-                            <input type="text" class="form-control" name="montoOCFacturaFormato" id="montoOCFacturaFormato" >
+                            <label for="montoOCFactura">Neto Factura</label> 
+                            <input type="text" class="form-control" readonly align="right" name="montoOCFacturaFormato" id="montoOCFacturaFormato" >
                             <input type="hidden" class="form-control" name="montoOCFactura" id="montoOCFactura" >
                          </div>
                      
                       <br>
-                      
-                          <div class="col-lg-8 col-xs-11"> 
-                            <label for="hesOCFactura">HES</label> 
-                            <input type="text" class="form-control" name="hesOCFactura" id="hesOCFactura" >
+                           <div class="col-lg-2 col-xs-11">
+                            <button class="btn btn-success btn-xm text-uppercase" id="btnAgregaReferencia">Agregar</button> 
                          </div>
                    </div>      
                </div>    
@@ -190,6 +212,13 @@ $idConstructora = $obra["id_constructoras"];
                             <div id="detalle_facturado" align="left"></div>    
                      </div>
                     </div>  
+                    <br>
+                     <br>
+                      <div class="row">   
+                      <div class="col-lg-11 col-xs-11">                     
+                            <div id="referencia_factura" align="left"></div>    
+                     </div>
+                    </div> 
 
 
                     
@@ -358,7 +387,11 @@ MODAL EDITAR
    if(estado_factura == 13){ 
          $('#contenedorEEPP').css("display", "none");
          $('#contenedorCheck').css("display", "none");
-         $('#btnTimbrarFactura').attr("disabled", 'disabled');;
+         $('#btnTimbrarFactura').attr("disabled", 'disabled');
+         $('#btnAgregaReferencia').attr("disabled", 'disabled');
+         $('#btnAnularFormaFactura').attr("disabled", 'disabled');
+
+         
 
 
           $('#contenedorFactura').css("display", "block");
@@ -369,6 +402,8 @@ MODAL EDITAR
    } 
    
    genera_tabla_detalle_facturacion();
+   obtenerTotalesFacturacion();
+   genera_tabla_referencia_factura();
 
    });     
 

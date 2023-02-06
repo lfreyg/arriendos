@@ -38,6 +38,24 @@ class AjaxEquiposGuiaArriendos{
 		echo json_encode($respuesta);
 	}
 
+	
+
+	public $idRegistroTaller;
+	public $idLog;
+	public $numeroGuiaTaller;
+
+	public function ajaxEliminarEquiposGuiaTaller(){
+
+		$idRegistroTaller = $this->idRegistroTaller;
+		$idLog = $this->idLog;
+		$numeroGuiaTaller = $this->numeroGuiaTaller;
+		$idUsuario = $_SESSION["id"];
+
+		$respuesta = ModeloGuiaDespachoDetalles::mdlEliminarEquipoGuiaTaller($idRegistroTaller,$idLog, $idUsuario, $numeroGuiaTaller);
+
+		echo json_encode($respuesta);
+	}
+
 	public $finalizaGuia;
 	public $idEmpresa;
 
@@ -129,6 +147,18 @@ if(isset($_POST["idTipoEquipo"]) && isset($_POST['idObra'])){
 	$precio -> ajaxBuscaPrecioConvenio();
 
 }
+
+if(isset($_POST["idRegistroTaller"]) && isset($_POST["idLog"])){
+
+	$eliminar = new AjaxEquiposGuiaArriendos();
+	$eliminar -> idRegistroTaller = $_POST["idRegistroTaller"];
+	$eliminar -> idLog = $_POST["idLog"];
+	$eliminar -> numeroGuiaTaller = $_POST["numeroGuiaTaller"];
+	$eliminar -> ajaxEliminarEquiposGuiaTaller();
+
+}
+
+
 
    
 

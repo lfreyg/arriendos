@@ -101,6 +101,37 @@ $eeppCobro = ControladorFacturacion::ctrMostrarEEPPFacturacionSeleccion($idFactu
             $total_facturacion_eepp = $total_equipos + $montoMat + $montoextras + $montodscto;
 
 
+             $factura = ModeloFacturacionEEPP::mdlMontoFacturadoEEPP($id_eepp);
+
+              if(!$factura){
+                $montoFacturado = 0;
+              }else{
+                $montoFacturado = $factura["totalFactura"];
+              }
+
+              $nc = ModeloFacturacionEEPP::mdlMontoNotaCredito($id_eepp);
+
+              if(!$nc){
+                $montonc = 0;
+              }else{
+                $montonc = $nc["totalNC"];
+              }
+
+               $nd = ModeloFacturacionEEPP::mdlMontoNotaDebito($id_eepp);
+
+              if(!$nd){
+                $montond = 0;
+              }else{
+                $montond = $nd["totalND"];
+              }
+
+               $totalFacturado = ($montoFacturado + $montond) + $montonc;
+
+
+
+              $saldo = $total_facturacion_eepp - $totalFacturado;
+
+
                           
 
              
@@ -110,7 +141,7 @@ $eeppCobro = ControladorFacturacion::ctrMostrarEEPPFacturacionSeleccion($idFactu
     <td ><div align="left"><?php echo $periodo?></div></td> 
     <td ><div align="center"><?php echo $fecha_eepp?></div></td> 
     <td ><div align="center"><?php echo $fecha_corte?></div></td> 
-    <td ><div align="right"><?php echo '$ '.number_format($total_facturacion_eepp,0,'','.')?></div></td>
+    <td ><div align="right"><?php echo '$ '.number_format($saldo,0,'','.')?></div></td>
     <td align="center" nowrap=""><button class="btn btn-warning btn-xm" onclick="verEEPPSel('<?php echo $id_eepp?>','<?php echo $idObra?>')">Ver EEPP</button>
       </td> 
   </tr>
@@ -122,8 +153,8 @@ $eeppCobro = ControladorFacturacion::ctrMostrarEEPPFacturacionSeleccion($idFactu
                               "glosa"=>null,
                               "cantidad"=> 1,
                               "um"=> 'GL',
-                              "precio"=> $total_facturacion_eepp,
-                              "valor"=> $total_facturacion_eepp,
+                              "precio"=> $saldo,
+                              "valor"=> $saldo,
                               "id_eepp"=>$id_eepp
 
                                                                    

@@ -14,7 +14,7 @@ class ModeloConstructoras{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM constructoras WHERE $item = :$item");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -24,7 +24,7 @@ class ModeloConstructoras{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla order by nombre");
+			$stmt = Conexion::conectar()->prepare("SELECT constructoras.*, codigo_actividad.actividad as nombre_actividad FROM constructoras left join codigo_actividad on constructoras.codigo_actividad = codigo_actividad.codigo order by constructoras.nombre");
 
 			$stmt -> execute();
 
@@ -188,6 +188,20 @@ class ModeloConstructoras{
 
 		$stmt = null;
 	}
+
+	static public function mdlMostrarActividadesSII(){
+		$stmt = Conexion::conectar()->prepare("SELECT codigo, actividad FROM codigo_actividad ORDER BY codigo ");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();		
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
+
 	
 
 }

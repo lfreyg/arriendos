@@ -39,8 +39,7 @@ $eeppCobro = ModeloFacturacionEEPP::mdlMostrarDatosFacturaSII($idFactura);
                   <th width="10%">Cantidad</th>
                   <th width="10%">Precio</th>
                   <th width="10%">Valor</th>
-                  <th width="5%">Editar</th>
-                  <th width="5%">Quitar</th>
+                  <th width="5%">Editar</th>                  
                 </tr>
 
     </thead>
@@ -72,16 +71,13 @@ $eeppCobro = ModeloFacturacionEEPP::mdlMostrarDatosFacturaSII($idFactura);
             
   ?>
   <tr>    
-    <td ><div align="left"><?php echo $codigo?></div></td> 
-    <td ><div align="left"><?php echo $descripcion?></div></td>
-    <td ><div align="left"><?php echo $cantidad.' '.$um?></div></td>
-    <td ><div align="left"><?php echo $precio?></div></td>
-    <td ><div align="left"><?php echo $valor?></div></td>  
+    <td ><div align="left"><?= $codigo?></div></td> 
+    <td ><div align="left"><?= $descripcion?></div></td>
+    <td ><div align="center"><?= $cantidad.' '.$um?></div></td>
+    <td ><div align="right"><?= '$ '.number_format($precio,0,'','.')?></div></td>
+    <td ><div align="right"><?= '$ '.number_format($valor,0,'','.')?></div></td>  
     <td align="center" nowrap=""><button class="btn btn-warning btn-xm" <?php echo $disable?> onclick="editarRegistroSII('<?php echo $id?>')">E</button>
       </td>  
-    <td align="center" nowrap=""><button class="btn btn-danger btn-xm" <?php echo $disable?> onclick="eliminarRegistroSII('<?php echo $id?>')">X</button>
-      </td> 
-
     
    
   </tr> 

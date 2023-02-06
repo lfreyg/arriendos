@@ -32,7 +32,8 @@ ModeloFacturacionEEPP::mdlEliminarRegistrosFacturaSII($idFactura);
    
   <?php
                $periodo = '';  
-               $total_facturacion_eepp = 0;                 
+               $total_facturacion_eepp = 0;
+               $totalFacturado = 0;                 
             for($i = 0; $i < count($eeppCobro); $i++){   
 
               $id_eepp = $eeppCobro[$i]["id_eepp"];
@@ -95,9 +96,50 @@ ModeloFacturacionEEPP::mdlEliminarRegistrosFacturaSII($idFactura);
             $total_facturacion_eepp_resumen = $total_equipos + $montoMat + $montoextras + $montodscto;
 
             $total_facturacion_eepp = $total_facturacion_eepp + $total_facturacion_eepp_resumen;
+
+
+            $factura = ModeloFacturacionEEPP::mdlMontoFacturadoEEPP($id_eepp);
+
+              if(!$factura){
+                $montoFacturado = 0;
+              }else{
+                $montoFacturado = $factura["totalFactura"];
+              }
+
+              $nc = ModeloFacturacionEEPP::mdlMontoNotaCredito($id_eepp);
+
+              if(!$nc){
+                $montonc = 0;
+              }else{
+                $montonc = $nc["totalNC"];
+              }
+
+               $nd = ModeloFacturacionEEPP::mdlMontoNotaDebito($id_eepp);
+
+              if(!$nd){
+                $montond = 0;
+              }else{
+                $montond = $nd["totalND"];
+              }
+
+              
+              $totalFacturadoResumen = $montoFacturado + $montonc + $montond;
+              $totalFacturado = $totalFacturado + $totalFacturadoResumen;
+
+
+
+            
                           
 
       }
+
+
+             
+
+
+
+              $saldo = $total_facturacion_eepp - $totalFacturado;
+
 
            $datos = array("idFactura"=>$idFactura,
                               "codigo"=>'EEPP',
@@ -105,8 +147,8 @@ ModeloFacturacionEEPP::mdlEliminarRegistrosFacturaSII($idFactura);
                               "glosa"=>null,
                               "cantidad"=> 1,
                               "um"=> '',
-                              "precio"=> $total_facturacion_eepp,
-                              "valor"=> $total_facturacion_eepp,
+                              "precio"=> $saldo,
+                              "valor"=> $saldo,
                               "id_eepp"=>null
 
                                                                    
@@ -117,7 +159,7 @@ ModeloFacturacionEEPP::mdlEliminarRegistrosFacturaSII($idFactura);
   ?>
   <tr>    
     <td ><div align="left"><?php echo $periodo?></div></td>      
-    <td ><div align="right"><?php echo '$ '.number_format($total_facturacion_eepp,0,'','.')?></div></td> 
+    <td ><div align="right"><?php echo '$ '.number_format($saldo,0,'','.')?></div></td> 
    
   </tr>  
    </tbody>

@@ -113,7 +113,7 @@ $_SESSION['idConstructora'] = null;
                     <td class="text-uppercase">'.$value["telefono_cobranza"].'</td>
                     <td class="text-uppercase">'.$value["email_cobranza"].'</td>
                     <td class="text-uppercase">'.$nombreFormaPago.$banco.'</td>
-                    <td class="text-uppercase">'.$value["codigo_actividad"].'</td>';
+                    <td class="text-uppercase">'.$value["nombre_actividad"].'</td>';
 
 
               if($value["estado"] != 0){
@@ -126,7 +126,7 @@ $_SESSION['idConstructora'] = null;
 
                   }                                  
 
-            echo'  <td>
+            echo'  <td width="150" height="21" nowrap="nowrap">
 
                       <div class="btn-group">
                           
@@ -291,16 +291,24 @@ MODAL AGREGAR PROVEEDOR
                  </div>              
                </div>  
 
-               <div class="form-group row">
+                <div class="form-group row">
                 <div class="form-group">              
-                  <div class="input-group">              
-                   <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                   <input type="text" class="form-control input-lg" name="codigoNuevaConstructora" placeholder="Código Actividad" required>
-                  </div>
-                </div>
-              </div>
+                      <div class="input-group">                      
+                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                        <select class="form-control input-lg" id="codigoNuevaConstructora" name="codigoNuevaConstructora" required>                      
+                          <option value="">Seleccionar Actividad</option>
+                          <?php
+                             $actividad = ModeloConstructoras::mdlMostrarActividadesSII();
+                          foreach ($actividad as $key => $value) {                            
+                            echo '<option value="'.$value["codigo"].'">'.$value["actividad"].'</option>';
+                          }
+                          ?>
+                        </select>
+                      </div>
+                   </div> 
+                   </div>   
 
-          
+                        
 
            </div>
   
@@ -469,13 +477,21 @@ MODAL EDITAR
 
                <div class="form-group row">
                 <div class="form-group">              
-                  <div class="input-group">              
-                   <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-                   <input type="text" class="form-control input-lg" id="codigoEditarConstructora" name="codigoEditarConstructora" placeholder="Código Actividad" required>
-                  </div>
-                </div>
-              </div>         
-           
+                      <div class="input-group">                      
+                        <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                        <select class="form-control input-lg" id="codigoEditarConstructora" name="codigoEditarConstructora" required>                      
+                         
+                          <?php
+                             $actividad = ModeloConstructoras::mdlMostrarActividadesSII();
+                          foreach ($actividad as $key => $value) {                            
+                            echo '<option value="'.$value["codigo"].'">'.$value["actividad"].'</option>';
+                          }
+                          ?>
+                        </select>
+                      </div>
+                   </div> 
+                   </div>   
+              
   
           </div>
 

@@ -251,7 +251,7 @@ MODAL AGREGAR
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoNombre" autocomplete="off" placeholder="Ingresar descripción" required>
+                <input type="text" class="form-control input-lg" name="nuevoNombre" autocomplete="off" placeholder="Ingresar descripción" value="<?=$nombreCategoria?>" required>
 
               </div>
 

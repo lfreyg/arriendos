@@ -87,6 +87,8 @@ $idConstructora = $obra["id_constructoras"];
              <div class="box box-warning"> 
                <div class="box-header with-border"></div>
                  <div class="box-body">  
+
+                      
                        <input type="hidden" id="idObra" name="idObra" value="<?php echo $idObra?>">                      
                        <input type="hidden" id="idConstructora" name="idConstructora" value="<?php echo $idConstructora?>">   
                         <input type="hidden" id="idFacturaEEPP" name="idFacturaEEPP" value="<?php echo $idFacturaEEPP?>"> 
@@ -94,6 +96,7 @@ $idConstructora = $obra["id_constructoras"];
                          
 
                             <div id="eepp_para_facturar" align="left"></div>
+                           
                                   
               </div>
             </div>
@@ -110,7 +113,7 @@ $idConstructora = $obra["id_constructoras"];
             </div>
 
              <div class="pull-right-container">
-             <button class="btn btn-lg btn-danger btn-block text-uppercase" id="btnContinuarFactura">CONTINUAR FACTURACIÓN</button> 
+             <button class="btn btn-lg btn-primary btn-block text-uppercase" id="btnContinuarFactura">CONTINUAR FACTURACIÓN</button> 
              </div> 
             
 
@@ -130,8 +133,7 @@ $idConstructora = $obra["id_constructoras"];
   
   
   $(document).ready(function(){
-
-    idObra = $('#idObra').val(); 
+ 
    
     genera_tabla_eepp_facturar();
     genera_tabla_EEPP_Seleccionado();

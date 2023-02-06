@@ -105,3 +105,10 @@ $("#nuevaRutChofer").change(function(){
 
 
 
+$(".tablas").on("click", ".btnHoja", function(){
+
+	 	var idChofer = $(this).attr("idChofer");
+
+	 window.open("extensiones/pdf/TCPDF/hoja-ruta.php?id="+idChofer, "_blank");
+
+})

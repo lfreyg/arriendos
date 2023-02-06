@@ -7,6 +7,7 @@ require_once "../modelos/ordenCompra.modelo.php";
 
  
 $id_eepp = $_POST['id'];
+$idOC = $_POST['idOC'];
 
 
 ?>
@@ -68,6 +69,17 @@ $id_eepp = $_POST['id'];
                 $disable = 'disabled';
               }  
 
+               $datos2 = array("id"=>$idDetalleEEPP,
+                              "tipoTabla"=>$tipoTabla,
+                              "idOC"=>$idOC            
+             ); 
+
+              $existeEnOC = ModeloOrdenCompra::mdlValidarExisteEnOC($datos2);
+
+              if($existeEnOC){
+                $disable = 'disabled';
+              }
+
 
               
             
@@ -80,7 +92,7 @@ $id_eepp = $_POST['id'];
     <td ><div align="center"><?php echo $dias?></div></td>
     <td ><div align="center"><?php echo $canOCSumado?></div></td>
     <td ><div align="center"><?php echo $saldo?></div></td>
-    <td align="center" nowrap=""><button class="btn btn-success btn-xm" <?php echo $disable?> onclick="SeleccionEquipoEEPPOC('<?= $idDetalleEEPP?>','<?= $codigo?>','<?= $descripcion?>','<?= $precio?>','<?=$saldo?>','<?=$tipoTabla?>')">Sel</button>
+    <td align="center" nowrap=""><button class="btn btn-success btn-xm" <?php echo $disable?> onclick="SeleccionEquipoEEPPOC('<?= $idDetalleEEPP?>','<?= $codigo?>','<?= $precio?>','<?=$saldo?>','<?=$tipoTabla?>')">Sel</button>
       </td> 
      
         
@@ -138,7 +150,7 @@ $id_eepp = $_POST['id'];
     <td ><div align="center"><?php echo number_format($cantidad,0,'','.')?></div></td>
     <td ><div align="center"><?php echo $canOCSumado?></div></td>
     <td ><div align="center"><?php echo $saldo?></div></td>
-    <td align="center" nowrap=""><button class="btn btn-success btn-xm" <?php echo $disable?> onclick="SeleccionEquipoEEPPOC('<?= $idDetalleEEPP?>','<?=$codigo?>','<?=$descripcion?>','<?=$precio?>','<?=$saldo?>','<?=$tipoTabla?>')">Sel</button>
+    <td align="center" nowrap=""><button class="btn btn-success btn-xm" <?php echo $disable?> onclick="SeleccionEquipoEEPPOC('<?= $idDetalleEEPP?>','<?=$codigo?>','<?=$precio?>','<?=$saldo?>','<?=$tipoTabla?>')">Sel</button>
       </td>  
    
        
@@ -197,7 +209,7 @@ $id_eepp = $_POST['id'];
     <td ><div align="center"><?php echo number_format($cantidad,0,'','.')?></div></td>        
    <td ><div align="center"><?php echo $canOCSumado?></div></td>
     <td ><div align="center"><?php echo $saldo?></div></td>
-    <td align="center" nowrap=""><button class="btn btn-success btn-xm" <?php echo $disable?> onclick="SeleccionEquipoEEPPOC('<?=$idDetalleEEPP?>','<?=$codigo?>','<?=$descripcion?>','<?= $precioMat?>','<?=$saldo?>','<?=$tipoTabla?>')">Sel</button>
+    <td align="center" nowrap=""><button class="btn btn-success btn-xm" <?php echo $disable?> onclick="SeleccionEquipoEEPPOC('<?=$idDetalleEEPP?>','<?=$codigo?>','<?= $precioMat?>','<?=$saldo?>','<?=$tipoTabla?>')">Sel</button>
       </td>        
   </tr>
 

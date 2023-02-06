@@ -1,7 +1,7 @@
 <?php
 
-require_once "../controladores/equipos.controlador.php";
-require_once "../modelos/equipos.modelo.php";
+require_once "../controladores/categorias.controlador.php";
+require_once "../modelos/categorias.modelo.php";
 
 
 
@@ -21,7 +21,9 @@ class TablaEquiposPedido{
 		    	$categoria = $this->idCategoria;		    	
        }
       
-  		$productos = ModeloEquipos::mdlMostrarEquiposPedidos($categoria);
+  	//	$productos = ModeloEquipos::mdlMostrarEquiposPedidos($categoria);
+
+  		$productos = ControladorCategorias::ctrMostrarCategorias(null,null);
  		
   		if(count($productos) == 0){
 
@@ -35,16 +37,13 @@ class TablaEquiposPedido{
 
 		  for($i = 0; $i < count($productos); $i++){
 
-		    		  	
 
-		  	$botones =  "<div class='btn-group'><button class='btn btn-primary agregarEquipoArriendo' idTipoEquipo='".$productos[$i]["id"]."'>Agregar</button></div>"; 
+
+		  	$botones =  "<div class='btn-group'><button class='btn btn-primary agregarEquipoArriendo' idCategoria='".$productos[$i]["id"]."'>Agregar</button></div>"; 
 
 		  	$datosJson .='[			     
 			      "'.$botones.'",			     
-			      "'.$productos[$i]["categoria"].'",
-			      "'.$productos[$i]["marca"].'",
-			      "'.$productos[$i]["equipo"].'",
-			      "'.$productos[$i]["modelo"].'"
+			      "'.strtoupper($productos[$i]["categoria"]).'"			     
 			    ],';
 
 		  }
@@ -70,13 +69,8 @@ class TablaEquiposPedido{
 ACTIVAR TABLA DE PRODUCTOS
 =============================================*/ 
 
-if(isset($_POST["idCategoria"])){
-  $activarProductosVentas = new TablaEquiposPedido();
-  $activarProductosVentas -> idCategoria = $_POST["idCategoria"];
+
+  $activarProductosVentas = new TablaEquiposPedido();  
   $activarProductosVentas -> mostrarTablaEquiposPedido();
-}else{
-  $activarProductosVentas = new TablaEquiposPedido();
-  $activarProductosVentas -> idCategoria = '';
-  $activarProductosVentas -> mostrarTablaEquiposPedido();
-}
+
 

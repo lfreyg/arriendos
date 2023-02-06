@@ -78,6 +78,16 @@ date_default_timezone_set('America/Santiago');
   <script src="vistas/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
   <script src="vistas/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
 
+   
+    
+    <script src="vistas/bower_components/datatables.net/js/dataTables.buttons.min.js"></script>
+    <script src="vistas/bower_components/datatables.net/js/buttons.flash.min.js"></script>
+    <script src="vistas/bower_components/datatables.net/js/jszip.min.js"></script>
+    <script src="vistas/bower_components/datatables.net/js/pdfmake.min.js"></script>
+    <script src="vistas/bower_components/datatables.net/js/vfs_fonts.js"></script>
+    <script src="vistas/bower_components/datatables.net/js/buttons.html5.min.js"></script>
+    <script src="vistas/bower_components/datatables.net/js/buttons.print.min.js"></script>
+
   <!-- SweetAlert 2 -->
   <script src="vistas/plugins/sweetalert2/sweetalert2.all.js"></script>
    <!-- By default SweetAlert2 doesn't support IE. To enable IE 11 support, include Promise polyfill:-->
@@ -217,6 +227,25 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "orden-compra-detalle" ||
          $_GET["ruta"] == "obras-factura-detalle" ||
          $_GET["ruta"] == "EEPPFacturarSeleccion" ||
+         $_GET["ruta"] == "EEPPFacturarSeleccionOC" ||
+         $_GET["ruta"] == "facturas-nc-nd" ||
+         $_GET["ruta"] == "factura-nota-credito-listado" ||
+         $_GET["ruta"] == "factura-nc-detalle" ||
+         $_GET["ruta"] == "factura-nota-debito-listado" ||
+         $_GET["ruta"] == "factura-nd-detalle" ||
+         $_GET["ruta"] == "cambia-estado-equipos" ||
+         $_GET["ruta"] == "usuarios-tipo-estado" ||
+         $_GET["ruta"] == "aprobar-cambio-estado" ||
+         $_GET["ruta"] == "talleres" ||
+         $_GET["ruta"] == "guia-despacho-taller" ||
+         $_GET["ruta"] == "guia-despacho-taller-detalle" ||
+         $_GET["ruta"] == "costos-reparacion-equipos" ||
+         $_GET["ruta"] == "despachar-pedido-equipos" ||
+         $_GET["ruta"] == "ver-detalle-despachar-pedido-equipos" ||
+         $_GET["ruta"] == "despachar-pedido-equipos-detalle" ||
+         $_GET["ruta"] == "hoja-ruta" ||
+
+         
 
         
 

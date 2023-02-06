@@ -60,7 +60,27 @@ $obtieneIdEEPP = ModeloFacturacionEEPP::mdlMostrarEEPPAsociadoFactura($idFactura
                 $montoFacturado = $factura["totalFactura"];
               }
 
-              $saldo = $montoEEPP - $montoFacturado;
+              $nc = ModeloFacturacionEEPP::mdlMontoNotaCredito($id_eepp);
+
+              if(!$nc){
+                $montonc = 0;
+              }else{
+                $montonc = $nc["totalNC"];
+              }
+
+               $nd = ModeloFacturacionEEPP::mdlMontoNotaDebito($id_eepp);
+
+              if(!$nd){
+                $montond = 0;
+              }else{
+                $montond = $nd["totalND"];
+              }
+
+              $totalFacturado = $montoFacturado + $montonc + $montond;
+
+
+
+              $saldo = $montoEEPP - $totalFacturado;
 
               if($saldo < 0){
              //   $saldo = 0;
@@ -73,7 +93,7 @@ $obtieneIdEEPP = ModeloFacturacionEEPP::mdlMostrarEEPPAsociadoFactura($idFactura
   <tr>   
     <td ><div align="left"><?php echo $periodo?></div></td> 
     <td ><div align="right"><?php echo '$ '.number_format($montoEEPP,0,'','.')?></div></td> 
-    <td ><div align="right"><?php echo '$ '.number_format($montoFacturado,0,'','.')?></div></td> 
+    <td ><div align="right"><?php echo '$ '.number_format($totalFacturado,0,'','.')?></div></td> 
     <td ><div align="right"><?php echo '$ '.number_format($saldo,0,'','.')?></div></td>        
   </tr>
   <?php

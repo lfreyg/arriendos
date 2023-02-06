@@ -205,6 +205,10 @@ class ModeloGuiaDespacho{
        $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado WHERE gdd.id_guia = $id"); 
                $sqlGuia->execute();
 
+        $sqlPedido = Conexion::conectar()->prepare("UPDATE pedido_equipo_detalle SET id_guia_despacho = null, id_guia_detalle = null, id_equipo = null, fecha_entrega = null WHERE id_guia_despacho = $id");
+
+	          $sqlPedido->execute();        
+
 		$stmt = Conexion::conectar()->prepare("DELETE FROM guia_despacho WHERE id = $id");
 		
 		if($stmt -> execute()){
@@ -246,6 +250,10 @@ class ModeloGuiaDespacho{
 
 		 $sqlGuia = Conexion::conectar()->prepare("UPDATE equipos e JOIN guia_despacho_detalle gdd ON e.id = gdd.id_equipo SET e.id_estado = $estado WHERE gdd.id_guia = $id"); 
                $sqlGuia->execute();
+
+               $sqlPedido = Conexion::conectar()->prepare("UPDATE pedido_equipo_detalle SET id_guia_despacho = null, id_guia_detalle = null, id_equipo = null, fecha_entrega = null WHERE id_guia_despacho = $id");
+
+	          $sqlPedido->execute();
 
 		$stmt = Conexion::conectar()->prepare("UPDATE guia_despacho SET estado_guia = 14 WHERE id = $id");
 		
@@ -354,6 +362,23 @@ class ModeloGuiaDespacho{
 		  $stmt -> close();
 
 		  $stmt = null;
+
+	}
+
+
+	static public function mdlValidarEnPedido($id){
+
+		
+			
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM pedido_equipo_detalle where id_guia_despacho = $id");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();		
+
+		    $stmt -> close();
+
+		    $stmt = null;
 
 	}
 

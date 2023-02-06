@@ -32,6 +32,22 @@ if($_SESSION["idGuiaDespachoArriendo"] == ''){
 
 }
 
+$validar = ModeloGuiaDespacho::mdlValidarEnPedido($idGuia);
+
+if($validar){
+
+  echo '<script>
+
+    window.location = "despachar-pedido-equipos-detalle";
+
+  </script>';
+
+  return;
+
+}
+
+
+
 $hoy = date('Y-m-d');
 
 $guiaDespacho = ModeloGuiaDespacho::mdlMostrarGuiaDespachoDetalle($idGuia);
@@ -671,6 +687,8 @@ MODAL EDITAR MATERIALES
 
      if($('#estadoGuia').val() == 13){
         $('#btnFinalizarGuia').attr('disabled', true)
+        $('#btnAgregarEquipo').attr('disabled', true)
+        $('#btnAgregarMaterial').attr('disabled', true)
 
 
      }

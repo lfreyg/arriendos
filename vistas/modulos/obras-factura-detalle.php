@@ -32,6 +32,22 @@ $nombreConstructora = $obra["constructora"];
 
 $usuario = $_SESSION["nombre"];
 
+$eeppCobro = ModeloFacturacionEEPP::mdlMostrarEEPPFacturacionPrevia($idObra);
+$FacturaExiste = ModeloFacturacionEEPP::mdlExisteFacturaSinTerminar($idObra);
+$disable = '';
+$mensaje = '';
+
+
+if(!$eeppCobro){
+  $disable = 'disabled';
+  $mensaje = 'No existen EEPP para Facturar';
+}
+
+if($FacturaExiste){
+  $disable = 'disabled';
+  $mensaje = 'Debe Terminar Factura en proceso o borrador';
+}
+
 
 ?>
 <div class="content-wrapper">
@@ -56,11 +72,12 @@ $usuario = $_SESSION["nombre"];
 
       <div class="box-header with-border">
   
-        <button class="btn btn-primary" id="btnNuevoFactura" data-toggle="modal" data-target="#modalAgregarFactura">
+        <button class="btn btn-primary btn-lg" <?=$disable?> id="btnNuevoFactura" data-toggle="modal" data-target="#modalAgregarFactura">
           
           Nueva Factura
 
         </button>
+          <h4><?=$mensaje?></h4>
 
               <input type="hidden" id="idObra_global" name="idObra_global" value="<?php echo $idObra?>">                      
              <input type="hidden" id="idConstructora_global" name="idConstructora_global" value="<?php echo $idConstructora?>">
@@ -75,9 +92,7 @@ $usuario = $_SESSION["nombre"];
          
          <tr>
            <th>Empresa</th> 
-           <th>N° Factura</th>   
-           <th>OC</th> 
-           <th>Fecha OC</th> 
+           <th>N° Factura</th>  
            <th>Neto</th>        
            <th>Fecha Factura</th>
            <th>Cliente</th> 
@@ -223,7 +238,7 @@ MODAL AGREGAR
 MODAL EDITAR 
 ======================================-->
 
-<div id="modalEditarOC" class="modal fade" role="dialog">
+<div id="modalEditarFac" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -239,7 +254,7 @@ MODAL EDITAR
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar Orden de Compra</h4>
+          <h4 class="modal-title">Editar Factura</h4>
 
         </div>
 
@@ -250,20 +265,11 @@ MODAL EDITAR
         <div class="modal-body">
 
           <div class="box-body">
-             
-             <div class="row">
-               <div class="col-lg-6 col-xs-11">               
-                <label for="nuevoNumeroOCE">Número OC</label> 
-                <input type="text" class="form-control input-lg" name="nuevoNumeroOCE" value="" id="nuevoNumeroOCE" autocomplete="off" placeholder="Número OC" required>
-                <input type="hidden" id="idRegistro" name="idRegistro">
-              </div>         
-           </div> 
-           <br>
-           <br>
            <div class="row">
                <div class="col-lg-6 col-xs-11"> 
-                <label for="nuevoFechaOCE">Fecha OC</label> 
-                <input type="date" class="form-control input-lg" name="nuevoFechaOCE" value="<?php echo $hoy?>" id="nuevoFechaOCE" autocomplete="off" placeholder="Fecha" required>
+                <label for="fechaFacEdita">Fecha Factura</label> 
+                <input type="date" class="form-control" name="fechaFacEdita"  id="fechaFacEdita" autocomplete="off" placeholder="Fecha" required>
+                <input type="hidden" id="idRegistro" name="idRegistro">
               </div>
           </div>    
            
@@ -288,8 +294,8 @@ MODAL EDITAR
 
         <?php
 
-          $editarReport = new ControladorOrdenCompra();
-          $editarReport -> ctrEditarOC();
+          $editarFac = new ControladorFacturacion();
+          $editarFac -> ctrEditarFacturaEEPP();
 
         ?>
 
@@ -303,12 +309,6 @@ MODAL EDITAR
 
 
 
-<?php
-
-  $eliminarOC = new ControladorOrdenCompra();
-  $eliminarOC -> ctrEliminarOC();
-
-?>      
 
 
 <script src="vistas/js/facturacionEEPP.js?v=<?php echo(rand());?>"></script>

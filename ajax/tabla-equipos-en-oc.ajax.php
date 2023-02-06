@@ -1,8 +1,21 @@
 <?php
 require_once "../modelos/eepp.modelo.php";
 require_once "../modelos/ordenCompra.modelo.php";
+require_once "../modelos/facturacion.modelo.php";
 
 $idOC = $_POST['id'];
+$idFactura = $_POST['idFactura'];
+
+$disable = '';
+if($idFactura != 0){
+   $facturacion = ModeloFacturacionEEPP::obtenerDatosFactura($idFactura);
+   $estadoFactura = $facturacion["estado_factura"];
+  
+  if($estadoFactura == 7 || $estadoFactura == 13){
+    $disable = 'disabled';
+  }
+
+}
 
 ?>
 <head>
@@ -87,7 +100,7 @@ $idOC = $_POST['id'];
        
     <td align="left" nowrap="">
             
-      <button class="btn btn-danger btn-xm" title="Eliminar" onclick="eliminarConsultaOC('<?php echo $value["id"]?>')">X</button>
+      <button class="btn btn-danger btn-xm" title="Eliminar" <?=$disable?> onclick="eliminarConsultaOC('<?php echo $value["id"]?>')">X</button>
     </td>
     
   </tr>

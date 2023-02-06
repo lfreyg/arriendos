@@ -17,6 +17,9 @@ $(".tablas").on("click", ".btnEditarObra", function(){
 	    processData: false,
 	    dataType: "json",
 	    success:function(respuesta){
+                
+                alert(respuesta["comuna"]);
+	    
      		
      		$("#nombreEditarObra").val(respuesta["nombre"]);
      		$("#idObras").val(respuesta["id"]);
@@ -25,6 +28,8 @@ $(".tablas").on("click", ".btnEditarObra", function(){
      		$("#telefonoEditarObra").val(respuesta["telefono"]);
      		$("#correoEditarObra").val(respuesta["email"]);
      		$("#formaCobroEditarObra").val(respuesta["forma_cobro_id"]);
+     		$("#cmbCiudad").val(respuesta["ciudad"]);
+     		$("#cmbComuna").val(respuesta["comuna"]);
 
      	}
 

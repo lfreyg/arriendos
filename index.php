@@ -30,6 +30,11 @@ require_once "controladores/pedidoInterno.controlador.php";
 require_once "controladores/eepp.controlador.php";
 require_once "controladores/facturacion.controlador.php";
 require_once "controladores/ordenCompra.controlador.php";
+require_once "controladores/facturaNC.controlador.php";
+require_once "controladores/facturaND.controlador.php";
+require_once "controladores/talleres.controlador.php";
+require_once "controladores/guiaDespachoTaller.controlador.php";
+require_once "controladores/comunas.controlador.php";
 
 require_once "modelos/categorias.modelo.php";
 require_once "modelos/clientes.modelo.php";
@@ -57,7 +62,12 @@ require_once "modelos/pedidoInterno.modelo.php";
 require_once "modelos/eepp.modelo.php";
 require_once "modelos/materiales.modelo.php";
 require_once "modelos/facturacion.modelo.php";
+require_once "modelos/facturacionOC.modelo.php";
 require_once "modelos/ordenCompra.modelo.php";
+require_once "modelos/facturacionNCND.modelo.php";
+require_once "modelos/estados.modelo.php";
+require_once "modelos/talleres.modelo.php";
+require_once "modelos/guiaDespachoTaller.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 

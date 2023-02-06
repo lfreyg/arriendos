@@ -171,5 +171,20 @@ class ModeloTransportista{
 		$stmt = null;
 	}
 
+
+	static public function mdlHojaRutaChofer($idTransporte){
+		
+			$stmt = Conexion::conectar()->prepare("SELECT c.nombre as constructora, o.nombre as obra, gd.numero_guia, o.comuna FROM guia_despacho_detalle gdd JOIN guia_despacho gd ON gdd.id_guia = gd.id JOIN constructoras c ON gd.id_constructoras = c.id JOIN obras o ON gd.id_obras = o.id WHERE gd.id_transporte_guia = $idTransporte and gdd.validado = 1 and gd.estado_guia = 13 and gdd.registro_eliminado = 0 GROUP BY gd.numero_guia ORDER BY o.comuna");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
 }
 

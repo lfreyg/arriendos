@@ -93,8 +93,9 @@ $('#btnEEPPFacturarVolver').click(function(){
 
 
 
-function genera_tabla_eepp_facturar(idObra) {
+function genera_tabla_eepp_facturar() {
 
+	 
 	idObra = $('#idObra').val(); 
 	idFactura = $('#idFacturaEEPP').val();
 	
@@ -118,6 +119,38 @@ function genera_tabla_eepp_facturar(idObra) {
 		}
 	});
 }
+
+function genera_tabla_oc_facturar() {
+
+	 $('#eepp_para_facturar').css("display", "none");
+	 $('#tbl_oc_facturar').css("display", "block");
+
+
+	idObra = $('#idObra').val(); 
+	idFactura = $('#idFacturaEEPP').val();
+	
+	datos = "idObra=" + idObra +
+	        "&idFactura=" + idFactura;
+
+
+	$.ajax({
+
+
+		url: "ajax/tabla-oc-para-facturar.ajax.php",
+		method: "GET",
+		data: datos,
+		async: true, 
+
+		success: function(html) {	
+
+			$("#tbl_oc_facturar").html("");      
+			$('#tbl_oc_facturar').html(html);
+
+		}
+	});
+}
+
+
 
 
 
@@ -204,6 +237,95 @@ $(".tablaObraListaFac tbody").on("click", "button.btnDetalleFac", function(){
 });
 
 
+$(".tablaObraListaFac tbody").on("click", "button.btnEditarFac", function(){
+
+	var idFactura = $(this).attr("idFactura");
+
+	var datos = new FormData();
+	datos.append("idFactura", idFactura);
+
+	$.ajax({
+	    url:"ajax/facturacion-detalle.ajax.php",
+	    method:"POST",
+	    data: datos,
+	    cache: false,
+	    contentType: false,
+	    processData: false,
+	    dataType: "json",
+	    success:function(respuesta){
+
+     		$("#idRegistro").val(idFactura);     		
+     		$("#fechaFacEdita").val(respuesta["fecha_factura"]);
+
+     		
+     		$("#modalEditarFac").modal("show"); 
+     		   		
+
+     	}
+
+	})
+
+
+});
+
+
+
+$(".tablaObraListaFac tbody").on("click", "button.btnEliminarFac", function(){
+
+	var idFactura = $(this).attr("idFactura");
+
+
+         swal({
+
+		title: '¿Está seguro de ELIMINAR Factura?',
+		text: "¡Si no lo está puede cancelar la accíón!",
+		type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, ELIMINAR FACTURA!'
+        }).then(function(result) {
+        if (result.value) {
+
+        			var idFacturaEliminar = idFactura;
+	
+
+				var datos = new FormData();
+				datos.append("idFacturaEliminar", idFacturaEliminar);
+
+				$.ajax({
+					 url:"ajax/facturacion-detalle.ajax.php",
+					method: "POST",
+					data: datos,
+					cache: false,
+					contentType: false,
+					processData: false,
+					dataType: "json",
+					success: function(r) {
+
+						alertify.success("Factura eliminada");
+						window.location = "index.php?ruta=obras-factura-detalle";  
+
+						
+
+
+					}
+				});   
+
+        }
+
+
+	})
+
+
+
+
+	
+
+});
+
+
 
 function SeleccionaEEPP(idEEPP) {
 	
@@ -254,6 +376,15 @@ function genera_tabla_EEPP_Seleccionado() {
 
 			$('#eepp_seleccionados').html(html);
 
+			if(html == ''){
+			   $('#btnContinuarFactura').attr('disabled', 'disabled'); 
+			   return false; 	
+			}
+
+			 $('#btnContinuarFactura').removeAttr('disabled'); 
+
+			
+
 		}
 	});
 }
@@ -265,15 +396,16 @@ function eliminarEEPPSeleccionado(idRegistro,idEEPP) {
 	
 	var idRegistro = idRegistro;
 	var idEEPPElimina = idEEPP;
+	var idFacturaQuitar = $('#idFacturaEEPP').val(); 
 	
 
 
 	var datos = new FormData();
 	datos.append("idRegistro", idRegistro);
 	datos.append("idEEPPElimina", idEEPPElimina);
+	datos.append("idFacturaQuitar", idFacturaQuitar);
 	
-
-
+	
 	$.ajax({
 		 url:"ajax/facturacion-detalle.ajax.php",
 		method: "POST",
@@ -321,6 +453,8 @@ function genera_tabla_eepp_facturar_seleccion() {
 			$("#eepp_para_facturar_sel").html("");      
 			$('#eepp_para_facturar_sel').html(html);
 			genera_tabla_detalle_facturacion();
+			obtenerTotalesFacturacion();
+			genera_tabla_referencia_factura();
 
 		}
 	});
@@ -375,6 +509,7 @@ function genera_tabla_eepp_agrupado() {
 			$("#eepp_para_facturar_sel").html("");      
 			$('#eepp_para_facturar_sel').html(html);
 			genera_tabla_detalle_facturacion();
+			obtenerTotalesFacturacion();
 
 		}
 	});
@@ -399,6 +534,8 @@ function genera_tabla_eepp_detalle() {
 
 			$("#eepp_para_facturar_sel").html("");      
 			$('#eepp_para_facturar_sel').html(html);
+			genera_tabla_detalle_facturacion();
+			obtenerTotalesFacturacion();
 
 		}
 	});
@@ -424,6 +561,7 @@ function genera_tabla_eepp_consolidado() {
 			$("#eepp_para_facturar_sel").html("");      
 			$('#eepp_para_facturar_sel').html(html);
 			genera_tabla_detalle_facturacion();
+			obtenerTotalesFacturacion();
 
 		}
 	});
@@ -501,7 +639,7 @@ $('#btnConfirmaFormaFactura').click(function(){
 	  $('#contenedorText').css("display", "block");
           $('#btnTimbrarFactura').css("display", "block");
 
-	  genera_tabla_factura_sii()
+	  genera_tabla_factura_sii();
 	  obtenerTotalesFacturacion();
 	  genera_tabla_detalle_facturacion();
         
@@ -663,16 +801,124 @@ function obtenerTotalesFacturacion(){
 
 
 
+$('#btnAgregaReferencia').click(function() {
+	   	      
+	      idFactura = $('#idFacturaEEPPSel').val(); 
+	      idOC = $('#idOrdenCompra').val();
+	      idReferencia = $("#cmbReferencias").val();
+	      numero = $("#numeroRef").val();
+	      fechaRef = $("#fechaRef").val();
+	     
+
+	      if(numero == ''){
+	      	alertify.error('Número de documento es obligatorio');
+	      	return false;
+	      }
+
+	      if(fechaRef == ''){
+	      	alertify.error('Fecha Documento es obligatorio');
+	      	return false;
+	      }
+
+	      			
+				
+
+	datos = "idFactura=" + idFactura +
+		"&idOC=" + idOC +		
+		"&idReferencia=" + idReferencia + 
+		"&numero=" + numero + 
+		"&fechaRef=" + fechaRef;
+
+
+	$.ajax({
+
+		type: "POST",
+		url: "ajax/guarda-registro-referencia-factura.ajax.php",
+		data: datos,
+
+		success: function(res) {
+
+			alertify.success("Referecnia agregada a Factura");
+			 $("#cmbReferencias").val(1);
+	                 $("#numeroRef").val('');
+	                 $("#fechaRef").val('');
+			genera_tabla_referencia_factura();
+			
+
+		}
+	});
+});
+
+
+
+function genera_tabla_referencia_factura() {
+
+	idFactura = $('#idFacturaEEPPSel').val(); 
+	
+	datos = "idFactura=" + idFactura;
+
+
+	$.ajax({
+
+
+		url: "ajax/tabla-detalle-referencia-factura.ajax.php",
+		method: "GET",
+		data: datos,
+		async: true, 
+
+		success: function(html) {	
+
+			$("#referencia_factura").html("");      
+			$('#referencia_factura').html(html);
+
+		}
+	});
+}
 
 
 
 
 
+$('#btnTimbrarFactura').click(function() {
+	
+	id = $('#idFacturaEEPPSel').val();
+	idEmpresa = $('#idEmpresaOperativa').val();
+   
+	alertify.confirm('GENERAR FACTURA', 'Esta seguro de Generar la Factura y enviarla al SII?', function() {
+		finalizaFacturaEEPP(id,idEmpresa)
+	}, function() {});
+
+
+	 
+
+});
+
+function finalizaFacturaEEPP(id,idEmpresa){
+
+	var datos = new FormData();
+	datos.append("finalizaFactura", id);
+	datos.append("idEmpresa", idEmpresa);
+
+
+	$.ajax({
+		url: "ajax/facturacion-detalle.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(r) {
+
+		
+	       window.location = "index.php?ruta=obras-factura-detalle";
 
 
 
+		}
+	});
 
-
+}
 
 
 

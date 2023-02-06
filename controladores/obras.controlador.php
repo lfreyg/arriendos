@@ -134,8 +134,12 @@ class ControladorObras{
 					           "telefono"=>$_POST["telefonoEditarObra"],
 					           "correo"=>$_POST["correoEditarObra"],
 					           "cobro"=>$_POST["formaCobroEditarObra"],
-					           "id"=>$_POST["idObras"]);
+					           "id"=>$_POST["idObras"],
+				               "ciudad"=>$_POST["cmbCiudad"],
+				               "comuna"=>$_POST["cmbComuna"]
+				           );
 
+				
 				$respuesta = ModeloObras::mdlEditarObra($tabla, $datos);
 
 				if($respuesta == "ok"){
@@ -237,6 +241,16 @@ class ControladorObras{
 
 		
 		$respuesta = ModeloObras::mdlMostrarObrasPorId($idObra);
+
+		return $respuesta;
+	
+	}
+
+
+	static public function ctrMostrarCiudades(){
+
+		
+		$respuesta = ModeloObras::mdlMostrarCiudades();
 
 		return $respuesta;
 	

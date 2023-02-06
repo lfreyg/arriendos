@@ -243,9 +243,11 @@ $(".tablaEquiposEEPP tbody").on("click", "button.agregarEquipo", function() {
 
 function recargaTablaOC() {
 
-	idEEPP = $('#id_eeppOCtxt').val();    
+	idEEPP = $('#id_eeppOCtxt').val();   
+	idOC = $('#idOC').val(); 
 
-	datos = "id=" + idEEPP;
+	datos = "id=" + idEEPP +
+	         "&idOC=" + idOC;
 
 	$.ajax({
 
@@ -355,8 +357,10 @@ $('#btnVolverOC').click(function() {
 function genera_tabla_oc() {
 
 	idOC = $('#idOC').val();    
+	idFactura = $('#id_FacturaTxt').val();
 
-	datos = "id=" + idOC;
+	datos = "id=" + idOC + 
+	        "&idFactura=" + idFactura;
 
 	$.ajax({
 
@@ -413,11 +417,19 @@ function elimina_equipo_oc(idRegistro) {
 	});
 }
 
-function SeleccionEquipoEEPPOC(idRegistroEquipo,codigo,descripcion,precio,saldo,tipoTabla) {
+
+/*
+function SeleccionEquipoEEPPOC(idRegistroEquipo,codigo,precio,saldo,tipoTabla) {
+
+	 
+	 precio = prompt("Precio OC", precio);
+	 cantidad = prompt("Cantidad OC", saldo);
+
+	return false;
 
 	$('#idEEPPDetalle').val(idRegistroEquipo);
 	$('#codigoEquipo').val(codigo);
-	$('#descripcionEquipo').val(descripcion);
+	//$('#descripcionEquipo').val(descripcion);
 	$('#precioEEPP').val(precio);
 	$('#cantidadEEPP').val(saldo);
 	$('#tablaOrigen').val(tipoTabla);
@@ -425,3 +437,99 @@ function SeleccionEquipoEEPPOC(idRegistroEquipo,codigo,descripcion,precio,saldo,
 
 
 }
+*/
+
+function SeleccionEquipoEEPPOC(idRegistroEquipo,codigo,precio,saldo,tipoTabla) {
+
+	 $('#idEEPPDetalle').val(idRegistroEquipo);
+	 $('#tablaOrigen').val(tipoTabla);
+
+	 precio = prompt("Precio OC", precio);
+	 cantidad = prompt("Cantidad OC", saldo);
+
+	 if (precio == '') {
+		alertify.error("Ingrese Precio para OC");
+		return false;
+	}
+
+	if (cantidad == '') {
+		alertify.error("Ingrese Cantidad para OC");
+		return false;
+	}
+
+	if (precio <= 0) {
+		alertify.error("Ingrese Precio para OC");
+		return false;
+	}
+
+	if (cantidad <= 0) {
+		alertify.error("Ingrese Cantidad para OC");
+		return false;
+	}
+	
+
+	idRegistroEEPPDetalle = $('#idEEPPDetalle').val();
+	idConstructora = $('#idConstructora').val();
+	idObra = $('#idObra').val();
+	idOC = $('#idOC').val();
+	numeroOC = $('#numeroOC').val();
+	idEEPP = $('#id_eeppOCtxt').val();
+	precio = precio;
+	cantidad = cantidad;
+	tabla = $('#tablaOrigen').val();
+
+
+	
+	datos = "id_oc_arriendo=" + idOC +
+		"&numero_oc=" + numeroOC +
+		"&id_constructora=" + idConstructora +		
+		"&id_obra=" + idObra +
+		"&id_eepp=" + idEEPP +		
+		"&id_eepp_detalle=" + idRegistroEEPPDetalle + 
+		"&precio_oc=" + precio + 
+		"&cantidad_oc=" + cantidad +
+		"&tabla=" + tabla;
+		
+
+
+	$.ajax({
+
+		type: "POST",
+		url: "ajax/guarda-equipo-detalle-oc.ajax.php",
+		data: datos,
+
+		success: function(res) {
+      
+    
+  
+			genera_tabla_oc();
+			recargaTablaOC();
+			alertify.success("Registro de EEPP agregado a OC");
+			$('#idEEPPDetalle').val('');	
+			$('#tablaOrigen').val('');
+		
+		
+						
+			
+		}
+	});
+
+	
+
+
+}
+
+
+$('#btnFacturarAhora').click(function() {
+
+     factura = $('#id_FacturaTxt').val();
+
+     if(factura == 0){
+     	$("#modalAgregarFacturaDesdeOC").modal("show");
+     }else{
+     	window.location = "index.php?ruta=EEPPFacturarSeleccionOC";
+     }	
+		
+	       	 
+
+});

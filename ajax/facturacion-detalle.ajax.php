@@ -2,6 +2,7 @@
 
 require_once "../controladores/facturacion.controlador.php";
 require_once "../modelos/facturacion.modelo.php";
+require_once "../modelos/facturacionOC.modelo.php";
 
 class AjaxFacturacionDetalle{
 
@@ -9,35 +10,37 @@ class AjaxFacturacionDetalle{
 	EDITAR 
 	=============================================*/	
 
-	public $idOC;
+	public $idFactura;
 
-	public function ajaxEditarOC(){
+	public function ajaxEditarFactura(){
 
 		
-		$idOC = $this->idOC;
+		$idFactura = $this->idFactura;
 		
 
-		$respuesta = ControladorOrdenCompra::ctrMostrarOC($idOC);
+		$respuesta = ModeloFacturacionEEPP::obtenerDatosFactura($idFactura);
 
 		echo json_encode($respuesta);
 
 	}
 
 	/*=============================================
-	VALIDAR NO REPETIR NOMBRE OBRA
+	ELIMINAR EEPP SELECCIONADO
 	=============================================*/	
 
 	public $idRegistro;
 	public $idEEPPElimina;
+	public $idFacturaQuitar;
 
 	public function ajaxEliminarEEPPFactura(){
 
 		
 		$idRegistro = $this->idRegistro;
 		$idEEPPElimina = $this->idEEPPElimina;
+		$idFacturaQuitar = $this->idFacturaQuitar;
 		
 
-		$respuesta = ModeloFacturacionEEPP::mdlEliminarEEPPSeleccionado($idRegistro,$idEEPPElimina);
+		$respuesta = ModeloFacturacionEEPP::mdlEliminarEEPPSeleccionado($idRegistro, $idEEPPElimina, $idFacturaQuitar);
 
 		echo json_encode($respuesta);
 
@@ -76,6 +79,69 @@ class AjaxFacturacionDetalle{
 
 		$respuesta = ModeloFacturacionEEPP::mdlObtenerTotalFactura($idFacturaObtener);
 
+		$total = $respuesta["totalFactura"];
+
+		ModeloFacturacionEEPP::mdlActualizaTotalNeto($idFacturaObtener, $total);
+
+	
+		echo json_encode($respuesta);
+
+	}
+
+	/*=============================================
+	ELIMINAR FACTURA COMPLETA SIN OC
+	=============================================*/	
+
+	public $idFacturaEliminar;
+
+	public function ajaxEliminarFacturaTotal(){
+
+		
+		$idFacturaEliminar = $this->idFacturaEliminar;
+		
+
+		$respuesta = ModeloFacturacionEEPPOC::mdlEliminaFacturacion($idFacturaEliminar);
+
+	
+		echo json_encode($respuesta);
+
+	}
+
+	/*=============================================
+	ELIMINAR FACTURA COMPLETA OC
+	=============================================*/	
+
+	public $idFacturaEliminarOC;
+
+	public function ajaxEliminarFacturaTotalOC(){
+
+		
+		$idFacturaEliminarOC = $this->idFacturaEliminarOC;
+		
+
+		$respuesta = ModeloFacturacionEEPPOC::mdlEliminaFacturacionOC($idFacturaEliminarOC);
+
+	
+		echo json_encode($respuesta);
+
+	}
+
+	/*=============================================
+	TIMBRE FACTURA OC
+	=============================================*/	
+
+	public $finalizaFactura;
+	public $idEmpresa;
+
+	public function ajaxTimbreFactura(){
+
+		
+		$finalizaFactura = $this->finalizaFactura;
+		$idEmpresa = $this->idEmpresa;
+		
+
+		$respuesta = ModeloFacturacionEEPP::mdlFinalizaFactura($finalizaFactura,$idEmpresa);
+
 	
 		echo json_encode($respuesta);
 
@@ -85,11 +151,11 @@ class AjaxFacturacionDetalle{
 /*=============================================
 EDITAR
 =============================================*/	
-if(isset($_POST["idOC"])){
+if(isset($_POST["idFactura"])){
 
 	$categoria = new AjaxFacturacionDetalle();
-	$categoria -> idOC = $_POST["idOC"];
-	$categoria -> ajaxEditarOC();
+	$categoria -> idFactura = $_POST["idFactura"];
+	$categoria -> ajaxEditarFactura();
 }
 
 /*=============================================
@@ -100,6 +166,7 @@ if(isset($_POST["idRegistro"])){
 	$eliminar = new AjaxFacturacionDetalle();
 	$eliminar -> idRegistro = $_POST["idRegistro"];	
 	$eliminar -> idEEPPElimina = $_POST["idEEPPElimina"];
+	$eliminar -> idFacturaQuitar = $_POST["idFacturaQuitar"];
 	$eliminar -> ajaxEliminarEEPPFactura();
 }
 
@@ -121,4 +188,33 @@ if(isset($_POST["idFacturaObtener"])){
 	$categoria = new AjaxFacturacionDetalle();
 	$categoria -> idFacturaObtener = $_POST["idFacturaObtener"];
 	$categoria -> ajaxTotalFactura();
+}
+/*=============================================
+ELIMINAR FACTURA
+=============================================*/	
+if(isset($_POST["idFacturaEliminar"])){
+
+	$eliminar = new AjaxFacturacionDetalle();
+	$eliminar -> idFacturaEliminar = $_POST["idFacturaEliminar"];
+	$eliminar -> ajaxEliminarFacturaTotal();
+}
+
+/*=============================================
+ELIMINAR FACTURA ORDEN COMPRA
+=============================================*/	
+if(isset($_POST["idFacturaEliminarOC"])){
+
+	$eliminar = new AjaxFacturacionDetalle();
+	$eliminar -> idFacturaEliminarOC = $_POST["idFacturaEliminarOC"];
+	$eliminar -> ajaxEliminarFacturaTotalOC();
+}
+/*=============================================
+FIRMAR FACTURA
+=============================================*/	
+if(isset($_POST["finalizaFactura"])){
+
+	$timbre = new AjaxFacturacionDetalle();
+	$timbre -> finalizaFactura = $_POST["finalizaFactura"];
+	$timbre -> idEmpresa = $_POST["idEmpresa"];
+	$timbre -> ajaxTimbreFactura();
 }

@@ -85,6 +85,7 @@ $nombreConstructora = $constructora["nombre"];
            <th>Telefono</th>
            <th>Correo</th>
            <th>Cobro</th>
+           <th>Comuna</th>
            <th>Estado</th>
            <th>Acciones</th>
 
@@ -110,7 +111,8 @@ $nombreConstructora = $constructora["nombre"];
                     <td class="text-uppercase">'.$value["direccion"].'</td>
                     <td class="text-uppercase">'.$value["telefono"].'</td>
                     <td class="text-uppercase">'.$value["email"].'</td>
-                    <td class="text-uppercase">'.$nombreFormaCobro.'</td>';
+                    <td class="text-uppercase">'.$nombreFormaCobro.'</td>
+                    <td class="text-uppercase">'.$value["comuna"].'</td>';
 
                     if($value["estado"] != 0){
 
@@ -443,6 +445,47 @@ MODAL EDITAR
                             foreach ($formaPago as $key => $value) {
                               
                               echo '<option value="'.$value["id"].'">'.$value["descripcion"].'</option>';
+                            }
+
+                          ?>
+                      </select>
+                  </div>
+                </div>
+
+                 <div class="form-group row">              
+                  <div class="input-group">                      
+                    <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+                      <select class="form-control input-lg" id="cmbCiudad" name="cmbCiudad" required>                          
+                           <option value="">Seleccionar Ciudad</option>
+                          <?php                           
+
+                            $ciudadList = ControladorObras::ctrMostrarCiudades();
+
+
+                            foreach ($ciudadList as $key => $value) {
+                              
+                              echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                            }
+
+                          ?>
+                      </select>
+                  </div>
+                </div>
+
+
+                 <div class="form-group row">              
+                  <div class="input-group">                      
+                    <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+                      <select class="form-control input-lg" id="cmbComuna" style="width: 100%;" name="cmbComuna" required>                          
+                           <option value="0">Seleccionar Comuna</option>
+                          <?php                           
+
+                            $comunaList = ControladorComunas::mostrarComunas();
+
+
+                            foreach ($comunaList as $key => $value) {
+                              
+                              echo '<option value="'.strtoupper($value).'">'.strtoupper($value).'</option>';
                             }
 
                           ?>

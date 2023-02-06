@@ -14,7 +14,7 @@ class TablaListadoFactura{
 		  		
   		$facturas = ModeloFacturacionEEPP::mdlMostrarListadoFacturacion($_SESSION['idObraFacturar']);	
 
-
+  		
   		if(count($facturas) == 0){
 
   			echo '{"data": []}';
@@ -39,7 +39,8 @@ class TablaListadoFactura{
             $cliente = $facturas[$i]["cliente"];
             $estadoFac = $facturas[$i]["estado"];
             $orden = $facturas[$i]['orden_compra'];
-            $neto = $facturas[$i]['orden_compra'];
+            $neto = $facturas[$i]['neto'];
+            $idEstadoFac = $facturas[$i]['estado_factura'];
 
 
             
@@ -53,6 +54,7 @@ class TablaListadoFactura{
 		  	}else{
 		  	  $fechaOrden = '';	
 		  	}
+
 
 
 		  	if($numFactura == 0){
@@ -70,20 +72,34 @@ class TablaListadoFactura{
             $disable_print = "";
             $estado = 'ACTIVO';
             $editable = 1;
+            
+            //FACTURA ENVIADA A SII
+            if($idEstadoFac == 13){
+            	$disable_editar = 'disabled';
+            	$disable_anular = 'disabled';
+            }
+            
+            //FACTURA ANULADA 
+            if($idEstadoFac == 14){
+            	$disable_editar = 'disabled';
+            	$disable_anular = 'disabled';
+            	$disable_detalle = 'disabled';
+            }
 
 		  	
   			
 
   				 $botones =  "<div class='btn-group'><button ".$disable_editar." class='btn btn-warning btnEditarFac' title='Editar' idFactura='".$idFactura."'><i class='fa fa-pencil'></i></button><button ".$disable_anular." class='btn btn-danger btnEliminarFac' title='Anular' idFactura='".$idFactura."'><i class='fa fa-times'></i></button><button ".$disable_detalle." class='btn btn-info btnDetalleFac' title='Detalle' idFactura='".$idFactura."'><i class='fa fa-th'></i></button></div>";
 
+
+  				 $link = "<a href='extensiones/pdf/TCPDF/factura.php?idFactura=".$idFactura."' target='_blank'>".$numFactura."</a>";
+
   				  	       
 		 
 		  	$datosJson .='[
 			      "'.$empresa.'",	
-			      "'.$numFactura.'",
-			      "'.$orden.'",
-			      "'.$fechaOrden.'",	
-			      "'.number_format($neto,0,'','.').'",	      
+			      "'.$link.'",			     	
+			      "'.'$ '.number_format($neto,0,'','.').'",	      
 			      "'.$fecha.'",
 			      "'.$cliente.'",
 			      "'.$estadoFac.'",			      		     

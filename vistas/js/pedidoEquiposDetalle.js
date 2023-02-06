@@ -29,14 +29,14 @@ function genera_tabla_compras() {
 $(".tablaEquiposFactura tbody").on("click", "button.agregarEquipoArriendo", function() {
 
 
-	var idTipoEquipo = $(this).attr("idTipoEquipo");
+	var idCategoria = $(this).attr("idCategoria");
 
 	var datos = new FormData();
-	datos.append("idTipoEquipo", idTipoEquipo);
+	datos.append("idCategoria", idCategoria);
 
 	$.ajax({
 
-		url: "ajax/tipoEquipos.ajax.php",
+		url: "ajax/categorias.ajax.php",
 		method: "POST",
 		data: datos,
 		cache: false,
@@ -45,31 +45,9 @@ $(".tablaEquiposFactura tbody").on("click", "button.agregarEquipoArriendo", func
 		dataType: "json",
 		success: function(respuesta) {
 
-
-			var idMarca = respuesta["id_marca"];
-
-			var datos = new FormData();
-			datos.append("idMarca", idMarca);
-			$.ajax({
-				url: "ajax/marcas.ajax.php",
-				method: "POST",
-				data: datos,
-				cache: false,
-				contentType: false,
-				processData: false,
-				dataType: "json",
-				success: function(marca) {
-
-					$("#compraDetalleMarca").val(marca["descripcion"]);
-					$("#compraDetalleDescripcion").val(respuesta["descripcion"]);
-					$("#compraDetalleModelo").val(respuesta["modelo"]);
-					$("#idEquipoDetalle").val(respuesta["id"]);	
-					$("#pedidoDetalle").focus();			
-					
-
-				}
-
-			})
+            $("#idCategoria").val(respuesta["id"]);	
+			$("#compraDetalleDescripcion").val(respuesta["categoria"]);
+			
 		}
 
 	});
@@ -82,20 +60,24 @@ $(".tablaEquiposFactura tbody").on("click", "button.agregarEquipoArriendo", func
 $('#btnAgregarDetalle').click(function() {
 
 		
-	if ($('#idEquipoDetalle').val() == '') {
+	if ($('#idCategoria').val() == '') {
 		alertify.error("Seleccione un equipo de la lista");
 		return false;
 	}
 
-	id_nombre_equipos = $('#idEquipoDetalle').val();
+	id_nombre_equipos = $('#idCategoria').val();
 	id_pedido = $('#idPedidoGenerado').val();
 	tipo = $('#pedidoTipo').val();
 	detalle = $('#pedidoDetalle').val();
+	idConstructora = $('#idConstructoraPedido').val();
+	idObra = $('#idObraPedido').val();
 	
 	datos = "id_nombre_equipos=" + id_nombre_equipos +
 		"&id_pedido=" + id_pedido +
 		"&tipo=" + tipo +
-		"&detalle=" + detalle;
+		"&detalle=" + detalle +
+		"&constructora=" + idConstructora +
+		"&obra=" + idObra;
 
 
 	$.ajax({

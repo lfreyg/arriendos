@@ -67,6 +67,8 @@ class ControladorPerfiles{
 	
 	}
 
+	
+
 	static public function ctrMostrarBancosId($item, $valor){
 
 		$tabla = "bancos";

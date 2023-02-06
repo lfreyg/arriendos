@@ -20,10 +20,8 @@ $id = $_POST['id'];
    <thead style="background-color: #ccc;color: black; font-weight: bold;">
 
                  <tr>   
-                  <th>#</th>
-                  <th>Marca</th>              
-                  <th>Equipo</th>
-                  <th>Modelo</th>
+                  <th>#</th>                              
+                  <th>Equipo</th>                 
                   <th>Detalles</th>
                   <th>Tipo</th>                                    
                   <th>Acciones</th>
@@ -40,16 +38,15 @@ $id = $_POST['id'];
 
          foreach ($productos as $key => $value){
 
-           $marca = $value["marca"];
-           $equipo = $value["tipo_equipo"];
-           $modelo = $value["modelo"];
+           $categoria = $value["categoria"];          
            $tipo = $value["tipo"];
            $detalle = $value["detalle"];
            $movimiento = $value["entrega"];
+           $guiaDespacho = $value["id_guia_despacho"];
            $i++; 
             
             
-            if($movimiento != null){
+            if($guiaDespacho != null){
               $disabled = "disabled";
             }else{
               $disabled = '';
@@ -57,13 +54,11 @@ $id = $_POST['id'];
   ?>
   <tr>
     <td><div align="center"><?php echo $i?></div></td>
-    <td ><div align="left"><?php echo $marca?></div></td>
-    <td ><div align="left"><?php echo $equipo?></div></td>
-    <td ><div align="left"><?php echo $modelo?></div></td>  
+    <td ><div align="left"><?php echo $categoria?></div></td>    
     <td ><div align="left"><?php echo $detalle?></div></td>  
     <td ><div align="left"><?php echo $tipo?></div></td>  
        
-    <td align="center" nowrap=""><span class="btn btn-warning btn-xm" title="Editar" onclick="editar('<?php echo $value["id"]?>')">E</span>
+    <td align="center" nowrap="">
       <button class="btn btn-danger btn-xm" title="Eliminar" <?php echo $disabled?> onclick="eliminarConsulta('<?php echo $value["id"]?>')">X</button></td>
     
   </tr>

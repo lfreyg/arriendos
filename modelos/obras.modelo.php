@@ -144,7 +144,7 @@ class ModeloObras{
 
 	static public function mdlEditarObra($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, contacto = :contacto, direccion = :direccion, telefono = :telefono, email = :correo, forma_cobro_id = :cobro WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, contacto = :contacto, direccion = :direccion, telefono = :telefono, email = :correo, forma_cobro_id = :cobro, ciudad = :ciudad, comuna = :comuna WHERE id = :id");
 
 		$stmt->bindParam(":id", strtoupper($datos['id']), PDO::PARAM_STR);				
 		$stmt->bindParam(":nombre", strtoupper($datos['nombre']), PDO::PARAM_STR);
@@ -153,6 +153,8 @@ class ModeloObras{
 		$stmt->bindParam(":telefono", strtoupper($datos['telefono']), PDO::PARAM_STR);
 		$stmt->bindParam(":correo", strtolower($datos['correo']), PDO::PARAM_STR);
 		$stmt->bindParam(":cobro", strtolower($datos['cobro']), PDO::PARAM_STR);
+		$stmt->bindParam(":ciudad", $datos['ciudad'], PDO::PARAM_INT);
+		$stmt->bindParam(":comuna", strtoupper($datos['comuna']), PDO::PARAM_STR);
 		
 
 		if($stmt->execute()){
@@ -248,6 +250,20 @@ class ModeloObras{
 			$stmt = Conexion::conectar()->prepare("SELECT o.id, o.id_constructoras, o.nombre, o.contacto, o.direccion, o.telefono, o.email, o.forma_cobro_id, o.estado, tc.descripcion as tipoCobro, c.nombre as constructora FROM obras o join tipo_cobro tc on o.forma_cobro_id = tc.id JOIN constructoras c ON o.id_constructoras = c.id WHERE o.id = $id");
 			$stmt -> execute();			
 			return $stmt -> fetch();			
+
+		    $stmt -> close();
+
+		    $stmt = null;
+
+	}
+
+	static public function mdlMostrarCiudades(){
+
+		
+
+			$stmt = Conexion::conectar()->prepare("SELECT * from ciudades");
+			$stmt -> execute();			
+			return $stmt -> fetchAll();			
 
 		    $stmt -> close();
 

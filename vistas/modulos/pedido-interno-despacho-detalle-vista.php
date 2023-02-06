@@ -33,6 +33,12 @@ if($_SESSION["idPedidoInternoDespacho"] == ''){
 
 }
 $hoy = date('Y-m-d');
+
+
+$fechaMas = date("Y-m-d",strtotime($hoy."+ 3 days")); 
+
+$fechaMenos = date("Y-m-d",strtotime($hoy."- 3 days")); 
+
 $pedido = ModeloPedidoInterno::mdlMostrarPedidoInternoDetalle($idPedido);
 
 $hacerNuevaGuia = ModeloPedidoInterno::mdlValidarHacerNuevaGuiaPedido($idPedido);
@@ -241,7 +247,7 @@ MODAL EDITAR
              <div class="col-lg-8 col-xs-11"> 
               
                 <label for="nuevoFechaGuia">Fecha Guía</label> 
-                <input type="date" class="form-control input-lg" name="nuevoFechaGuia" value="<?php echo $hoy?>" id="nuevoFechaGuia" readonly autocomplete="off" placeholder="Fecha" required>
+                <input type="date" class="form-control input-lg" name="nuevoFechaGuia" value="<?php echo $hoy?>" id="nuevoFechaGuia" min="<?=$fechaMenos?>" max="<?=$fechaMas?>" autocomplete="off" placeholder="Fecha" required>
                 <input type="hidden" name="tipoGuia" value="T">
                 <input type="hidden" id="idPedidoGenerado" name="idPedidoGenerado" value="<?php echo $idPedido; ?>">
                     <input type="hidden" id="idSucursaltxt" name="idSucursaltxt" value="<?php echo $pedido["sucursal"]; ?>">

@@ -2,6 +2,11 @@
 
 require_once "../modelos/guiaDespachoDetalles.modelo.php";
 
+               if(isset($_POST["idPedidoObra"])){
+                  $idPedidoObra = $_POST["idPedidoObra"];
+               }else{
+                  $idPedidoObra = 0;
+               }
 
   
 
@@ -13,11 +18,15 @@ require_once "../modelos/guiaDespachoDetalles.modelo.php";
                   "fechaDevolucion"=>$_POST["fechaDevolucion"],
                   "contrato"=>$_POST["contrato"],
                   "movimiento"=>$_POST["movimiento"],
-                  "idEmpresa"=>$_POST["idEmpresa"]                                   
+                  "idEmpresa"=>$_POST["idEmpresa"],
+                  "idPedidoObra"=>$idPedidoObra                                   
 				 );
 
          
           $respuesta = ModeloGuiaDespachoDetalles::mdlIngresarGuiaDespachoDetalle($datos);
+
+
+          
 
           return $respuesta
 
